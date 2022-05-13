@@ -6,6 +6,22 @@
   <router-view />
 </template>
 
+<script setup lang="ts">
+import { useStore } from "@/store";
+import { onMounted } from "vue";
+import baseRequest from "@/utils/baseRequest";
+import { AWSEndpoints, RequestMethods } from "@/types/apiTypes";
+
+const store = useStore();
+
+onMounted(async () => {
+  store.userAccount = await baseRequest(
+    AWSEndpoints.GET_ACCOUNT + process.env.VUE_APP_AWS_BASE_URL,
+    RequestMethods.GET
+  );
+});
+</script>
+
 <style lang="scss">
 // This is the global style sheet
 #app {

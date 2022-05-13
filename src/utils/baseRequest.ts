@@ -7,10 +7,7 @@ export default async function baseRequest(
 ) {
   const rawResponse = await fetch(url, {
     method,
-    headers: {
-      "Content-Type": "application/json",
-    },
     body: JSON.stringify(body),
   });
-  console.log(rawResponse);
+  return await rawResponse.json();
 }
