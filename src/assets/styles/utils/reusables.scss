@@ -1,0 +1,11 @@
+@mixin top-gradient {
+  background: linear-gradient(180deg, rgba(104, 110, 220, 1) 0%, rgba(104, 110, 220, 0.4) 49.18%, rgba(121, 127, 234, 0.2) 70.66%, rgba(143, 148, 251, 0) 100%);
+}
+
+@mixin footer-gradient {
+  background: linear-gradient(360deg, rgba(10, 10, 10, 1) 20.1%, rgba(10, 10, 10, 0) 100%);
+}
+
+@mixin tile-bg {
+  background: rgba(143, 148, 251, 0.15);
+}

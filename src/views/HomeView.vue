@@ -11,3 +11,5 @@ import { useStore } from "@/store";
 
 const store = useStore();
 </script>
+
+<style lang="scss" scoped></style>
