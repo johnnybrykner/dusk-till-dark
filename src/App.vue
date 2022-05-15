@@ -2,12 +2,15 @@
   <nav>
     <router-link to="/">Home</router-link> |
     <router-link to="/about">About</router-link>
-    <h1>Good evening</h1>
   </nav>
+  <PageHeader />
+  <MainNavigation />
   <router-view />
 </template>
 
 <script setup lang="ts">
+import PageHeader from "./components/PageHeader.vue";
+import MainNavigation from "./components/MainNavigation.vue";
 // import { useStore } from "@/store";
 // import { onMounted } from "vue";
 // import baseRequest from "@/utils/baseRequest";
@@ -29,6 +32,8 @@
 @import "./assets/styles/fonts.css";
 
 #app {
+  height: 100vh;
+
   background-color: $black;
   color: $white;
   font-family: "OpenSans";
@@ -48,6 +53,11 @@ h2 {
 h3 {
   font-size: 11px;
   font-weight: 300;
+}
+
+p {
+  font-size: 16px;
+  font-weight: 400;
 }
 
 nav {

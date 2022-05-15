@@ -9,3 +9,8 @@
 @mixin tile-bg {
   background: rgba(143, 148, 251, 0.15);
 }
+
+@mixin grid-view($gap: $spacing-big) {
+  display: grid;
+  gap: $gap;
+}
