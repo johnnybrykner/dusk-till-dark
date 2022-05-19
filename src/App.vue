@@ -30,15 +30,14 @@ import MainNavigation from "./components/MainNavigation.vue";
 @import "./assets/styles/fonts.css";
 
 #app {
-  height: 100vh;
+  min-height: 100vh;
   background-color: $black;
   color: $white;
   font-family: "OpenSans";
   font-weight: 400;
 
   .wrapper {
-    padding: $spacing-med;
-    padding-top: $header-height;
+    padding: $header-height $spacing-med;
   }
 }
 

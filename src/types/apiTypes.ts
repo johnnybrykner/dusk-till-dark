@@ -12,10 +12,23 @@ export interface Film {
   providers?: AvailableProviders;
 }
 
+export interface FilmResponse {
+  poster_path: string;
+  overview: string;
+  release_date: string;
+  genre_ids: number[];
+  id: number;
+  original_title: string;
+  original_language: string;
+  title: string;
+  backdrop_path: string;
+  vote_average: number;
+}
+
 export interface AvailableProviders {
-  Disney: boolean;
-  Netflix: boolean;
-  Prime: boolean;
+  disney: boolean;
+  netflix: boolean;
+  prime: boolean;
 }
 
 export enum AWSEndpoints {
@@ -23,5 +36,5 @@ export enum AWSEndpoints {
 }
 
 export enum TMDBEndpoints {
-  GET_FILM = "movie/",
+  GET_FILM = "search/movie",
 }

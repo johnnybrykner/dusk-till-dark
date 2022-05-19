@@ -1,7 +1,10 @@
 <template>
-  <div class="page-header">
+  <header class="page-header">
+    <p v-if="store.thrownError" class="page-header__error">
+      {{ store.thrownError }}
+    </p>
     <h1 class="page-header__title">{{ store.headerGreeting }}</h1>
-  </div>
+  </header>
 </template>
 
 <script setup lang="ts">
@@ -14,14 +17,20 @@ const store = useStore();
 <style scoped lang="scss">
 .page-header {
   @include top-gradient;
+  @include flex-column;
+  justify-content: flex-end;
   position: fixed;
   top: 0;
   height: $header-height;
-  width: 100vw;
+  width: calc(100% - #{$spacing-med * 4});
+  padding: 0 $spacing-med * 2;
+
+  &__error {
+    color: $error;
+  }
 
   &__title {
-    padding: 50px calc($spacing-med * 2) calc($spacing-big * 2)
-      calc($spacing-med * 2);
+    margin-bottom: $spacing-med * 2;
   }
 }
 </style>

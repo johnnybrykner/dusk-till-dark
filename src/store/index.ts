@@ -6,6 +6,7 @@ export const useStore = defineStore("miscellaneous", {
   state: () => {
     return {
       // all these properties will have their type inferred automatically
+      thrownError: "",
       currentHour: new Date().getHours(),
     };
   },

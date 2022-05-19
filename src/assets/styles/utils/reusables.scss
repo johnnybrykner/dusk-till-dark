@@ -15,8 +15,14 @@
   gap: $gap;
 }
 
-@mixin flex-column($col-gap: $spacing-big) {
+@mixin flex-row($col-gap: $spacing-big) {
   display: flex;
   flex-flow: row nowrap;
   column-gap: $col-gap;
+}
+
+@mixin flex-column($col-gap: $spacing-big) {
+  display: flex;
+  flex-flow: column nowrap;
+  row-gap: $col-gap;
 }

@@ -1,5 +1,5 @@
 <template>
-  <div class="page-footer">
+  <footer class="page-footer">
     <div class="page-footer__navbar">
       <img src="../assets/images/home_icon.svg" class="icon" />
       <img src="../assets/images/search_icon.svg" class="icon" />
@@ -11,7 +11,7 @@
         <img src="../assets/images/tmdb_logo.svg" />
       </div>
     </div>
-  </div>
+  </footer>
 </template>
 
 <style scoped lang="scss">
@@ -21,7 +21,7 @@
   width: calc(100% - calc($spacing-med * 2));
 
   &__navbar {
-    @include flex-column;
+    @include flex-row;
     align-items: center;
     background-color: $white;
     border-radius: $border-radius;
