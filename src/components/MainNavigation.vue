@@ -1,7 +1,9 @@
 <template>
   <div class="page-footer">
     <div class="page-footer__navbar">
-      <p>smth</p>
+      <img src="../assets/images/home_icon.svg" class="icon" />
+      <img src="../assets/images/search_icon.svg" class="icon" />
+      <img src="../assets/images/list_icon.svg" class="icon" />
     </div>
     <div class="page-footer__references">
       <p class="name">Dusk Till Dark</p>
@@ -13,30 +15,36 @@
 </template>
 
 <style scoped lang="scss">
-$navbar-height: 50px;
-
 .page-footer {
   position: fixed;
   bottom: 0;
-  width: 100vw;
+  width: calc(100% - calc($spacing-med * 2));
 
   &__navbar {
+    @include flex-column;
+    align-items: center;
     background-color: $white;
     border-radius: $border-radius;
-    height: $navbar-height;
-    margin: $spacing-med;
+    height: $bar-height;
+
+    .icon {
+      flex-basis: calc(100% / 3);
+      height: 24px;
+      color: $black;
+    }
   }
 
   &__references {
     @include footer-gradient;
     @include grid-view;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 35px 1fr 35px;
     padding: $spacing-med;
 
     .name {
       grid-column-start: 2;
       grid-column-end: 3;
       color: $purple-light;
+      text-align: center;
     }
 
     .sources {

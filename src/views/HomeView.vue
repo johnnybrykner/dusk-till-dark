@@ -1,14 +1,11 @@
 <template>
   <div class="home">
-    <div v-if="store.userAccount">{{ store.userAccount }}</div>
-    <div v-else>Loading...</div>
+    <TheSearch />
   </div>
 </template>
 
 <script setup lang="ts">
-import { useAccount } from "@/store/account";
-
-const store = useAccount();
+import TheSearch from "@/components/TheSearch.vue";
 </script>
 
 <style lang="scss" scoped></style>

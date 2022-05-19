@@ -12,8 +12,6 @@ const store = useStore();
 </script>
 
 <style scoped lang="scss">
-$header-height: 104px;
-
 .page-header {
   @include top-gradient;
   position: fixed;

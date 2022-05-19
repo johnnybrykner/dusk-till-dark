@@ -1,11 +1,9 @@
 <template>
-  <nav>
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </nav>
   <PageHeader />
-  <MainNavigation />
-  <router-view />
+  <div class="wrapper">
+    <router-view />
+    <MainNavigation />
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -33,11 +31,15 @@ import MainNavigation from "./components/MainNavigation.vue";
 
 #app {
   height: 100vh;
-
   background-color: $black;
   color: $white;
   font-family: "OpenSans";
   font-weight: 400;
+
+  .wrapper {
+    padding: $spacing-med;
+    padding-top: $header-height;
+  }
 }
 
 h1 {
@@ -58,18 +60,5 @@ h3 {
 p {
   font-size: 16px;
   font-weight: 400;
-}
-
-nav {
-  padding: 30px;
-
-  a {
-    font-weight: 600;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
 }
 </style>

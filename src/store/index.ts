@@ -12,11 +12,14 @@ export const useStore = defineStore("miscellaneous", {
   getters: {
     headerGreeting: (state) => {
       if (state.currentHour >= 4 && state.currentHour < 12)
-        return "Good morning!";
+        return "Good morning";
       if (state.currentHour >= 12 && state.currentHour < 20)
-        return "Good afternoon!";
-      if (state.currentHour >= 20 && state.currentHour < 4)
-        return "Good evening!";
+        return "Good afternoon";
+      if (
+        state.currentHour >= 20 ||
+        (state.currentHour >= 0 && state.currentHour < 4)
+      )
+        return "Good evening";
     },
   },
   actions: {},
