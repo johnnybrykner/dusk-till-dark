@@ -1,14 +1,18 @@
 <template>
   <footer class="page-footer">
     <div class="page-footer__navbar">
-      <img src="../assets/images/home_icon.svg" class="icon" />
-      <img src="../assets/images/search_icon.svg" class="icon" />
-      <img src="../assets/images/list_icon.svg" class="icon" />
+      <img src="../assets/images/home_icon.svg" class="icon" alt="Home icon" />
+      <img
+        src="../assets/images/search_icon.svg"
+        class="icon"
+        alt="Search icon"
+      />
+      <img src="../assets/images/list_icon.svg" class="icon" alt="List icon" />
     </div>
     <div class="page-footer__references">
       <p class="name">Dusk Till Dark</p>
       <div class="sources">
-        <img src="../assets/images/tmdb_logo.svg" />
+        <img src="../assets/images/tmdb_logo.svg" alt="TMDB logo" />
       </div>
     </div>
   </footer>

@@ -1,4 +1,5 @@
 <template>
+  <StatusNotification />
   <PageHeader />
   <div class="wrapper">
     <router-view />
@@ -9,6 +10,7 @@
 <script setup lang="ts">
 import PageHeader from "./components/PageHeader.vue";
 import MainNavigation from "./components/MainNavigation.vue";
+import StatusNotification from "./components/StatusNotification.vue";
 // import { useStore } from "@/store";
 // import { onMounted } from "vue";
 // import baseRequest from "@/utils/baseRequest";

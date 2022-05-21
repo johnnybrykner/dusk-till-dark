@@ -1,5 +1,5 @@
+import { useStore } from "@/store";
 import { Film, RequestMethods } from "@/types/apiTypes";
-import handleError from "./handleError";
 
 export default async function baseRequest(
   url: string,
@@ -7,6 +7,7 @@ export default async function baseRequest(
   queryString?: string,
   body?: Film
 ) {
+  const store = useStore();
   try {
     const query = queryString
       ? "&query=" + encodeURIComponent(queryString)
@@ -20,6 +21,6 @@ export default async function baseRequest(
     );
     return await rawResponse.json();
   } catch (error) {
-    handleError(error as string);
+    store.handleError(error as string);
   }
 }

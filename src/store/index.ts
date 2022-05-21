@@ -7,6 +7,7 @@ export const useStore = defineStore("miscellaneous", {
     return {
       // all these properties will have their type inferred automatically
       thrownError: "",
+      notificationText: "",
       currentHour: new Date().getHours(),
     };
   },
@@ -23,5 +24,14 @@ export const useStore = defineStore("miscellaneous", {
         return "Good evening";
     },
   },
-  actions: {},
+  actions: {
+    handleError(errorMessage: string) {
+      this.thrownError = errorMessage;
+      setTimeout(() => (this.thrownError = ""), 5000);
+    },
+    showNotification(notificationText: string) {
+      this.notificationText = notificationText;
+      setTimeout(() => (this.notificationText = ""), 5000);
+    },
+  },
 });

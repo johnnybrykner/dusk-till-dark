@@ -1,14 +1,10 @@
 <template>
   <header class="page-header">
-    <p v-if="store.thrownError" class="page-header__error">
-      {{ store.thrownError }}
-    </p>
     <h1 class="page-header__title">{{ store.headerGreeting }}</h1>
   </header>
 </template>
 
 <script setup lang="ts">
-// import { ref } from "vue";
 import { useStore } from "@/store";
 
 const store = useStore();
@@ -25,12 +21,8 @@ const store = useStore();
   width: calc(100% - #{$spacing-med * 4});
   padding: 0 $spacing-med * 2;
 
-  &__error {
-    color: $error;
-  }
-
   &__title {
-    margin-bottom: $spacing-med * 2;
+    margin-bottom: $spacing-small * 5;
   }
 }
 </style>
