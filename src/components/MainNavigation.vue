@@ -22,7 +22,7 @@
 .page-footer {
   position: fixed;
   bottom: 0;
-  width: calc(100% - calc($spacing-med * 2));
+  width: calc(100% - calc($spacing-med * 4));
 
   &__navbar {
     @include flex-row;

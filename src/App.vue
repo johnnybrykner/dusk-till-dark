@@ -39,7 +39,7 @@ import StatusNotification from "./components/StatusNotification.vue";
   font-weight: 400;
 
   .wrapper {
-    padding: $header-height $spacing-med;
+    padding: $header-height $spacing-med * 2;
   }
 }
 

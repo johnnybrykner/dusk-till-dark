@@ -11,7 +11,9 @@
         v-for="result in search.tmdbResults"
         :key="result.id"
       >
-        {{ result.original_title }}
+        <router-link :to="'/film/' + result.id">
+          {{ result.original_title }}
+        </router-link>
       </li>
     </ul>
   </section>
