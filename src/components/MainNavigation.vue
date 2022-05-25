@@ -1,13 +1,27 @@
 <template>
   <footer class="page-footer">
     <div class="page-footer__navbar">
-      <img src="../assets/images/home_icon.svg" class="icon" alt="Home icon" />
-      <img
-        src="../assets/images/search_icon.svg"
-        class="icon"
-        alt="Search icon"
-      />
-      <img src="../assets/images/list_icon.svg" class="icon" alt="List icon" />
+      <router-link to="/" class="router-link">
+        <img
+          src="../assets/images/home_icon.svg"
+          class="icon"
+          alt="Home icon"
+        />
+      </router-link>
+      <router-link to="/" class="router-link">
+        <img
+          src="../assets/images/search_icon.svg"
+          class="icon"
+          alt="Search icon"
+        />
+      </router-link>
+      <router-link to="/lists" class="router-link">
+        <img
+          src="../assets/images/list_icon.svg"
+          class="icon"
+          alt="List icon"
+        />
+      </router-link>
     </div>
     <div class="page-footer__references">
       <p class="name">Dusk Till Dark</p>
@@ -22,7 +36,7 @@
 .page-footer {
   position: fixed;
   bottom: 0;
-  width: calc(100% - calc($spacing-med * 4));
+  width: calc(100% - calc($spacing-med * 2));
 
   &__navbar {
     @include flex-row;
@@ -31,10 +45,15 @@
     border-radius: $border-radius;
     height: $bar-height;
 
-    .icon {
+    .router-link {
       flex-basis: calc(100% / 3);
-      height: 24px;
-      color: $black;
+      @include flex-row;
+      justify-content: center;
+
+      .icon {
+        height: 24px;
+        color: $black;
+      }
     }
   }
 

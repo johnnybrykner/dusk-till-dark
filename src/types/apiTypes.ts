@@ -15,6 +15,11 @@ export interface Film {
   year: number;
 }
 
+export interface FilmSearch {
+  id: number;
+  name: string;
+}
+
 export interface FilmResponse {
   poster_path: string;
   overview: string;
@@ -26,6 +31,13 @@ export interface FilmResponse {
   title: string;
   backdrop_path: string;
   vote_average: number;
+}
+
+export interface UserAccount {
+  previously_watched: Film[];
+  recent_searches: FilmSearch[];
+  to_watch: Film[];
+  username: string;
 }
 
 export interface FilmDetails {
