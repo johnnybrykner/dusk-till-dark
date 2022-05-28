@@ -1,13 +1,17 @@
 <template>
   <header class="page-header">
-    <h1 class="page-header__title">{{ store.headerGreeting }}</h1>
+    <h1 v-if="route.name === 'home'" class="page-header__title">
+      {{ store.headerGreeting }}
+    </h1>
   </header>
 </template>
 
 <script setup lang="ts">
+import { useRoute } from "vue-router";
 import { useStore } from "@/store";
 
 const store = useStore();
+const route = useRoute();
 </script>
 
 <style scoped lang="scss">

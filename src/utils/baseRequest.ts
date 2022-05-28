@@ -8,6 +8,7 @@ export default async function baseRequest(
   body?: Film
 ) {
   const store = useStore();
+  store.loading = true;
   try {
     const query = queryString
       ? "&query=" + encodeURIComponent(queryString)
@@ -22,5 +23,7 @@ export default async function baseRequest(
     return await rawResponse.json();
   } catch (error) {
     store.handleError(error as string);
+  } finally {
+    store.loading = false;
   }
 }

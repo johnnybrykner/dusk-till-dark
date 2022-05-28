@@ -3,6 +3,7 @@
     <input
       type="search"
       class="the-search__field"
+      placeholder="Quickly find films"
       @input="(event) => debouncedSearch(event.target as HTMLInputElement)"
     />
     <ul class="the-search__results" v-if="search.tmdbResults.length">
@@ -11,7 +12,13 @@
         v-for="result in search.tmdbResults"
         :key="result.id"
       >
-        {{ result.original_title }}
+        <router-link :to="'/film/' + result.id">
+          <h2>{{ result.original_title }}</h2>
+          <h3 class="details">
+            {{ result.original_language }} <span class="dot" />
+            {{ result.release_date }}
+          </h3>
+        </router-link>
       </li>
     </ul>
   </section>
@@ -40,7 +47,11 @@ function debouncedSearch(input: HTMLInputElement) {
     background-color: $purple-light;
     border-radius: $border-radius;
     border: none;
+    outline: none;
     padding: $spacing-med;
+    font-size: 16px;
+    font-weight: 500;
+    color: $purple-dark;
   }
 
   &__results {
@@ -48,8 +59,23 @@ function debouncedSearch(input: HTMLInputElement) {
     margin-top: $spacing-big;
 
     .search-result {
-      padding: $spacing-med;
-      background-color: $grey;
+      @include tile;
+
+      a {
+        @include flex-column($row-gap: $spacing-med);
+        text-decoration: none;
+        color: $white;
+        font-size: 16px;
+        font-weight: 400;
+
+        .details {
+          @include flex-row($col-gap: $spacing-small);
+
+          .dot {
+            @include dot;
+          }
+        }
+      }
     }
   }
 }

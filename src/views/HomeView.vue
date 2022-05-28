@@ -1,6 +1,8 @@
 <template>
   <div class="home">
-    <TheSearch />
+    <KeepAlive>
+      <TheSearch />
+    </KeepAlive>
   </div>
 </template>
 

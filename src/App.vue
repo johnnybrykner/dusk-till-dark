@@ -11,19 +11,19 @@
 import PageHeader from "./components/PageHeader.vue";
 import MainNavigation from "./components/MainNavigation.vue";
 import StatusNotification from "./components/StatusNotification.vue";
-// import { useStore } from "@/store";
-// import { onMounted } from "vue";
-// import baseRequest from "@/utils/baseRequest";
-// import { AWSEndpoints, RequestMethods } from "@/types/apiTypes";
+import { useAccount } from "@/store/account";
+import { onMounted } from "vue";
+import baseRequest from "@/utils/baseRequest";
+import { AWSEndpoints, RequestMethods } from "@/types/apiTypes";
 
-// const store = useStore();
+const store = useAccount();
 
-// onMounted(async () => {
-//   store.userAccount = await baseRequest(
-//     AWSEndpoints.GET_ACCOUNT + process.env.VUE_APP_AWS_BASE_URL,
-//     RequestMethods.GET
-//   );
-// });
+onMounted(async () => {
+  store.userAccount = await baseRequest(
+    AWSEndpoints.GET_ACCOUNT + process.env.VUE_APP_AWS_BASE_URL,
+    RequestMethods.GET
+  );
+});
 </script>
 
 <style lang="scss">
@@ -51,11 +51,12 @@ h1 {
 h2 {
   font-size: 16px;
   font-weight: 600;
+  line-height: 24px;
 }
 
 h3 {
   font-size: 11px;
-  font-weight: 300;
+  font-weight: 400;
 }
 
 p {

@@ -12,7 +12,7 @@ export const useSearch = defineStore("search", {
   actions: {
     async tmdbSearch(searchString: string) {
       const response = await baseRequest(
-        process.env.VUE_APP_TMDB_BASE_URL + TMDBEndpoints.GET_FILM,
+        process.env.VUE_APP_TMDB_BASE_URL + TMDBEndpoints.FILM_SEARCH,
         RequestMethods.GET,
         searchString
       );

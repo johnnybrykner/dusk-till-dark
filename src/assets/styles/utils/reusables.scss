@@ -19,10 +19,26 @@
   display: flex;
   flex-flow: row nowrap;
   column-gap: $col-gap;
+  align-items: center;
 }
 
-@mixin flex-column($col-gap: $spacing-big) {
+@mixin flex-column($row-gap: $spacing-big) {
   display: flex;
   flex-flow: column nowrap;
-  row-gap: $col-gap;
+  row-gap: $row-gap;
+}
+
+@mixin tile {
+  background: rgba(143, 148, 251, 0.15);
+  border-radius: $border-radius;
+  padding: $spacing-big $spacing-med;
+  color: $white;
+}
+
+@mixin dot {
+  display: block;
+  width: 2px;
+  height: 2px;
+  background-color: $white;
+  border-radius: 100%;
 }
