@@ -31,6 +31,7 @@
 @mixin tile {
   background: rgba(143, 148, 251, 0.15);
   border-radius: $border-radius;
+  width: calc(100% - (2 * $spacing-med));
   padding: $spacing-big $spacing-med;
   color: $white;
 }

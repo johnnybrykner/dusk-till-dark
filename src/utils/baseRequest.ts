@@ -1,11 +1,11 @@
 import { useStore } from "@/store";
-import { Film, RequestMethods } from "@/types/apiTypes";
+import { OurFilmInterface, RequestMethods } from "@/types/apiTypes";
 
 export default async function baseRequest(
   url: string,
   method: RequestMethods,
   queryString?: string,
-  body?: Film
+  body?: OurFilmInterface
 ) {
   const store = useStore();
   store.loading = true;
