@@ -1,6 +1,5 @@
 <template>
   <StatusNotification />
-  <PageHeader />
   <div class="wrapper">
     <router-view />
     <MainNavigation />
@@ -8,7 +7,6 @@
 </template>
 
 <script setup lang="ts">
-import PageHeader from "./components/PageHeader.vue";
 import MainNavigation from "./components/MainNavigation.vue";
 import StatusNotification from "./components/StatusNotification.vue";
 import { useAccount } from "@/store/account";
@@ -39,7 +37,7 @@ onMounted(async () => {
   font-weight: 400;
 
   .wrapper {
-    padding: $header-height $spacing-med;
+    padding: 60px $spacing-med $header-height $spacing-med;
   }
 }
 
@@ -62,5 +60,31 @@ h3 {
 p {
   font-size: 16px;
   font-weight: 400;
+}
+
+.g-page-header {
+  @include top-gradient;
+  @include flex-column;
+  justify-content: flex-end;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: $header-height;
+  width: calc(100% - #{$spacing-med * 4});
+  padding: 0 $spacing-med * 2;
+
+  &__wrapper {
+    @include flex-row;
+    justify-content: space-between;
+    align-items: flex-start;
+    position: sticky;
+    top: $spacing-med;
+  }
+}
+.g-page-title {
+  position: sticky;
+  top: $spacing-med;
+  margin-bottom: $spacing-small * 5;
+  padding: 0 $spacing-med;
 }
 </style>

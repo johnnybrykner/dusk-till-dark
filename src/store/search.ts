@@ -1,11 +1,15 @@
-import { RequestMethods, TMDBEndpoints, FilmResponse } from "@/types/apiTypes";
+import {
+  RequestMethods,
+  TMDBEndpoints,
+  FilmSearchResponse,
+} from "@/types/apiTypes";
 import baseRequest from "@/utils/baseRequest";
 import { defineStore } from "pinia";
 
 export const useSearch = defineStore("search", {
   state: () => {
     return {
-      tmdbResults: [] as FilmResponse[],
+      tmdbResults: [] as FilmSearchResponse[],
     };
   },
   getters: {},

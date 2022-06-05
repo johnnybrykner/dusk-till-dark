@@ -28,11 +28,11 @@
 </template>
 
 <script setup lang="ts">
-import { Film } from "@/types/apiTypes";
+import { OurFilmInterface } from "@/types/apiTypes";
 import { defineProps } from "vue";
 
 const props = defineProps<{
-  films: Film[];
+  films: OurFilmInterface[];
 }>();
 </script>
 

@@ -4,9 +4,9 @@ export enum RequestMethods {
   PATCH = "PATCH",
 }
 
-export interface Film {
+export interface OurFilmInterface {
   director: string;
-  film_genres?: Set<string>;
+  film_genres?: FilmGenre[];
   id: number;
   length: number;
   name: string;
@@ -15,12 +15,31 @@ export interface Film {
   year: number;
 }
 
+export interface AddToWatch {
+  director: string;
+  film_genres: FilmGenre[];
+  id: number;
+  length: number;
+  name: string;
+  providers: AvailableProviders;
+  year: number;
+}
+
+export interface AddToPreviouslyWatched {
+  director: string;
+  id: number;
+  length: number;
+  name: string;
+  our_rating: number;
+  year: number;
+}
+
 export interface FilmSearch {
   id: number;
   name: string;
 }
 
-export interface FilmResponse {
+export interface FilmSearchResponse {
   poster_path: string;
   overview: string;
   release_date: string;
@@ -34,13 +53,13 @@ export interface FilmResponse {
 }
 
 export interface UserAccount {
-  previously_watched: Film[];
+  previously_watched: OurFilmInterface[];
   recent_searches: FilmSearch[];
-  to_watch: Film[];
+  to_watch: OurFilmInterface[];
   username: string;
 }
 
-export interface FilmDetails {
+export interface FilmDetailsResponse {
   backdrop_path: string;
   genres: FilmGenre[];
   id: number;
@@ -53,6 +72,37 @@ export interface FilmDetails {
   runtime: number;
   title: string;
   vote_average: number;
+}
+
+export interface FilmCastResponse {
+  id: number;
+  cast: FilmActor[];
+  crew: FilmCrew[];
+}
+
+export interface FilmActor {
+  gender: number;
+  id: number;
+  known_for_departmen: string;
+  name: string;
+  original_name: string;
+  profile_path: string;
+  cast_id: number;
+  character: string;
+  credit_id: string;
+  order: number;
+}
+
+export interface FilmCrew {
+  gender: number;
+  id: number;
+  known_for_department: string;
+  name: string;
+  original_name: string;
+  profile_path: string;
+  credit_id: string;
+  department: string;
+  job: string;
 }
 
 export interface AvailableProviders {
@@ -73,9 +123,12 @@ export interface FilmLocation {
 
 export enum AWSEndpoints {
   GET_ACCOUNT = "https://f45m7vc6ytsljdo7tkexl45opi0krdrt.",
+  PATCH_TO_WATCH = "https://crhpfnm44rqsy457nesrawvcwi0pldit.",
+  PATCH_PREVIOUSLY_WATCHED = "https://7tdqyc4cginsdkl7rsluiawhse0cpuxy.",
 }
 
 export enum TMDBEndpoints {
   FILM_SEARCH = "search/movie",
   FILM_DETAILS = "movie/",
+  FILM_CREDITS = "/credits",
 }
