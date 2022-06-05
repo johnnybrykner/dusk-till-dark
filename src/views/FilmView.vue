@@ -17,9 +17,11 @@
       />
       <div class="details">
         <div class="details__wrapper">
-          <div class="director">
+          <div v-if="filmDirector" class="director">
             <h3>Director</h3>
-            <h2>Peter Jackson</h2>
+            <h2>
+              {{ filmDirector.original_name }}
+            </h2>
           </div>
           <div class="duration">
             <h3>Release</h3>
@@ -69,11 +71,13 @@ import {
   RequestMethods,
   TMDBEndpoints,
   FilmDetailsResponse,
+  FilmCastResponse,
 } from "../types/apiTypes";
 
 const store = useStore();
 const route = useRoute();
 const film = ref<null | FilmDetailsResponse>(null);
+const filmCast = ref<null | FilmCastResponse>(null);
 
 const imageUrl = computed(() => {
   if (film.value)
@@ -84,11 +88,26 @@ const imageUrl = computed(() => {
   return null;
 });
 
+const filmDirector = computed(() => {
+  if (filmCast.value)
+    return filmCast.value.crew.find(
+      (crewMember) => crewMember.job === "Director"
+    );
+  return null;
+});
+
 onMounted(async () => {
   film.value = await baseRequest(
     process.env.VUE_APP_TMDB_BASE_URL +
       TMDBEndpoints.FILM_DETAILS +
       route.params.id,
+    RequestMethods.GET
+  );
+  filmCast.value = await baseRequest(
+    process.env.VUE_APP_TMDB_BASE_URL +
+      TMDBEndpoints.FILM_DETAILS +
+      route.params.id +
+      TMDBEndpoints.FILM_CREDITS,
     RequestMethods.GET
   );
 });

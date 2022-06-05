@@ -15,95 +15,24 @@ export interface OurFilmInterface {
   year: number;
 }
 
-// export interface AddToWatch {
-//   "M": {
-//     "director": {
-//       "S": "Peter Jackson"
-//     },
-//     "film_genres": {
-//       "L": [
-//         {
-//           "M": {
-//             "id": {
-//               "N": "12"
-//             },
-//             "name": {
-//               "S": "Adventure"
-//             }
-//           }
-//         },
-//         {
-//           "M": {
-//             "id": {
-//               "N": "14"
-//             },
-//             "name": {
-//               "S": "Fantasy"
-//             }
-//           }
-//         },
-//         {
-//           "M": {
-//             "id": {
-//               "N": "28"
-//             },
-//             "name": {
-//               "S": "Action"
-//             }
-//           }
-//         }
-//       ]
-//     },
-//     "id": {
-//       "N": "121"
-//     },
-//     "length": {
-//       "N": "179"
-//     },
-//     "name": {
-//       "S": "The Lord of the Rings: The Two Towers"
-//     },
-//     "providers": {
-//       "M": {
-//         "disney": {
-//           "BOOL": true
-//         },
-//         "netflix": {
-//           "BOOL": false
-//         },
-//         "prime": {
-//           "BOOL": false
-//         }
-//       }
-//     },
-//     "year": {
-//       "N": "2002"
-//     }
-//   }
-// }
+export interface AddToWatch {
+  director: string;
+  film_genres: FilmGenre[];
+  id: number;
+  length: number;
+  name: string;
+  providers: AvailableProviders;
+  year: number;
+}
 
-// export interface AddPreviouslyWatched {
-//   "M": {
-//     "director": {
-//       "S": "Peter Jackson"
-//     },
-//     "id": {
-//       "N": "120"
-//     },
-//     "length": {
-//       "N": "179"
-//     },
-//     "name": {
-//       "S": "The Lord of the Rings: The Fellowship of the Ring"
-//     },
-//     "our_rating": {
-//       "N": "100"
-//     },
-//     "year": {
-//       "N": "2001"
-//     }
-//   }
-// }
+export interface AddToPreviouslyWatched {
+  director: string;
+  id: number;
+  length: number;
+  name: string;
+  our_rating: number;
+  year: number;
+}
 
 export interface FilmSearch {
   id: number;
