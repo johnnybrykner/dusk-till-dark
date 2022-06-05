@@ -27,6 +27,7 @@
       <p class="name">Dusk Till Dark</p>
       <div class="sources">
         <img src="../assets/images/tmdb_logo.svg" alt="TMDB logo" />
+        <img src="../assets/images/just_watch_logo.png" alt="JustWatch logo" />
       </div>
     </div>
   </footer>
@@ -60,7 +61,7 @@
   &__references {
     @include footer-gradient;
     @include grid-view;
-    grid-template-columns: 35px 1fr 35px;
+    grid-template-columns: 60px 1fr 60px;
     padding: $spacing-med;
 
     .name {
@@ -74,6 +75,9 @@
       grid-column-start: 3;
       grid-column-end: 4;
       justify-self: end;
+      width: 100%;
+      display: flex;
+      gap: $spacing-small;
 
       img {
         height: 16px;

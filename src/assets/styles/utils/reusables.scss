@@ -43,3 +43,11 @@
   background-color: $white;
   border-radius: 100%;
 }
+
+@mixin tile-white {
+  background: $white;
+  border-radius: $border-radius;
+  padding: $spacing-big $spacing-med;
+  width: calc(100% - (2 * $spacing-med));
+  color: $black;
+}

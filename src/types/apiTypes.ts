@@ -11,7 +11,6 @@ export interface OurFilmInterface {
   length: number;
   name: string;
   our_rating?: number;
-  providers?: AvailableProviders;
   year: number;
 }
 
@@ -21,7 +20,6 @@ export interface AddToWatch {
   id: number;
   length: number;
   name: string;
-  providers: AvailableProviders;
   year: number;
 }
 
@@ -74,7 +72,7 @@ export interface FilmDetailsResponse {
   vote_average: number;
 }
 
-export interface FilmCastResponse {
+export interface FilmCreditsResponse {
   id: number;
   cast: FilmActor[];
   crew: FilmCrew[];
@@ -83,7 +81,7 @@ export interface FilmCastResponse {
 export interface FilmActor {
   gender: number;
   id: number;
-  known_for_departmen: string;
+  known_for_department: string;
   name: string;
   original_name: string;
   profile_path: string;
@@ -105,10 +103,25 @@ export interface FilmCrew {
   job: string;
 }
 
-export interface AvailableProviders {
-  disney: boolean;
-  netflix: boolean;
-  prime: boolean;
+export interface WatchProvidersReponse {
+  id: number;
+  results: {
+    [key: string]: CountryWatchProviders;
+  };
+}
+
+export interface CountryWatchProviders {
+  link: string;
+  flatrate: WatchProvider[];
+  buy: WatchProvider[];
+  rent: WatchProvider[];
+}
+
+export interface WatchProvider {
+  display_priority: number;
+  logo_path: string;
+  provider_id: number;
+  provider_name: string;
 }
 
 export interface FilmGenre {
@@ -121,6 +134,12 @@ export interface FilmLocation {
   name: string;
 }
 
+export interface FormattedDate {
+  year: number;
+  month: number;
+  day: number;
+}
+
 export enum AWSEndpoints {
   GET_ACCOUNT = "https://f45m7vc6ytsljdo7tkexl45opi0krdrt.",
   PATCH_TO_WATCH = "https://crhpfnm44rqsy457nesrawvcwi0pldit.",
@@ -131,4 +150,5 @@ export enum TMDBEndpoints {
   FILM_SEARCH = "search/movie",
   FILM_DETAILS = "movie/",
   FILM_CREDITS = "/credits",
+  WATCH_PROVIDERS = "/watch/providers",
 }

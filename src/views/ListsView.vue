@@ -6,16 +6,21 @@
         <h1 v-if="listToggled" class="g-page-title">Watched list</h1>
         <h1 v-else class="g-page-title">To watch list</h1>
       </Transition>
-      <div @click="toggleList" class="swap">
-        <img src="../assets/images/swap_icon.svg" alt="" />
+      <div
+        @click="toggleList"
+        class="swap"
+        :class="{ 'swap--flipped': listToggled }"
+      >
+        <img src="../assets/images/swap_icon.svg" alt="Swap icon" />
       </div>
     </div>
     <Transition name="fade" mode="out-in">
+      <div v-if="store.loading">Loading...</div>
       <WatchedList
-        v-if="listToggled"
-        :films="store.userAccount.previously_watched"
+        v-else-if="listToggled"
+        :films="accountStore.userAccount.previously_watched"
       />
-      <ToWatchList v-else :films="store.userAccount.to_watch" />
+      <ToWatchList v-else :films="accountStore.userAccount.to_watch" />
     </Transition>
   </div>
 </template>
@@ -24,8 +29,10 @@
 import ToWatchList from "@/components/ToWatchList.vue";
 import WatchedList from "@/components/WatchedList.vue";
 import { useAccount } from "@/store/account";
+import { useStore } from "@/store";
 import { ref } from "vue";
-const store = useAccount();
+const accountStore = useAccount();
+const store = useStore();
 
 const listToggled = ref(false);
 
@@ -39,6 +46,11 @@ function toggleList() {
   &__wrapper {
     .swap {
       padding: 0 $spacing-med;
+      transition: transform 0.2s ease;
+
+      &--flipped {
+        transform: rotate(180deg);
+      }
     }
   }
 }
