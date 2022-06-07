@@ -49,7 +49,7 @@ function toggleList() {
       transition: transform 0.2s ease;
 
       &--flipped {
-        transform: rotate(180deg);
+        transform: rotateY(180deg);
       }
     }
   }

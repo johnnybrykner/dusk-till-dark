@@ -112,9 +112,9 @@ export interface WatchProvidersReponse {
 
 export interface CountryWatchProviders {
   link: string;
-  flatrate: WatchProvider[];
-  buy: WatchProvider[];
-  rent: WatchProvider[];
+  flatrate?: WatchProvider[];
+  buy?: WatchProvider[];
+  rent?: WatchProvider[];
 }
 
 export interface WatchProvider {
@@ -138,6 +138,12 @@ export interface FormattedDate {
   year: number;
   month: number;
   day: number;
+}
+
+export enum OurWatchProviders {
+  NETFLIX = 8,
+  DISNEY = 337,
+  PRIME = 119,
 }
 
 export enum AWSEndpoints {

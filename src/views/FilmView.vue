@@ -1,14 +1,14 @@
 <template>
-  <div v-if="store.loading || !film">Loading...</div>
+  <div v-if="!film || !filmCredits">Loading...</div>
   <div class="film" v-else>
     <PageOverlay>
       <div class="overlay-container">
         <div class="overlay-option" @click="addToWatch">
-          <img src="../assets/images/list_icon.svg" alt="" />
+          <img src="../assets/images/list_icon.svg" alt="list-icon" />
           <h2>To watch list</h2>
         </div>
         <div class="overlay-option" @click="addToPreviouslyWatched">
-          <img src="../assets/images/list_icon.svg" alt="" />
+          <img src="../assets/images/list_icon.svg" alt="list-icon" />
           <h2>Previously watched list</h2>
         </div>
       </div>
@@ -21,12 +21,13 @@
       >
         {{ film.title }}
       </h1>
-      <div
-        class="add"
-        @click="store.showOverlay = true"
-        v-if="!store.showOverlay"
-      >
-        <img src="../assets/images/add_icon.svg" alt="" />
+      <div class="actions-container" v-if="!store.showOverlay">
+        <div class="watch" @click="checkProviderAvailability">
+          <img src="../assets/images/play_icon.svg" alt="play-icon" />
+        </div>
+        <div class="add" @click="store.showOverlay = true">
+          <img src="../assets/images/add_icon.svg" alt="" />
+        </div>
       </div>
     </div>
     <div class="film__wrapper">
@@ -92,13 +93,45 @@
           </h2>
         </div>
       </div>
+      <div class="providers" v-if="availableProviders" ref="watchProviders">
+        <h3>Streaming availability</h3>
+        <div class="providers__wrapper">
+          <img
+            v-if="isAvailableOnNetflix"
+            src="../assets/images/netflix.png"
+            class="provider-img"
+            alt="netflix"
+          />
+          <img
+            v-if="isAvailableOnDisney"
+            src="../assets/images/disney.png"
+            class="provider-img"
+            alt="disney"
+          />
+          <img
+            v-if="isAvailableOnPrime"
+            src="../assets/images/prime.png"
+            class="provider-img"
+            alt="prime"
+          />
+          <h2
+            v-if="
+              !isAvailableOnNetflix &&
+              !isAvailableOnDisney &&
+              !isAvailableOnPrime
+            "
+          >
+            No streaming availability
+          </h2>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import baseRequest from "@/utils/baseRequest";
-import { computed, onMounted, ref } from "vue";
+import { computed, onMounted, ref, nextTick } from "vue";
 import { useRoute } from "vue-router";
 import { useStore } from "@/store";
 import {
@@ -108,14 +141,19 @@ import {
   FilmCreditsResponse,
   AddToWatch,
   AddToPreviouslyWatched,
+  WatchProvidersReponse,
+  OurWatchProviders,
 } from "../types/apiTypes";
 import PageOverlay from "../components/PageOverlay.vue";
 import { formatDate, formatLength } from "@/utils/dataFormatters";
 
 const store = useStore();
 const route = useRoute();
+
+const watchProviders = ref<null | HTMLElement>(null);
 const film = ref<null | FilmDetailsResponse>(null);
 const filmCredits = ref<null | FilmCreditsResponse>(null);
+const availableProviders = ref<null | WatchProvidersReponse>(null);
 
 const imageUrl = computed(() => {
   if (film.value)
@@ -142,10 +180,54 @@ const filmCast = computed(() => {
   return null;
 });
 
+const isAvailableOnNetflix = computed(() => {
+  return (
+    availableProviders.value &&
+    availableProviders.value.results.NL.flatrate &&
+    availableProviders.value.results.NL.flatrate.find(
+      (provider) => provider.provider_id === OurWatchProviders.NETFLIX
+    )
+  );
+});
+
+const isAvailableOnDisney = computed(() => {
+  return (
+    availableProviders.value &&
+    availableProviders.value.results.NL.flatrate &&
+    availableProviders.value.results.NL.flatrate.find(
+      (provider) => provider.provider_id === OurWatchProviders.DISNEY
+    )
+  );
+});
+
+const isAvailableOnPrime = computed(() => {
+  return (
+    availableProviders.value &&
+    availableProviders.value.results.NL.flatrate &&
+    availableProviders.value.results.NL.flatrate.find(
+      (provider) => provider.provider_id === OurWatchProviders.PRIME
+    )
+  );
+});
+
 const formattedReleaseDate = computed(() => {
   if (film.value) return formatDate(film.value.release_date);
   return null;
 });
+
+async function checkProviderAvailability() {
+  if (availableProviders.value) return;
+  availableProviders.value = await baseRequest(
+    process.env.VUE_APP_TMDB_BASE_URL +
+      TMDBEndpoints.FILM_DETAILS +
+      route.params.id +
+      TMDBEndpoints.WATCH_PROVIDERS,
+    RequestMethods.GET
+  );
+  await nextTick();
+  if (watchProviders.value)
+    watchProviders.value.scrollIntoView({ behavior: "smooth", block: "start" });
+}
 
 async function addToWatch() {
   if (!film.value) return;
@@ -153,12 +235,11 @@ async function addToWatch() {
     director: filmDirector.value
       ? filmDirector.value.original_name
       : "unspecified",
-    film_genres: film.value?.genres,
+    film_genres: film.value.genres,
     id: film.value.id,
     length: film.value.runtime,
     name: film.value.title,
-    //TODO: add year formatting
-    year: 2000,
+    year: formattedReleaseDate.value ? formattedReleaseDate.value.year : 0,
   };
 }
 
@@ -173,8 +254,7 @@ async function addToPreviouslyWatched() {
     name: film.value.title,
     //TODO: change to our rating
     our_rating: film.value.vote_average,
-    //TODO: add year formatting
-    year: 2000,
+    year: formattedReleaseDate.value ? formattedReleaseDate.value.year : 0,
   };
 }
 
@@ -204,11 +284,16 @@ onMounted(async () => {
   }
 }
 
+.actions-container {
+  @include flex-row;
+  justify-content: flex-end;
+}
+
 .film {
   .g-page-header {
     &__wrapper {
       .add {
-        padding: 0 $spacing-med;
+        padding: 0 $spacing-med 0 0;
 
         img {
           width: 24px;
@@ -259,10 +344,23 @@ onMounted(async () => {
       }
     }
 
+    .providers {
+      &__wrapper {
+        width: 100%;
+        @include flex-row;
+        justify-content: space-between;
+
+        .provider-img {
+          max-width: calc(100% / 3 - #{$spacing-big});
+        }
+      }
+    }
+
     .details,
     .cast,
     .overview,
-    .production {
+    .production,
+    .providers {
       @include tile;
     }
   }
