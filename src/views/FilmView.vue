@@ -5,11 +5,17 @@
   <div class="film" v-else>
     <PageOverlay>
       <div class="overlay-container">
-        <div class="overlay-option" @click="addToWatch">
+        <div
+          class="overlay-option"
+          @click="account.addToWatch(film as FilmDetailsResponse, filmDirector as FilmCrew, formattedReleaseDate ? formattedReleaseDate.year : 0)"
+        >
           <img src="../assets/images/list_icon.svg" alt="list-icon" />
           <h2>To watch list</h2>
         </div>
-        <div class="overlay-option" @click="addToPreviouslyWatched">
+        <div
+          class="overlay-option"
+          @click="account.addToPreviouslyWatched(film as FilmDetailsResponse, filmDirector as FilmCrew, formattedReleaseDate ? formattedReleaseDate.year : 0)"
+        >
           <img src="../assets/images/list_icon.svg" alt="list-icon" />
           <h2>Previously watched list</h2>
         </div>
@@ -140,20 +146,21 @@ import baseRequest from "@/utils/baseRequest";
 import { computed, onMounted, ref, nextTick } from "vue";
 import { useRoute } from "vue-router";
 import { useStore } from "@/store";
+import { useAccount } from "@/store/account";
 import {
   RequestMethods,
   TMDBEndpoints,
   FilmDetailsResponse,
   FilmCreditsResponse,
-  AddToWatch,
-  AddToPreviouslyWatched,
   WatchProvidersReponse,
   OurWatchProviders,
+  FilmCrew,
 } from "../types/apiTypes";
 import PageOverlay from "../components/PageOverlay.vue";
 import { formatDate, formatLength } from "@/utils/dataFormatters";
 
 const store = useStore();
+const account = useAccount();
 const route = useRoute();
 
 const watchProvidersElement = ref<null | HTMLElement>(null);
@@ -242,35 +249,6 @@ async function checkProviderAvailability() {
     });
 }
 
-async function addToWatch() {
-  if (!film.value) return;
-  const filmToAdd: AddToWatch = {
-    director: filmDirector.value
-      ? filmDirector.value.original_name
-      : "unspecified",
-    film_genres: film.value.genres,
-    id: film.value.id,
-    length: film.value.runtime,
-    name: film.value.title,
-    year: formattedReleaseDate.value ? formattedReleaseDate.value.year : 0,
-  };
-}
-
-async function addToPreviouslyWatched() {
-  if (!film.value) return;
-  const filmToAdd: AddToPreviouslyWatched = {
-    director: filmDirector.value
-      ? filmDirector.value.original_name
-      : "unspecified",
-    id: film.value.id,
-    length: film.value.runtime,
-    name: film.value.title,
-    //TODO: change to our rating
-    our_rating: film.value.vote_average,
-    year: formattedReleaseDate.value ? formattedReleaseDate.value.year : 0,
-  };
-}
-
 onMounted(async () => {
   film.value = await baseRequest(
     process.env.VUE_APP_TMDB_BASE_URL +
@@ -300,6 +278,7 @@ onMounted(async () => {
 .actions-container {
   @include flex-row;
   justify-content: flex-end;
+  cursor: pointer;
 }
 
 .film {
