@@ -1,5 +1,7 @@
 <template>
-  <div v-if="!film || !filmCredits">Loading...</div>
+  <div v-if="!film || !filmCredits" class="g-loading">
+    <img src="../assets/images/loading.svg" alt="Loading animation" />
+  </div>
   <div class="film" v-else>
     <PageOverlay>
       <div class="overlay-container">
@@ -93,7 +95,11 @@
           </h2>
         </div>
       </div>
-      <div class="providers" v-if="availableProviders" ref="watchProviders">
+      <div
+        class="providers"
+        v-if="availableProviders"
+        ref="watchProvidersElement"
+      >
         <h3>Streaming availability</h3>
         <div class="providers__wrapper">
           <img
@@ -150,7 +156,7 @@ import { formatDate, formatLength } from "@/utils/dataFormatters";
 const store = useStore();
 const route = useRoute();
 
-const watchProviders = ref<null | HTMLElement>(null);
+const watchProvidersElement = ref<null | HTMLElement>(null);
 const film = ref<null | FilmDetailsResponse>(null);
 const filmCredits = ref<null | FilmCreditsResponse>(null);
 const availableProviders = ref<null | WatchProvidersReponse>(null);
@@ -183,6 +189,7 @@ const filmCast = computed(() => {
 const isAvailableOnNetflix = computed(() => {
   return (
     availableProviders.value &&
+    availableProviders.value.results.NL &&
     availableProviders.value.results.NL.flatrate &&
     availableProviders.value.results.NL.flatrate.find(
       (provider) => provider.provider_id === OurWatchProviders.NETFLIX
@@ -193,6 +200,7 @@ const isAvailableOnNetflix = computed(() => {
 const isAvailableOnDisney = computed(() => {
   return (
     availableProviders.value &&
+    availableProviders.value.results.NL &&
     availableProviders.value.results.NL.flatrate &&
     availableProviders.value.results.NL.flatrate.find(
       (provider) => provider.provider_id === OurWatchProviders.DISNEY
@@ -203,6 +211,7 @@ const isAvailableOnDisney = computed(() => {
 const isAvailableOnPrime = computed(() => {
   return (
     availableProviders.value &&
+    availableProviders.value.results.NL &&
     availableProviders.value.results.NL.flatrate &&
     availableProviders.value.results.NL.flatrate.find(
       (provider) => provider.provider_id === OurWatchProviders.PRIME
@@ -225,8 +234,12 @@ async function checkProviderAvailability() {
     RequestMethods.GET
   );
   await nextTick();
-  if (watchProviders.value)
-    watchProviders.value.scrollIntoView({ behavior: "smooth", block: "start" });
+  await nextTick();
+  if (watchProvidersElement.value)
+    watchProvidersElement.value.scrollIntoView({
+      behavior: "smooth",
+      block: "start",
+    });
 }
 
 async function addToWatch() {

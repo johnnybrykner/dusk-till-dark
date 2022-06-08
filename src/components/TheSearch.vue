@@ -21,13 +21,18 @@
         </router-link>
       </li>
     </ul>
+    <div class="g-loading" v-else-if="store.loading">
+      <img src="../assets/images/loading.svg" alt="Loading animation" />
+    </div>
   </section>
 </template>
 
 <script setup lang="ts">
 import { useSearch } from "@/store/search";
+import { useStore } from "@/store";
 import { ref } from "vue";
 const search = useSearch();
+const store = useStore();
 
 const debounceTimer = ref<number>(0);
 

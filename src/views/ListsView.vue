@@ -15,7 +15,9 @@
       </div>
     </div>
     <Transition name="fade" mode="out-in">
-      <div v-if="store.loading">Loading...</div>
+      <div v-if="store.loading" class="g-loading">
+        <img src="../assets/images/loading.svg" alt="Loading animation" />
+      </div>
       <WatchedList
         v-else-if="listToggled"
         :films="accountStore.userAccount.previously_watched"
@@ -49,7 +51,7 @@ function toggleList() {
       transition: transform 0.2s ease;
 
       &--flipped {
-        transform: rotateY(180deg);
+        transform: rotateX(180deg);
       }
     }
   }

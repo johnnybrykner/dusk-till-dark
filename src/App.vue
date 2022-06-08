@@ -87,4 +87,9 @@ p {
   margin-bottom: $spacing-small * 5;
   padding: 0 $spacing-med;
 }
+
+.g-loading {
+  @include flex-row;
+  justify-content: center;
+}
 </style>
