@@ -11,14 +11,14 @@ import MainNavigation from "./components/MainNavigation.vue";
 import StatusNotification from "./components/StatusNotification.vue";
 import { useAccount } from "@/store/account";
 import { onMounted } from "vue";
-import baseRequest from "@/utils/baseRequest";
+import { baseAwsRequest } from "@/utils/baseRequest";
 import { AWSEndpoints, RequestMethods } from "@/types/apiTypes";
 
 const store = useAccount();
 
 onMounted(async () => {
-  store.userAccount = await baseRequest(
-    AWSEndpoints.GET_ACCOUNT + process.env.VUE_APP_AWS_BASE_URL,
+  store.userAccount = await baseAwsRequest(
+    AWSEndpoints.GET_ACCOUNT,
     RequestMethods.GET
   );
 });

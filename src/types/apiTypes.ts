@@ -1,6 +1,5 @@
 export enum RequestMethods {
   GET = "GET",
-  POST = "POST",
   PATCH = "PATCH",
 }
 
@@ -51,9 +50,9 @@ export interface FilmSearchResponse {
 }
 
 export interface UserAccount {
-  previously_watched: OurFilmInterface[];
+  previously_watched: AddToPreviouslyWatched[];
   recent_searches: FilmSearch[];
-  to_watch: OurFilmInterface[];
+  to_watch: AddToWatch[];
   username: string;
 }
 
@@ -148,8 +147,10 @@ export enum OurWatchProviders {
 
 export enum AWSEndpoints {
   GET_ACCOUNT = "https://f45m7vc6ytsljdo7tkexl45opi0krdrt.",
-  PATCH_TO_WATCH = "https://crhpfnm44rqsy457nesrawvcwi0pldit.",
-  PATCH_PREVIOUSLY_WATCHED = "https://7tdqyc4cginsdkl7rsluiawhse0cpuxy.",
+  ADD_TO_WATCH = "https://crhpfnm44rqsy457nesrawvcwi0pldit.",
+  ADD_PREVIOUSLY_WATCHED = "https://7tdqyc4cginsdkl7rsluiawhse0cpuxy.",
+  REMOVE_TO_WATCH = "https://sm27no2ghycyomfcloqvg2lgjy0qjckv.",
+  REMOVE_PREVIOUSLY_WATCHED = "https://k542njzonwvxbhfxmx6wjy4sgy0xoxat.",
 }
 
 export enum TMDBEndpoints {

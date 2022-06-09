@@ -2,7 +2,7 @@
   <transition name="fade-in">
     <div class="overlay" v-if="store.showOverlay">
       <header class="overlay__header">
-        <h1>Add to list</h1>
+        <h1>List management</h1>
         <img
           src="../assets/images/close_icon.svg"
           alt="Close icon"

@@ -1,11 +1,14 @@
 import { useStore } from "@/store";
-import { OurFilmInterface, RequestMethods } from "@/types/apiTypes";
+import {
+  AWSEndpoints,
+  OurFilmInterface,
+  RequestMethods,
+} from "@/types/apiTypes";
 
-export default async function baseRequest(
+export async function baseTmdbRequest(
   url: string,
   method: RequestMethods,
-  queryString?: string,
-  body?: OurFilmInterface
+  queryString?: string
 ) {
   const store = useStore();
   store.loading = true;
@@ -15,6 +18,28 @@ export default async function baseRequest(
       : "";
     const rawResponse = await fetch(
       url + "?api_key=" + process.env.VUE_APP_TMDB_KEY + query,
+      {
+        method,
+      }
+    );
+    return await rawResponse.json();
+  } catch (error) {
+    store.handleError(error as string);
+  } finally {
+    store.loading = false;
+  }
+}
+
+export async function baseAwsRequest(
+  urlPrefix: AWSEndpoints,
+  method: RequestMethods,
+  body?: OurFilmInterface
+) {
+  const store = useStore();
+  store.loading = true;
+  try {
+    const rawResponse = await fetch(
+      urlPrefix + process.env.VUE_APP_AWS_BASE_URL,
       {
         method,
         body: JSON.stringify(body),

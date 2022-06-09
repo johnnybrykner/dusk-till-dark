@@ -5,7 +5,7 @@ export function formatDate(dateString: string): FormattedDate {
   const dateFragment = dateString.split("-");
   return datePieces.reduce(
     (accumulator, datePiece, index) => {
-      return { ...accumulator, [datePiece]: dateFragment[index] };
+      return { ...accumulator, [datePiece]: Number(dateFragment[index]) };
     },
     { year: 0, month: 0, day: 0 }
   );

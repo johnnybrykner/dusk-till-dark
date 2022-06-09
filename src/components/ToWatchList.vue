@@ -1,13 +1,15 @@
 <template>
   <ul class="list-wrapper">
-    <li v-for="film in props.films" :key="film.id" class="result">
-      <div class="result__wrapper">
-        <h2 class="title">{{ film.name }}</h2>
-      </div>
-      <h3 class="result__details">
-        {{ formatLength(film.length) }} <span class="dot" />
-        {{ film.director }} <span class="dot" /> {{ film.year }}
-      </h3>
+    <li v-for="film in props.films" :key="film.id">
+      <router-link :to="'/film/' + film.id" class="result">
+        <div class="result__wrapper">
+          <h2 class="title">{{ film.name }}</h2>
+        </div>
+        <h3 class="result__details">
+          {{ formatLength(film.length) }} <span class="dot" />
+          {{ film.director }} <span class="dot" /> {{ film.year }}
+        </h3>
+      </router-link>
     </li>
   </ul>
 </template>
@@ -29,6 +31,7 @@ const props = defineProps<{
   .result {
     @include tile;
     @include flex-column;
+    text-decoration: none;
 
     &__wrapper {
       @include flex-row;

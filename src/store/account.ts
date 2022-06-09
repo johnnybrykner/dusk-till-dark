@@ -7,7 +7,7 @@ import {
   RequestMethods,
   UserAccount,
 } from "@/types/apiTypes";
-import baseRequest from "@/utils/baseRequest";
+import { baseAwsRequest } from "@/utils/baseRequest";
 import { defineStore } from "pinia";
 
 export const useAccount = defineStore("account", {
@@ -18,7 +18,8 @@ export const useAccount = defineStore("account", {
   },
   getters: {},
   actions: {
-    async addToWatch(
+    async updateToWatch(
+      listAction: AWSEndpoints,
       filmDetails: FilmDetailsResponse,
       filmDirector: FilmCrew,
       filmReleaseYear: number
@@ -31,12 +32,14 @@ export const useAccount = defineStore("account", {
         name: filmDetails.title,
         year: filmReleaseYear,
       };
-      // await baseRequest(
-      //   AWSEndpoints.PATCH_TO_WATCH + process.env.VUE_APP_AWS_BASE_URL,
-      //   RequestMethods.PATCH
-      // );
+      this.userAccount = await baseAwsRequest(
+        listAction,
+        RequestMethods.PATCH,
+        filmToAdd
+      );
     },
-    async addToPreviouslyWatched(
+    async updatePreviouslyWatched(
+      listAction: AWSEndpoints,
       filmDetails: FilmDetailsResponse,
       filmDirector: FilmCrew,
       filmReleaseYear: number
@@ -50,11 +53,11 @@ export const useAccount = defineStore("account", {
         our_rating: filmDetails.vote_average,
         year: filmReleaseYear,
       };
-      // await baseRequest(
-      //   AWSEndpoints.PATCH_PREVIOUSLY_WATCHED +
-      //     process.env.VUE_APP_AWS_BASE_URL,
-      //   RequestMethods.PATCH
-      // );
+      this.userAccount = await baseAwsRequest(
+        listAction,
+        RequestMethods.PATCH,
+        filmToAdd
+      );
     },
   },
 });

@@ -5,20 +5,48 @@
   <div class="film" v-else>
     <PageOverlay>
       <div class="overlay-container">
-        <div
-          class="overlay-option"
-          @click="account.addToWatch(film as FilmDetailsResponse, filmDirector as FilmCrew, formattedReleaseDate ? formattedReleaseDate.year : 0)"
-        >
-          <img src="../assets/images/list_icon.svg" alt="list-icon" />
-          <h2>To watch list</h2>
+        <div class="overlay-option">
+          <div
+            class="overlay-option--selected"
+            v-if="alreadyInToWatch"
+            @click="removeFromWatchList"
+          >
+            <img src="../assets/images/remove_icon.svg" alt="list-icon" />
+            <h2>Remove from to watch</h2>
+          </div>
+          <div class="g-loading" v-else-if="store.loading">
+            <img src="../assets/images/loading.svg" alt="Loading animation" />
+          </div>
+          <div
+            class="overlay-option--unselected"
+            @click="addToWatchList"
+            v-else
+          >
+            <img src="../assets/images/list_icon.svg" alt="list-icon" />
+            <h2>Add to watch</h2>
+          </div>
         </div>
-        <div
-          class="overlay-option"
-          @click="account.addToPreviouslyWatched(film as FilmDetailsResponse, filmDirector as FilmCrew, formattedReleaseDate ? formattedReleaseDate.year : 0)"
-        >
-          <img src="../assets/images/list_icon.svg" alt="list-icon" />
-          <h2>Previously watched list</h2>
-        </div>
+        <!-- <div class="overlay-option">
+          <div
+            class="overlay-option--selected"
+            v-if="alreadyInWatchedList"
+            @click="account.updatePreviouslyWatched(AWSEndpoints.REMOVE_PREVIOUSLY_WATCHED, film!, filmDirector!, formattedReleaseDate ? formattedReleaseDate.year : 0)"
+          >
+            <img src="../assets/images/remove_icon.svg" alt="list-icon" />
+            <h2>Remove from previously watched</h2>
+          </div>
+          <div class="g-loading" v-else-if="store.loading">
+            <img src="../assets/images/loading.svg" alt="Loading animation" />
+          </div>
+          <div
+            class="overlay-option--unselected"
+            @click="account.updatePreviouslyWatched(AWSEndpoints.ADD_PREVIOUSLY_WATCHED, film!, filmDirector!, formattedReleaseDate ? formattedReleaseDate.year : 0)"
+            v-else
+          >
+            <img src="../assets/images/list_icon.svg" alt="list-icon" />
+            <h2>Add to previously watched</h2>
+          </div>
+        </div> -->
       </div>
     </PageOverlay>
     <header class="g-page-header"></header>
@@ -142,7 +170,7 @@
 </template>
 
 <script setup lang="ts">
-import baseRequest from "@/utils/baseRequest";
+import { baseTmdbRequest } from "@/utils/baseRequest";
 import { computed, onMounted, ref, nextTick } from "vue";
 import { useRoute } from "vue-router";
 import { useStore } from "@/store";
@@ -150,6 +178,7 @@ import { useAccount } from "@/store/account";
 import {
   RequestMethods,
   TMDBEndpoints,
+  AWSEndpoints,
   FilmDetailsResponse,
   FilmCreditsResponse,
   WatchProvidersReponse,
@@ -167,6 +196,20 @@ const watchProvidersElement = ref<null | HTMLElement>(null);
 const film = ref<null | FilmDetailsResponse>(null);
 const filmCredits = ref<null | FilmCreditsResponse>(null);
 const availableProviders = ref<null | WatchProvidersReponse>(null);
+
+const alreadyInToWatch = computed(() => {
+  if (!account.userAccount?.to_watch) return null;
+  return !!account.userAccount.to_watch.find(
+    (listItem) => listItem.id === film.value?.id
+  );
+});
+
+// const alreadyInWatchedList = computed(() => {
+//   if (!account.userAccount?.previously_watched) return null;
+//   return !!account.userAccount.previously_watched.find(
+//     (listItem) => listItem.id === film.value?.id
+//   );
+// });
 
 const imageUrl = computed(() => {
   if (film.value)
@@ -233,7 +276,7 @@ const formattedReleaseDate = computed(() => {
 
 async function checkProviderAvailability() {
   if (availableProviders.value) return;
-  availableProviders.value = await baseRequest(
+  availableProviders.value = await baseTmdbRequest(
     process.env.VUE_APP_TMDB_BASE_URL +
       TMDBEndpoints.FILM_DETAILS +
       route.params.id +
@@ -249,14 +292,32 @@ async function checkProviderAvailability() {
     });
 }
 
+function addToWatchList() {
+  account.updateToWatch(
+    AWSEndpoints.ADD_TO_WATCH,
+    film.value as FilmDetailsResponse,
+    filmDirector.value as FilmCrew,
+    formattedReleaseDate.value ? formattedReleaseDate.value.year : 0
+  );
+}
+
+function removeFromWatchList() {
+  account.updateToWatch(
+    AWSEndpoints.REMOVE_TO_WATCH,
+    film.value as FilmDetailsResponse,
+    filmDirector.value as FilmCrew,
+    formattedReleaseDate.value ? formattedReleaseDate.value.year : 0
+  );
+}
+
 onMounted(async () => {
-  film.value = await baseRequest(
+  film.value = await baseTmdbRequest(
     process.env.VUE_APP_TMDB_BASE_URL +
       TMDBEndpoints.FILM_DETAILS +
       route.params.id,
     RequestMethods.GET
   );
-  filmCredits.value = await baseRequest(
+  filmCredits.value = await baseTmdbRequest(
     process.env.VUE_APP_TMDB_BASE_URL +
       TMDBEndpoints.FILM_DETAILS +
       route.params.id +
@@ -271,7 +332,11 @@ onMounted(async () => {
   @include flex-column;
   .overlay-option {
     @include tile-white;
-    @include flex-row($col-gap: $spacing-small);
+
+    &--selected,
+    &--unselected {
+      @include flex-row($col-gap: $spacing-small);
+    }
   }
 }
 
