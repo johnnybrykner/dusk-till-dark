@@ -1,6 +1,8 @@
 <template>
   <div class="lists">
-    <header class="g-page-header"></header>
+    <header class="g-page-header">
+      <div class="g-page-header__gradient"></div>
+    </header>
     <div class="g-page-header__wrapper">
       <Transition name="slide-up" mode="out-in">
         <h1 v-if="listToggled" class="g-page-title">Watched list</h1>
@@ -14,16 +16,18 @@
         <img src="../assets/images/swap_icon.svg" alt="Swap icon" />
       </div>
     </div>
-    <Transition name="fade" mode="out-in">
-      <div v-if="store.loading" class="g-loading">
-        <img src="../assets/images/loading.svg" alt="Loading animation" />
-      </div>
-      <WatchedList
-        v-else-if="listToggled"
-        :films="accountStore.userAccount.previously_watched"
-      />
-      <ToWatchList v-else :films="accountStore.userAccount.to_watch" />
-    </Transition>
+    <div class="lists-wrapper">
+      <Transition name="fade" mode="out-in">
+        <div v-if="store.loading" class="g-loading">
+          <img src="../assets/images/loading.svg" alt="Loading animation" />
+        </div>
+        <WatchedList
+          v-else-if="listToggled"
+          :films="accountStore.userAccount.previously_watched"
+        />
+        <ToWatchList v-else :films="accountStore.userAccount.to_watch" />
+      </Transition>
+    </div>
   </div>
 </template>
 
@@ -55,6 +59,10 @@ function toggleList() {
       }
     }
   }
+}
+
+.lists-wrapper {
+  @include content;
 }
 
 .slide-up-enter-active,

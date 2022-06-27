@@ -29,16 +29,15 @@ const store = useStore();
   left: 0;
   background: linear-gradient(
     180deg,
-    rgba(78, 84, 200, 0.9) 0%,
-    rgba(143, 148, 251, 0.9) 100%
+    rgba(143, 148, 251, 0.9) 0%,
+    rgba(78, 84, 200, 0.9) 100%
   );
-  z-index: 2;
+  z-index: 4;
   padding: $spacing-med * 2 $spacing-med;
 
   &__header {
     @include flex-row;
     justify-content: space-between;
-    height: $header-height;
     padding: 0 $spacing-med;
   }
 }

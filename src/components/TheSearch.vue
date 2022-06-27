@@ -54,6 +54,7 @@ function debouncedSearch(input: HTMLInputElement) {
     border: none;
     outline: none;
     padding: $spacing-med;
+    margin: $spacing-med 0;
     font-size: 16px;
     font-weight: 500;
     color: $purple-dark;

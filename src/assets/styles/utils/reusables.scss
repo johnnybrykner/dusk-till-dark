@@ -1,5 +1,6 @@
 @mixin top-gradient {
-  background: linear-gradient(180deg, rgba(104, 110, 220, 1) 0%, rgba(104, 110, 220, 0.4) 49.18%, rgba(121, 127, 234, 0.2) 70.66%, rgba(143, 148, 251, 0) 100%);
+  background-image: linear-gradient(to bottom, #8f94fb, #6d6eb7, #4c4b78, #2c2a3f, rgba(10, 10, 10, 0));
+  // background-image: linear-gradient(to right bottom, #4e54c8, #5b60d2, #676cdb, #7378e5, #7f84ee, #797ddb, #7375c9, #6d6eb7, #545387, #3c3a5b, #242332, rgba(10, 10, 10, 0));
 }
 
 @mixin footer-gradient {
@@ -7,7 +8,17 @@
 }
 
 @mixin tile-bg {
-  background: rgba(143, 148, 251, 0.15);
+  background: rgba(30,31,46,0.30);
+}
+
+@mixin content {
+  position: relative;
+  z-index: 1;
+  background: rgba(30,31,46,0.30);
+  width: calc(100vw - (2 * $spacing-med));
+  min-height: calc(100vh - $body-padding-top - $page-title-height - $body-padding-bottom - (2 * $spacing-med));
+  margin-left: -$spacing-med;
+  padding: $spacing-med;
 }
 
 @mixin grid-view($gap: $spacing-big) {
@@ -22,15 +33,13 @@
   align-items: center;
 }
 
-@mixin flex-column($row-gap: $spacing-big) {
+@mixin flex-column($row-gap: $spacing-med) {
   display: flex;
   flex-flow: column nowrap;
   row-gap: $row-gap;
 }
 
 @mixin tile {
-  background: rgba(143, 148, 251, 0.15);
-  border-radius: $border-radius;
   width: calc(100% - (2 * $spacing-med));
   padding: $spacing-big $spacing-med;
   color: $white;

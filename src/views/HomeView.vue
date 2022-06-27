@@ -1,12 +1,16 @@
 <template>
   <div class="home">
-    <header class="g-page-header"></header>
+    <header class="g-page-header">
+      <div class="g-page-header__gradient"></div>
+    </header>
     <h1 v-if="route.name === 'home'" class="g-page-title">
       {{ store.headerGreeting }}
     </h1>
-    <KeepAlive>
-      <TheSearch />
-    </KeepAlive>
+    <div class="home-wrapper">
+      <KeepAlive>
+        <TheSearch />
+      </KeepAlive>
+    </div>
   </div>
 </template>
 
@@ -19,4 +23,8 @@ const store = useStore();
 const route = useRoute();
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.home-wrapper {
+  @include content;
+}
+</style>

@@ -36,8 +36,10 @@
 <style scoped lang="scss">
 .page-footer {
   position: fixed;
+  z-index: 2;
   bottom: 0;
   width: calc(100% - calc($spacing-med * 2));
+  max-height: $body-padding-bottom;
 
   &__navbar {
     @include flex-row;

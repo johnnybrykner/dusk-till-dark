@@ -49,7 +49,9 @@
         </div> -->
       </div>
     </PageOverlay>
-    <header class="g-page-header"></header>
+    <header class="g-page-header">
+      <div class="g-page-header__gradient"></div>
+    </header>
     <div class="g-page-header__wrapper">
       <h1
         class="g-page-title"
@@ -361,6 +363,7 @@ onMounted(async () => {
 
   &__wrapper {
     @include flex-column;
+    @include content;
     align-items: center;
 
     h3 {
@@ -369,6 +372,9 @@ onMounted(async () => {
 
     .poster {
       width: 50%;
+      margin: $spacing-med;
+      box-shadow: rgba(30, 31, 46, 0.4) 0px 30px 60px -12px,
+        rgba(0, 0, 0, 0.3) 0px 18px 36px -18px;
     }
 
     .details {
@@ -419,6 +425,7 @@ onMounted(async () => {
     .production,
     .providers {
       @include tile;
+      @include tile-bg;
     }
   }
 }
