@@ -11,14 +11,14 @@ import MainNavigation from "./components/MainNavigation.vue";
 import StatusNotification from "./components/StatusNotification.vue";
 import { useAccount } from "@/store/account";
 import { onMounted } from "vue";
-import baseRequest from "@/utils/baseRequest";
+import { baseAwsRequest } from "@/utils/baseRequest";
 import { AWSEndpoints, RequestMethods } from "@/types/apiTypes";
 
 const store = useAccount();
 
 onMounted(async () => {
-  store.userAccount = await baseRequest(
-    AWSEndpoints.GET_ACCOUNT + process.env.VUE_APP_AWS_BASE_URL,
+  store.userAccount = await baseAwsRequest(
+    AWSEndpoints.GET_ACCOUNT,
     RequestMethods.GET
   );
 });
@@ -37,7 +37,8 @@ onMounted(async () => {
   font-weight: 400;
 
   .wrapper {
-    padding: 60px $spacing-med $header-height $spacing-med;
+    padding: $body-padding-top $spacing-med $body-padding-bottom $spacing-med;
+    min-height: calc(100vh - $body-padding-top - $body-padding-bottom);
   }
 }
 
@@ -63,22 +64,31 @@ p {
 }
 
 .g-page-header {
-  @include top-gradient;
   @include flex-column;
-  justify-content: flex-end;
+  justify-content: flex-start;
   position: fixed;
+  z-index: 0;
   top: 0;
   left: 0;
   height: $header-height;
-  width: calc(100% - #{$spacing-med * 4});
-  padding: 0 $spacing-med * 2;
+  width: 100%;
+  mask-image: linear-gradient(rgba(0, 0, 0, 1), transparent);
+
+  &__gradient {
+    @include top-gradient;
+    height: 80%;
+  }
 
   &__wrapper {
     @include flex-row;
     justify-content: space-between;
     align-items: flex-start;
     position: sticky;
+    z-index: 3;
     top: $spacing-med;
+    min-height: 24.5px;
+    max-height: $page-title-height;
+    overflow: hidden;
   }
 }
 .g-page-title {
@@ -86,5 +96,10 @@ p {
   top: $spacing-med;
   margin-bottom: $spacing-small * 5;
   padding: 0 $spacing-med;
+}
+
+.g-loading {
+  @include flex-row;
+  justify-content: center;
 }
 </style>

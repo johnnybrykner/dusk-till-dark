@@ -6,8 +6,8 @@
         <h2 class="rating">{{ film.our_rating }}</h2>
       </div>
       <h3 class="result__details">
-        {{ film.length }} <span class="dot" /> {{ film.director }}
-        <span class="dot" /> {{ film.year }}
+        {{ formatLength(film.length) }} <span class="dot" />
+        {{ film.director }} <span class="dot" /> {{ film.year }}
       </h3>
     </li>
   </ul>
@@ -16,6 +16,7 @@
 <script setup lang="ts">
 import { OurFilmInterface } from "@/types/apiTypes";
 import { defineProps } from "vue";
+import { formatLength } from "@/utils/dataFormatters";
 
 const props = defineProps<{
   films: OurFilmInterface[];

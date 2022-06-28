@@ -10,6 +10,7 @@ export const useStore = defineStore("miscellaneous", {
       thrownError: "",
       notificationText: "",
       currentHour: new Date().getHours(),
+      showOverlay: false,
     };
   },
   getters: {

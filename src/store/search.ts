@@ -3,7 +3,7 @@ import {
   TMDBEndpoints,
   FilmSearchResponse,
 } from "@/types/apiTypes";
-import baseRequest from "@/utils/baseRequest";
+import { baseTmdbRequest } from "@/utils/baseRequest";
 import { defineStore } from "pinia";
 
 export const useSearch = defineStore("search", {
@@ -15,7 +15,7 @@ export const useSearch = defineStore("search", {
   getters: {},
   actions: {
     async tmdbSearch(searchString: string) {
-      const response = await baseRequest(
+      const response = await baseTmdbRequest(
         process.env.VUE_APP_TMDB_BASE_URL + TMDBEndpoints.FILM_SEARCH,
         RequestMethods.GET,
         searchString
