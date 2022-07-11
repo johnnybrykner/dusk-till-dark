@@ -1,5 +1,5 @@
 <template>
-  <transition name="fade-in">
+  <transition name="fade" mode="out-in">
     <div class="overlay" v-if="store.showOverlay">
       <header class="overlay__header">
         <h1>List management</h1>
@@ -23,31 +23,40 @@ const store = useStore();
 <style scoped lang="scss">
 .overlay {
   position: fixed;
-  top: 0;
+  z-index: 4;
+  height: 75%;
   bottom: 0;
   right: 0;
   left: 0;
-  background: linear-gradient(
-    180deg,
-    rgba(143, 148, 251, 0.9) 0%,
-    rgba(78, 84, 200, 0.9) 100%
-  );
-  z-index: 4;
-  padding: $spacing-med * 2 $spacing-med;
+  background: $black;
+  mask-image: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.99)),
+    linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.99)),
+    linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.99)),
+    linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.99)),
+    linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.99)),
+    linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.99)),
+    linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.99)),
+    linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.99));
+  display: flex;
+  flex-flow: column;
+  justify-content: flex-end;
+  padding: ($spacing-med * 2) $spacing-med $body-padding-bottom $spacing-med;
+  overflow-y: hidden;
 
   &__header {
     @include flex-row;
     justify-content: space-between;
     padding: 0 $spacing-med;
+    margin-bottom: calc($spacing-med * 2);
   }
 }
 
-.fade-in-enter-active,
-.fade-in-leave-active {
-  transition: opacity 0.3s ease;
+.fade-enter-active,
+.fade-leave-active {
+  transition: all 0.5s ease;
 }
-.fade-in-enter-from,
-.fade-in-leave-to {
-  opacity: 0;
+.fade-enter-from,
+.fade-leave-to {
+  transform: translateY(100%);
 }
 </style>

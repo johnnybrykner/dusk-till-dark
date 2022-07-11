@@ -38,8 +38,10 @@
   position: fixed;
   z-index: 2;
   bottom: 0;
-  width: calc(100% - calc($spacing-med * 2));
+  left: 0;
+  width: 100vw;
   max-height: $body-padding-bottom;
+  background: rgba(30, 31, 46, 0.3);
 
   &__navbar {
     @include flex-row;
@@ -47,6 +49,7 @@
     background-color: $white;
     border-radius: $border-radius;
     height: $bar-height;
+    margin: $spacing-med;
 
     .router-link {
       flex-basis: calc(100% / 3);

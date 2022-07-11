@@ -12,7 +12,7 @@
             @click="removeFromWatchList"
           >
             <img src="../assets/images/remove_icon.svg" alt="list-icon" />
-            <h2>Remove from to watch</h2>
+            <h2>Remove from To watch list</h2>
           </div>
           <div class="g-loading" v-else-if="store.loading">
             <img src="../assets/images/loading.svg" alt="Loading animation" />
@@ -22,55 +22,30 @@
             @click="addToWatchList"
             v-else
           >
-            <img src="../assets/images/list_icon.svg" alt="list-icon" />
-            <h2>Add to watch</h2>
+            <img src="../assets/images/add_icon.svg" alt="list-icon" />
+            <h2>Add to To watch list</h2>
           </div>
         </div>
-        <!-- <div class="overlay-option">
-          <div
-            class="overlay-option--selected"
-            v-if="alreadyInWatchedList"
-            @click="account.updatePreviouslyWatched(AWSEndpoints.REMOVE_PREVIOUSLY_WATCHED, film!, filmDirector!, formattedReleaseDate ? formattedReleaseDate.year : 0)"
-          >
-            <img src="../assets/images/remove_icon.svg" alt="list-icon" />
-            <h2>Remove from previously watched</h2>
+        <div class="overlay-option">
+          <div class="overlay-option--watch" @click="checkProviderAvailability">
+            <img src="../assets/images/play_icon.svg" alt="play-icon" />
+            <h2>Where do I watch it?</h2>
           </div>
-          <div class="g-loading" v-else-if="store.loading">
-            <img src="../assets/images/loading.svg" alt="Loading animation" />
-          </div>
-          <div
-            class="overlay-option--unselected"
-            @click="account.updatePreviouslyWatched(AWSEndpoints.ADD_PREVIOUSLY_WATCHED, film!, filmDirector!, formattedReleaseDate ? formattedReleaseDate.year : 0)"
-            v-else
-          >
-            <img src="../assets/images/list_icon.svg" alt="list-icon" />
-            <h2>Add to previously watched</h2>
-          </div>
-        </div> -->
+        </div>
       </div>
     </PageOverlay>
     <header class="g-page-header">
       <div class="g-page-header__gradient"></div>
     </header>
     <div class="g-page-header__wrapper">
-      <h1
-        class="g-page-title"
-        :style="{ color: store.showOverlay ? 'transparent' : 'inherit' }"
-      >
+      <h1 class="g-page-title">
         {{ film.title }}
       </h1>
-      <div class="actions-container" v-if="!store.showOverlay">
-        <div class="watch" @click="checkProviderAvailability">
-          <img src="../assets/images/play_icon.svg" alt="play-icon" />
-        </div>
-        <div class="add" @click="store.showOverlay = true">
-          <img src="../assets/images/add_icon.svg" alt="" />
-        </div>
-      </div>
     </div>
     <div class="film__wrapper">
       <img
         class="poster"
+        :class="{ 'poster--whenOverlay': store.showOverlay }"
         v-if="imageUrl"
         :src="imageUrl"
         :alt="film.title + ' image'"
@@ -167,6 +142,14 @@
           </h2>
         </div>
       </div>
+      <div class="actions-container" @click="openOverlay">
+        <div class="add" v-if="!store.showOverlay">
+          <img src="../assets/images/add_icon.svg" alt="" />
+        </div>
+        <div class="add" v-if="store.showOverlay">
+          <img src="../assets/images/close_icon.svg" alt="" />
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -205,13 +188,6 @@ const alreadyInToWatch = computed(() => {
     (listItem) => listItem.id === film.value?.id
   );
 });
-
-// const alreadyInWatchedList = computed(() => {
-//   if (!account.userAccount?.previously_watched) return null;
-//   return !!account.userAccount.previously_watched.find(
-//     (listItem) => listItem.id === film.value?.id
-//   );
-// });
 
 const imageUrl = computed(() => {
   if (film.value)
@@ -276,6 +252,15 @@ const formattedReleaseDate = computed(() => {
   return null;
 });
 
+function openOverlay() {
+  store.showOverlay = true;
+  window.scroll({
+    top: 0,
+    left: 0,
+    behavior: "smooth",
+  });
+}
+
 async function checkProviderAvailability() {
   if (availableProviders.value) return;
   availableProviders.value = await baseTmdbRequest(
@@ -332,20 +317,32 @@ onMounted(async () => {
 <style scoped lang="scss">
 .overlay-container {
   @include flex-column;
+  height: 30%;
   .overlay-option {
-    @include tile-white;
+    padding: $spacing-big $spacing-med;
+    width: calc(100% - (2 * $spacing-med));
+    cursor: pointer;
 
     &--selected,
-    &--unselected {
-      @include flex-row($col-gap: $spacing-small);
+    &--unselected,
+    &--watch {
+      @include flex-row($col-gap: $spacing-med);
     }
   }
 }
 
 .actions-container {
   @include flex-row;
-  justify-content: flex-end;
+  justify-content: center;
+  align-self: flex-end;
+  position: sticky;
+  bottom: $body-padding-bottom;
+  right: $spacing-med;
   cursor: pointer;
+  background-color: $purple-light;
+  border-radius: $border-radius;
+  height: $bar-height;
+  width: $bar-height;
 }
 
 .film {
@@ -371,10 +368,17 @@ onMounted(async () => {
     }
 
     .poster {
-      width: 50%;
-      margin: $spacing-med;
+      position: relative;
+      z-index: 0;
+      width: 45%;
+      margin: calc($spacing-big + $spacing-small) 0 $spacing-big 0;
       box-shadow: rgba(30, 31, 46, 0.4) 0px 30px 60px -12px,
         rgba(0, 0, 0, 0.3) 0px 18px 36px -18px;
+      transition: z-index 0.2s cubic-bezier(1, 0, 1, 0);
+
+      &--whenOverlay {
+        z-index: 4;
+      }
     }
 
     .details {

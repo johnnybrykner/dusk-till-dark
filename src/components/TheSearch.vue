@@ -47,14 +47,15 @@ function debouncedSearch(input: HTMLInputElement) {
 <style scoped lang="scss">
 .the-search {
   &__field {
-    width: 100%;
+    width: calc(100vw - (2 * $spacing-med));
     height: $bar-height;
+    padding: $spacing-med;
     background-color: $purple-light;
     border-radius: $border-radius;
     border: none;
     outline: none;
     padding: $spacing-med;
-    margin: $spacing-med 0;
+    margin: $spacing-med;
     font-size: 16px;
     font-weight: 500;
     color: $purple-dark;

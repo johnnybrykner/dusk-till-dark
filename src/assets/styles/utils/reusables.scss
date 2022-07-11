@@ -4,7 +4,7 @@
 }
 
 @mixin footer-gradient {
-  background: linear-gradient(360deg, rgba(10, 10, 10, 1) 20.1%, rgba(10, 10, 10, 0) 100%);
+  background: linear-gradient(to top, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0));
 }
 
 @mixin tile-bg {
@@ -13,12 +13,12 @@
 
 @mixin content {
   position: relative;
-  z-index: 1;
+  z-index: inherit;
+  bottom: 0;
   background: rgba(30,31,46,0.30);
-  width: calc(100vw - (2 * $spacing-med));
-  min-height: calc(100vh - $body-padding-top - $page-title-height - $body-padding-bottom - (2 * $spacing-med));
+  width: 100vw;
+  min-height: calc(100vh - $body-padding-top - $page-title-height - $body-padding-bottom);
   margin-left: -$spacing-med;
-  padding: $spacing-med;
 }
 
 @mixin grid-view($gap: $spacing-big) {
@@ -40,8 +40,8 @@
 }
 
 @mixin tile {
-  width: calc(100% - (2 * $spacing-med));
-  padding: $spacing-big $spacing-med;
+  width: calc(100vw - (2 * (2 * $spacing-med)));
+  padding: $spacing-big (2 * $spacing-med);
   color: $white;
 }
 

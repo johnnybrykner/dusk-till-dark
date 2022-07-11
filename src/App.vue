@@ -88,7 +88,6 @@ p {
     top: $spacing-med;
     min-height: 24.5px;
     max-height: $page-title-height;
-    overflow: hidden;
   }
 }
 .g-page-title {
