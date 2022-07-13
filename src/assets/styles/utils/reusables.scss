@@ -1,11 +1,26 @@
+$breakpoints: (
+  "phone": 0, 
+  "screen-med": 1080px,
+);
+
+@mixin screen-size($breakpoint) {
+  @media (min-width: map-get($breakpoints, $breakpoint)) {
+    @content;
+  }
+}
+
+@mixin content-screen-med {
+  width: $width-screen-med;
+  margin: 0 auto;
+}
+
 @mixin top-gradient {
   background-image: linear-gradient(to bottom, #8f94fb, #6d6eb7, #4c4b78, #2c2a3f, rgba(10, 10, 10, 0));
-  // background-image: linear-gradient(to right bottom, #4e54c8, #5b60d2, #676cdb, #7378e5, #7f84ee, #797ddb, #7375c9, #6d6eb7, #545387, #3c3a5b, #242332, rgba(10, 10, 10, 0));
 }
 
 @mixin footer-gradient {
-  background: linear-gradient(to top, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0));
-}
+  background: rgb(0,0,0);
+  background: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.6512605042016807) 40%, rgba(0,0,0,0.8025210084033614) 60%, rgba(0,0,0,0.953781512605042) 80%, rgba(0,0,0,1) 100%); }
 
 @mixin tile-bg {
   background: rgba(30,31,46,0.30);
@@ -40,7 +55,7 @@
 }
 
 @mixin tile {
-  width: calc(100vw - (2 * (2 * $spacing-med)));
+  width: calc(100% - (2 * (2 * $spacing-med)));
   padding: $spacing-big (2 * $spacing-med);
   color: $white;
 }

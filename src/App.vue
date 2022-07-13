@@ -63,6 +63,11 @@ p {
   font-weight: 400;
 }
 
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
 .g-page-header {
   @include flex-column;
   justify-content: flex-start;
@@ -92,9 +97,16 @@ p {
 }
 .g-page-title {
   position: sticky;
+  z-index: 2;
   top: $spacing-med;
   margin-bottom: $spacing-small * 5;
   padding: 0 $spacing-med;
+
+  @include screen-size("screen-med") {
+    width: calc($width-screen-med - (2 * $spacing-med));
+    margin: 0 auto;
+    margin-bottom: $spacing-small * 5;
+  }
 }
 
 .g-loading {

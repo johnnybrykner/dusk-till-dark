@@ -50,6 +50,8 @@ function toggleList() {
 <style scoped lang="scss">
 .g-page-header {
   &__wrapper {
+    @include flex-row;
+    align-items: flex-start;
     .swap {
       padding: 0 $spacing-med;
       transition: transform 0.2s ease;
@@ -58,11 +60,28 @@ function toggleList() {
         transform: rotateX(180deg);
       }
     }
+
+    @include screen-size("screen-med") {
+      width: $width-screen-med;
+      justify-content: flex-start;
+      margin: 0 auto;
+      .g-page-title {
+        margin: 0 0 ($spacing-small * 5) 0;
+        width: auto;
+      }
+    }
   }
 }
 
 .lists-wrapper {
   @include content;
+
+  @include screen-size("screen-med") {
+    .list-wrapper {
+      width: $width-screen-med;
+      margin: 0 auto;
+    }
+  }
 }
 
 .slide-up-enter-active,

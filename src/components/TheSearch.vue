@@ -47,6 +47,9 @@ function debouncedSearch(input: HTMLInputElement) {
 <style scoped lang="scss">
 .the-search {
   &__field {
+    position: sticky;
+    z-index: 4;
+    top: $spacing-med;
     width: calc(100vw - (2 * $spacing-med));
     height: $bar-height;
     padding: $spacing-med;
@@ -59,6 +62,10 @@ function debouncedSearch(input: HTMLInputElement) {
     font-size: 16px;
     font-weight: 500;
     color: $purple-dark;
+
+    @include screen-size("screen-med") {
+      width: calc(100% - (2 * $spacing-med));
+    }
   }
 
   &__results {
@@ -84,6 +91,10 @@ function debouncedSearch(input: HTMLInputElement) {
         }
       }
     }
+  }
+
+  @include screen-size("screen-med") {
+    @include content-screen-med;
   }
 }
 </style>
