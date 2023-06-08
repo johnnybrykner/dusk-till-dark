@@ -30,21 +30,15 @@ onMounted(async () => {
 @import "./assets/styles/fonts.css";
 
 #app {
+  @include page-gradient;
+  background-attachment: fixed;
   min-height: 100vh;
-  background-color: $black;
-  color: $white;
-  font-family: "OpenSans";
-  font-weight: 400;
-
-  .wrapper {
-    padding: $body-padding-top $spacing-med $body-padding-bottom $spacing-med;
-    min-height: calc(100vh - $body-padding-top - $body-padding-bottom);
-  }
 }
 
 h1 {
-  font-size: 24px;
-  font-weight: 300;
+  font-family: "JostMedium";
+  font-size: 28px;
+  color: $white;
 }
 
 h2 {
@@ -58,25 +52,30 @@ h3 {
   font-weight: 400;
 }
 
+h4 {
+  font-family: "JostRegular";
+  font-size: 12px;
+}
+
+a,
 p {
+  font-family: "JostRegular";
   font-size: 16px;
   font-weight: 400;
 }
 
 .g-page-header {
   @include flex-column;
-  justify-content: flex-start;
-  position: fixed;
-  z-index: 0;
-  top: 0;
-  left: 0;
-  height: $header-height;
-  width: 100%;
-  mask-image: linear-gradient(rgba(0, 0, 0, 1), transparent);
+  align-items: center;
+  padding: $spacing-big $spacing-max;
 
-  &__gradient {
-    @include top-gradient;
-    height: 80%;
+  &__title {
+    text-transform: capitalize;
+  }
+
+  &__subtitle {
+    color: $white;
+    text-transform: capitalize;
   }
 
   &__wrapper {
@@ -85,7 +84,7 @@ p {
     align-items: flex-start;
     position: sticky;
     z-index: 3;
-    top: $spacing-med;
+    top: $spacing-medium;
     min-height: 24.5px;
     max-height: $page-title-height;
     overflow: hidden;
@@ -93,9 +92,9 @@ p {
 }
 .g-page-title {
   position: sticky;
-  top: $spacing-med;
+  top: $spacing-medium;
   margin-bottom: $spacing-small * 5;
-  padding: 0 $spacing-med;
+  padding: 0 $spacing-medium;
 }
 
 .g-loading {

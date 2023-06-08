@@ -1,11 +1,11 @@
 <template>
   <div class="home">
     <header class="g-page-header">
-      <div class="g-page-header__gradient"></div>
+      <h1 class="g-page-header__title">Dusk Till Dark</h1>
+      <h4 v-if="route.name === 'home'" class="g-page-header__subtitle">
+        {{ store.headerGreeting }}
+      </h4>
     </header>
-    <h1 v-if="route.name === 'home'" class="g-page-title">
-      {{ store.headerGreeting }}
-    </h1>
     <div class="home-wrapper">
       <KeepAlive>
         <TheSearch />
@@ -25,6 +25,5 @@ const route = useRoute();
 
 <style lang="scss" scoped>
 .home-wrapper {
-  @include content;
 }
 </style>

@@ -33,12 +33,12 @@ const store = useStore();
     rgba(78, 84, 200, 0.9) 100%
   );
   z-index: 4;
-  padding: $spacing-med * 2 $spacing-med;
+  padding: $spacing-medium * 2 $spacing-medium;
 
   &__header {
     @include flex-row;
     justify-content: space-between;
-    padding: 0 $spacing-med;
+    padding: 0 $spacing-medium;
   }
 }
 

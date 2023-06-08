@@ -51,7 +51,7 @@ function toggleList() {
 .g-page-header {
   &__wrapper {
     .swap {
-      padding: 0 $spacing-med;
+      padding: 0 $spacing-medium;
       transition: transform 0.2s ease;
 
       &--flipped {

@@ -352,7 +352,7 @@ onMounted(async () => {
   .g-page-header {
     &__wrapper {
       .add {
-        padding: 0 $spacing-med 0 0;
+        padding: 0 $spacing-medium 0 0;
 
         img {
           width: 24px;
@@ -372,7 +372,7 @@ onMounted(async () => {
 
     .poster {
       width: 50%;
-      margin: $spacing-med;
+      margin: $spacing-medium;
       box-shadow: rgba(30, 31, 46, 0.4) 0px 30px 60px -12px,
         rgba(0, 0, 0, 0.3) 0px 18px 36px -18px;
     }

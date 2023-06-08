@@ -1,18 +1,30 @@
-$black: #0A0A0A;
-$white: #FEFCFB;
-$purple-light: #8F94FB;
-$purple-dark: #4E54C8;
+$black: #000000;
+$white: #ffffff;
+$space: #1c274c;
+$wine: #742f37;
+
+$purple-light: #8f94fb;
+$purple-dark: #4e54c8;
 $grey: #1e1f2e;
 $error: red;
 $success: greenyellow;
 
-$border-radius: 5px;
-$spacing-big: 15px;
-$spacing-med: 10px;
-$spacing-small: 5px;
+$border-radius: 50%;
+$spacing-max: 30px;
+$spacing-big: 20px;
+$spacing-medium: 6px;
+$spacing-small: 3px;
+$spacing-min: 1.1px;
 
 $body-padding-top: 30px;
 $body-padding-bottom: 104px;
 $page-title-height: 49px;
 $header-height: 250px;
 $bar-height: 50px;
+$screen-height: 100vh;
+
+$calc-page-width: calc(100vw - (2 * $spacing-max));
+$button-size: 50px;
+$icon-size-big: 24px;
+$icon-size-medium: 20px;
+$icon-size-small: 14px;

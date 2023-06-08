@@ -1,11 +1,18 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
 import HomeView from "../views/HomeView.vue";
+import SettingsView from "../views/SettingsView.vue";
+import SearchView from "../views/SearchView.vue";
 
 const routes: Array<RouteRecordRaw> = [
   {
     path: "/",
     name: "home",
     component: HomeView,
+  },
+  {
+    path: "/search",
+    name: "search",
+    component: SearchView,
   },
   {
     path: "/lists",
@@ -21,6 +28,11 @@ const routes: Array<RouteRecordRaw> = [
     name: "film",
     component: () =>
       import(/* webpackChunkName: "film" */ "../views/FilmView.vue"),
+  },
+  {
+    path: "/settings",
+    name: "settings",
+    component: SettingsView,
   },
 ];
 

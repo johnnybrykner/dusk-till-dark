@@ -3,87 +3,75 @@
     <div class="page-footer__navbar">
       <router-link to="/" class="router-link">
         <img
-          src="../assets/images/home_icon.svg"
+          src="../assets/images/home_icon_black.svg"
           class="icon"
           alt="Home icon"
         />
       </router-link>
-      <router-link to="/" class="router-link">
+      <router-link to="/search" class="router-link">
         <img
-          src="../assets/images/search_icon.svg"
+          src="../assets/images/search_icon_black.svg"
           class="icon"
           alt="Search icon"
         />
       </router-link>
       <router-link to="/lists" class="router-link">
         <img
-          src="../assets/images/list_icon.svg"
+          src="../assets/images/movie_icon_black.svg"
           class="icon"
           alt="List icon"
         />
       </router-link>
+      <router-link to="/settings" class="router-link">
+        <img
+          src="../assets/images/settings_icon_black.svg"
+          class="icon"
+          alt="Settings icon"
+        />
+      </router-link>
     </div>
     <div class="page-footer__references">
-      <p class="name">Dusk Till Dark</p>
-      <div class="sources">
-        <img src="../assets/images/tmdb_logo.svg" alt="TMDB logo" />
-        <img src="../assets/images/just_watch_logo.png" alt="JustWatch logo" />
-      </div>
+      <img src="../assets/images/tmdb_logo.svg" alt="TMDB logo" />
+      <img src="../assets/images/just_watch_logo.png" alt="JustWatch logo" />
     </div>
   </footer>
 </template>
 
 <style scoped lang="scss">
 .page-footer {
-  position: fixed;
-  z-index: 2;
-  bottom: 0;
-  width: calc(100% - calc($spacing-med * 2));
-  max-height: $body-padding-bottom;
+  z-index: 1;
 
   &__navbar {
     @include flex-row;
-    align-items: center;
-    background-color: $white;
-    border-radius: $border-radius;
-    height: $bar-height;
+    justify-content: space-between;
+    position: fixed;
+    bottom: 40px;
+    z-index: 1;
+    width: $calc-page-width;
+    margin: 0px $spacing-max;
 
     .router-link {
-      flex-basis: calc(100% / 3);
-      @include flex-row;
+      @include object-shadow;
+      @include flex-column;
       justify-content: center;
+      width: $button-size;
+      height: $button-size;
+      background-color: $white;
+      border-radius: $border-radius;
 
       .icon {
-        height: 24px;
+        height: $icon-size-big;
         color: $black;
       }
     }
   }
 
   &__references {
-    @include footer-gradient;
-    @include grid-view;
-    grid-template-columns: 60px 1fr 60px;
-    padding: $spacing-med;
+    @include flex-row($col-gap: $spacing-medium);
+    justify-content: center;
 
-    .name {
-      grid-column-start: 2;
-      grid-column-end: 3;
-      color: $purple-light;
-      text-align: center;
-    }
-
-    .sources {
-      grid-column-start: 3;
-      grid-column-end: 4;
-      justify-self: end;
-      width: 100%;
-      display: flex;
-      gap: $spacing-small;
-
-      img {
-        height: 16px;
-      }
+    img {
+      height: $icon-size-small;
     }
   }
 }

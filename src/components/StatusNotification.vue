@@ -34,10 +34,10 @@ const store = useStore();
   @include flex-row;
   position: fixed;
   top: $spacing-big;
-  left: $spacing-med;
-  right: $spacing-med;
+  left: $spacing-medium;
+  right: $spacing-medium;
   z-index: 1;
-  padding: $spacing-med;
+  padding: $spacing-medium;
 
   &--error {
     background-color: $error;
