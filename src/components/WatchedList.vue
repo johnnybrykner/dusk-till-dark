@@ -1,6 +1,13 @@
 <template>
   <ul class="list-wrapper">
-    <li v-for="film in props.films" :key="film.id" class="list-item">
+    <li
+      v-for="film in props.films"
+      :key="film.id"
+      class="list-item"
+      :class="{
+        'list-item--transit': unmountTransitionRunning,
+      }"
+    >
       <router-link :to="'/film/' + film.id">
         <h2 class="title">{{ film.name }}</h2>
         <div class="details">
@@ -38,10 +45,10 @@
 <script setup lang="ts">
 import { OurFilmInterface } from "@/types/apiTypes";
 import { defineProps } from "vue";
-import { formatLength } from "@/utils/dataFormatters";
 
 const props = defineProps<{
   films: OurFilmInterface[];
+  unmountTransitionRunning: boolean;
 }>();
 </script>
 
@@ -51,8 +58,12 @@ const props = defineProps<{
   margin-top: $spacing-max;
 
   .list-item {
+    transform-style: preserve-3d;
+    perspective: 500px;
+
     a {
       @include tile;
+      transition: all 0.2s;
       @include flex-column($row-gap: $spacing-medium);
       text-decoration: none;
       color: $black;
@@ -82,6 +93,10 @@ const props = defineProps<{
           }
         }
       }
+    }
+
+    &--transit a {
+      transform: rotate3d(1, 0, 0, -0.25turn);
     }
   }
 }

@@ -17,15 +17,20 @@
         />
       </div>
     </header>
-    <div>
+    <div class="transition__container">
       <div v-if="store.loading" class="g-loading">
         <img src="../assets/images/loading.svg" alt="Loading animation" />
       </div>
       <WatchedList
         v-else-if="listToggled"
         :films="accountStore.userAccount.previously_watched"
+        :unmountTransitionRunning="listTransitInProgress"
       />
-      <ToWatchList v-else :films="accountStore.userAccount.to_watch" />
+      <ToWatchList
+        v-else
+        :films="accountStore.userAccount.to_watch"
+        :unmountTransitionRunning="listTransitInProgress"
+      />
     </div>
   </div>
 </template>
@@ -35,14 +40,20 @@ import ToWatchList from "@/components/ToWatchList.vue";
 import WatchedList from "@/components/WatchedList.vue";
 import { useAccount } from "@/store/account";
 import { useStore } from "@/store";
-import { ref } from "vue";
+import { nextTick, ref } from "vue";
 const accountStore = useAccount();
 const store = useStore();
 
 const listToggled = ref(false);
+const listTransitInProgress = ref(false);
 
 function toggleList() {
-  listToggled.value = !listToggled.value;
+  listTransitInProgress.value = true;
+  setTimeout(async () => {
+    listToggled.value = !listToggled.value;
+    await nextTick();
+    listTransitInProgress.value = false;
+  }, 200);
 }
 </script>
 
@@ -78,18 +89,24 @@ function toggleList() {
   opacity: 0;
   transform: rotateX(-90deg);
 }
+.transition__container {
+  position: relative;
 
-.fade-enter-active,
-.fade-leave-active {
-  transition: all 0.2s ease;
-}
+  .fade-enter-active,
+  .fade-leave-active {
+    transition: all 0.2s ease;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    z-index: 1;
+  }
 
-.fade-enter-from {
-  opacity: 0;
-  transform: rotateX(90deg);
-}
-.fade-leave-to {
-  opacity: 0;
-  transform: rotateX(-90deg);
+  .fade-enter-from {
+    opacity: 0;
+  }
+  .fade-leave-to {
+    opacity: 0;
+  }
 }
 </style>
