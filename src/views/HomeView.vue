@@ -23,7 +23,4 @@ const store = useStore();
 const route = useRoute();
 </script>
 
-<style lang="scss" scoped>
-.home-wrapper {
-}
-</style>
+<style lang="scss" scoped></style>

@@ -42,19 +42,20 @@ h1 {
 }
 
 h2 {
+  font-family: "JostMedium";
   font-size: 16px;
-  font-weight: 600;
-  line-height: 24px;
+  line-height: 30px;
 }
 
 h3 {
-  font-size: 11px;
-  font-weight: 400;
+  font-family: "JostSemiBold";
+  font-size: 14px;
 }
 
 h4 {
   font-family: "JostRegular";
   font-size: 12px;
+  line-height: 18px;
 }
 
 a,
@@ -78,23 +79,17 @@ p {
     text-transform: capitalize;
   }
 
-  &__wrapper {
-    @include flex-row;
-    justify-content: space-between;
-    align-items: flex-start;
-    position: sticky;
-    z-index: 3;
-    top: $spacing-medium;
-    min-height: 24.5px;
-    max-height: $page-title-height;
-    overflow: hidden;
-  }
-}
-.g-page-title {
-  position: sticky;
-  top: $spacing-medium;
-  margin-bottom: $spacing-small * 5;
-  padding: 0 $spacing-medium;
+  // &__wrapper {
+  //   @include flex-row;
+  //   justify-content: space-between;
+  //   align-items: flex-start;
+  //   position: sticky;
+  //   z-index: 3;
+  //   top: $spacing-medium;
+  //   min-height: 24.5px;
+  //   max-height: $page-title-height;
+  //   overflow: hidden;
+  // }
 }
 
 .g-loading {

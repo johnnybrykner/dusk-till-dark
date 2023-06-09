@@ -1,9 +1,6 @@
 <template>
   <div class="lists">
     <header class="g-page-header">
-      <div class="g-page-header__gradient"></div>
-    </header>
-    <div class="g-page-header__wrapper">
       <Transition name="slide-up" mode="out-in">
         <h1 v-if="listToggled" class="g-page-title">Watched list</h1>
         <h1 v-else class="g-page-title">To watch list</h1>
@@ -13,20 +10,22 @@
         class="swap"
         :class="{ 'swap--flipped': listToggled }"
       >
-        <img src="../assets/images/swap_icon.svg" alt="Swap icon" />
-      </div>
-    </div>
-    <div class="lists-wrapper">
-      <Transition name="fade" mode="out-in">
-        <div v-if="store.loading" class="g-loading">
-          <img src="../assets/images/loading.svg" alt="Loading animation" />
-        </div>
-        <WatchedList
-          v-else-if="listToggled"
-          :films="accountStore.userAccount.previously_watched"
+        <img
+          src="../assets/images/swap_icon.svg"
+          class="swap__icon"
+          alt="Swap icon"
         />
-        <ToWatchList v-else :films="accountStore.userAccount.to_watch" />
-      </Transition>
+      </div>
+    </header>
+    <div>
+      <div v-if="store.loading" class="g-loading">
+        <img src="../assets/images/loading.svg" alt="Loading animation" />
+      </div>
+      <WatchedList
+        v-else-if="listToggled"
+        :films="accountStore.userAccount.previously_watched"
+      />
+      <ToWatchList v-else :films="accountStore.userAccount.to_watch" />
     </div>
   </div>
 </template>
@@ -49,44 +48,48 @@ function toggleList() {
 
 <style scoped lang="scss">
 .g-page-header {
-  &__wrapper {
-    .swap {
-      padding: 0 $spacing-medium;
-      transition: transform 0.2s ease;
+  .swap {
+    position: absolute;
+    top: $spacing-big;
+    right: $spacing-max;
+    transition: transform 0.2s ease;
 
-      &--flipped {
-        transform: rotateX(180deg);
-      }
+    &--flipped {
+      transform: rotateX(180deg);
+    }
+
+    &__icon {
+      height: $icon-size-big;
     }
   }
 }
 
-.lists-wrapper {
-  @include content;
-}
-
 .slide-up-enter-active,
 .slide-up-leave-active {
-  transition: all 0.2s ease-out;
+  transition: all 0.2s ease;
 }
 
 .slide-up-enter-from {
   opacity: 0;
-  transform: translateY(30px);
+  transform: rotateX(90deg);
 }
 
 .slide-up-leave-to {
   opacity: 0;
-  transform: translateY(-30px);
+  transform: rotateX(-90deg);
 }
 
 .fade-enter-active,
 .fade-leave-active {
-  transition: opacity 0.3s ease;
+  transition: all 0.2s ease;
 }
 
-.fade-enter-from,
+.fade-enter-from {
+  opacity: 0;
+  transform: rotateX(90deg);
+}
 .fade-leave-to {
   opacity: 0;
+  transform: rotateX(-90deg);
 }
 </style>

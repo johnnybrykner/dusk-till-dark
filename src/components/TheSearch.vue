@@ -26,10 +26,10 @@
       >
         <router-link :to="'/film/' + result.id">
           <h2>{{ result.original_title }}</h2>
-          <h3 class="details">
+          <h4 class="details">
             {{ result.original_language }} <span class="dot" />
             {{ result.release_date }}
-          </h3>
+          </h4>
         </router-link>
       </li>
     </ul>
@@ -95,7 +95,7 @@ function debouncedSearch(input: HTMLInputElement) {
         color: $black;
 
         .details {
-          @include flex-row($col-gap: $spacing-small);
+          @include flex-row($col-gap: $spacing-medium);
 
           .dot {
             @include dot;

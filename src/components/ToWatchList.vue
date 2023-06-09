@@ -1,14 +1,12 @@
 <template>
   <ul class="list-wrapper">
-    <li v-for="film in props.films" :key="film.id">
-      <router-link :to="'/film/' + film.id" class="result">
-        <div class="result__wrapper">
-          <h2 class="title">{{ film.name }}</h2>
-        </div>
-        <h3 class="result__details">
+    <li v-for="film in props.films" :key="film.id" class="list-item">
+      <router-link :to="'/film/' + film.id">
+        <h2>{{ film.name }}</h2>
+        <h4 class="details">
           {{ formatLength(film.length) }} <span class="dot" />
           {{ film.director }} <span class="dot" /> {{ film.year }}
-        </h3>
+        </h4>
       </router-link>
     </li>
   </ul>
@@ -26,24 +24,22 @@ const props = defineProps<{
 
 <style scoped lang="scss">
 .list-wrapper {
-  @include flex-column;
+  @include flex-column($row-gap: $spacing-min);
+  margin-top: $spacing-max;
 
-  .result {
-    @include tile;
-    @include flex-column;
-    text-decoration: none;
+  .list-item {
+    a {
+      @include tile;
+      @include flex-column($row-gap: $spacing-medium);
+      text-decoration: none;
+      color: $black;
 
-    &__wrapper {
-      @include flex-row;
-      align-items: flex-start;
-      justify-content: space-between;
-    }
+      .details {
+        @include flex-row($col-gap: $spacing-medium);
 
-    &__details {
-      @include flex-row($col-gap: $spacing-small);
-
-      .dot {
-        @include dot;
+        .dot {
+          @include dot;
+        }
       }
     }
   }
