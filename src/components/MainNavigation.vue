@@ -39,13 +39,18 @@
 
 <style scoped lang="scss">
 .page-footer {
+  @include flex-column;
+  justify-content: flex-end;
+  height: calc(
+    $icon-size-small + 10px + $spacing-big + $button-size + $spacing-max
+  );
   z-index: 1;
 
   &__navbar {
     @include flex-row;
     justify-content: space-between;
     position: fixed;
-    bottom: 40px;
+    bottom: calc($icon-size-small + 10px + $spacing-big);
     z-index: 1;
     width: $calc-page-width;
     margin: 0px $spacing-max;
@@ -69,9 +74,10 @@
   &__references {
     @include flex-row($col-gap: $spacing-medium);
     justify-content: center;
+    margin-bottom: 10px;
 
     img {
-      height: $icon-size-small;
+      height: $icon-size-min;
     }
   }
 }

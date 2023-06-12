@@ -3,71 +3,9 @@
     <img src="../assets/images/loading.svg" alt="Loading animation" />
   </div>
   <div class="film" v-else>
-    <PageOverlay>
-      <div class="overlay-container">
-        <div class="overlay-option">
-          <div
-            class="overlay-option--selected"
-            v-if="alreadyInToWatch"
-            @click="removeFromWatchList"
-          >
-            <img src="../assets/images/remove_icon.svg" alt="list-icon" />
-            <h2>Remove from to watch</h2>
-          </div>
-          <div class="g-loading" v-else-if="store.loading">
-            <img src="../assets/images/loading.svg" alt="Loading animation" />
-          </div>
-          <div
-            class="overlay-option--unselected"
-            @click="addToWatchList"
-            v-else
-          >
-            <img src="../assets/images/list_icon.svg" alt="list-icon" />
-            <h2>Add to watch</h2>
-          </div>
-        </div>
-        <!-- <div class="overlay-option">
-          <div
-            class="overlay-option--selected"
-            v-if="alreadyInWatchedList"
-            @click="account.updatePreviouslyWatched(AWSEndpoints.REMOVE_PREVIOUSLY_WATCHED, film!, filmDirector!, formattedReleaseDate ? formattedReleaseDate.year : 0)"
-          >
-            <img src="../assets/images/remove_icon.svg" alt="list-icon" />
-            <h2>Remove from previously watched</h2>
-          </div>
-          <div class="g-loading" v-else-if="store.loading">
-            <img src="../assets/images/loading.svg" alt="Loading animation" />
-          </div>
-          <div
-            class="overlay-option--unselected"
-            @click="account.updatePreviouslyWatched(AWSEndpoints.ADD_PREVIOUSLY_WATCHED, film!, filmDirector!, formattedReleaseDate ? formattedReleaseDate.year : 0)"
-            v-else
-          >
-            <img src="../assets/images/list_icon.svg" alt="list-icon" />
-            <h2>Add to previously watched</h2>
-          </div>
-        </div> -->
-      </div>
-    </PageOverlay>
     <header class="g-page-header">
-      <div class="g-page-header__gradient"></div>
+      <h1 class="g-page-header__title">{{ film.title }}</h1>
     </header>
-    <div class="g-page-header__wrapper">
-      <h1
-        class="g-page-title"
-        :style="{ color: store.showOverlay ? 'transparent' : 'inherit' }"
-      >
-        {{ film.title }}
-      </h1>
-      <div class="actions-container" v-if="!store.showOverlay">
-        <div class="watch" @click="checkProviderAvailability">
-          <img src="../assets/images/play_icon.svg" alt="play-icon" />
-        </div>
-        <div class="add" @click="store.showOverlay = true">
-          <img src="../assets/images/add_icon.svg" alt="" />
-        </div>
-      </div>
-    </div>
     <div class="film__wrapper">
       <img
         class="poster"
@@ -76,35 +14,31 @@
         :alt="film.title + ' image'"
       />
       <div class="details">
-        <div class="details__wrapper">
-          <div v-if="filmDirector" class="director">
-            <h3>Director</h3>
-            <h2>
-              {{ filmDirector.original_name }}
-            </h2>
-          </div>
-          <div class="duration">
-            <h3>Duration</h3>
-            <h2>{{ formatLength(film.runtime) }}</h2>
-          </div>
+        <div v-if="filmDirector" class="details__director">
+          <h4>Director</h4>
+          <h2>
+            {{ filmDirector.original_name }}
+          </h2>
         </div>
-        <div class="details__wrapper">
-          <div class="release" v-if="formattedReleaseDate">
-            <h3>Release</h3>
-            <h2>
-              {{ formattedReleaseDate.day }}.{{ formattedReleaseDate.month }}.{{
-                formattedReleaseDate.year
-              }}
-            </h2>
-          </div>
-          <div class="language">
-            <h3>Language</h3>
-            <h2>{{ film.original_language }}</h2>
-          </div>
+        <div class="details__duration">
+          <h4>Duration</h4>
+          <h2>{{ formatLength(film.runtime) }}</h2>
+        </div>
+        <div class="details__release" v-if="formattedReleaseDate">
+          <h4>Release</h4>
+          <h2>
+            {{ formattedReleaseDate.day }}.{{ formattedReleaseDate.month }}.{{
+              formattedReleaseDate.year
+            }}
+          </h2>
+        </div>
+        <div class="details__language">
+          <h4>Language</h4>
+          <h2>{{ film.original_language }}</h2>
         </div>
       </div>
       <div class="cast">
-        <h3>Cast</h3>
+        <h4>Cast</h4>
         <div class="cast__wrapper">
           <h2
             v-for="castMember in filmCast"
@@ -116,11 +50,11 @@
         </div>
       </div>
       <div class="overview">
-        <h3>Overview</h3>
+        <h4>Overview</h4>
         <h2>{{ film.overview }}</h2>
       </div>
       <div class="production">
-        <h3>Production countries</h3>
+        <h4>Production countries</h4>
         <div class="production__wrapper">
           <h2
             v-for="country in film.production_countries"
@@ -131,31 +65,14 @@
           </h2>
         </div>
       </div>
-      <div
-        class="providers"
-        v-if="availableProviders"
-        ref="watchProvidersElement"
-      >
-        <h3>Streaming availability</h3>
+
+      <!-- Todo: come back to this, rework the functionality of immediately fetching streaming providers -->
+      <!-- <div class="providers" ref="watchProvidersElement">
+        <h4>Streaming availability</h4>
         <div class="providers__wrapper">
-          <img
-            v-if="isAvailableOnNetflix"
-            src="../assets/images/netflix.png"
-            class="provider-img"
-            alt="netflix"
-          />
-          <img
-            v-if="isAvailableOnDisney"
-            src="../assets/images/disney.png"
-            class="provider-img"
-            alt="disney"
-          />
-          <img
-            v-if="isAvailableOnPrime"
-            src="../assets/images/prime.png"
-            class="provider-img"
-            alt="prime"
-          />
+          <h2 v-if="isAvailableOnNetflix">Netflix</h2>
+          <h2 v-if="isAvailableOnPrime">Primevideo</h2>
+          <h2 v-if="isAvailableOnDisney">Disney+</h2>
           <h2
             v-if="
               !isAvailableOnNetflix &&
@@ -165,6 +82,25 @@
           >
             No streaming availability
           </h2>
+        </div>
+      </div> -->
+
+      <div class="rating">
+        <div class="rating__wrapper">
+          <h2>Give rating</h2>
+          <img src="../assets/images/arrow-forward_icon_black.svg" alt="" />
+        </div>
+      </div>
+      <div class="add">
+        <div class="add__wrapper">
+          <h2>Add to To Watch List</h2>
+          <img src="../assets/images/arrow-forward_icon_black.svg" alt="" />
+        </div>
+      </div>
+      <div class="remove">
+        <div class="remove__wrapper">
+          <h2>Remove film from library</h2>
+          <img src="../assets/images/arrow-forward_icon_black.svg" alt="" />
         </div>
       </div>
     </div>
@@ -187,7 +123,6 @@ import {
   OurWatchProviders,
   FilmCrew,
 } from "../types/apiTypes";
-import PageOverlay from "../components/PageOverlay.vue";
 import { formatDate, formatLength } from "@/utils/dataFormatters";
 
 const store = useStore();
@@ -330,70 +265,35 @@ onMounted(async () => {
 </script>
 
 <style scoped lang="scss">
-.overlay-container {
-  @include flex-column;
-  .overlay-option {
-    @include tile-white;
-
-    &--selected,
-    &--unselected {
-      @include flex-row($col-gap: $spacing-small);
-    }
-  }
-}
-
-.actions-container {
-  @include flex-row;
-  justify-content: flex-end;
-  cursor: pointer;
-}
-
 .film {
   .g-page-header {
-    &__wrapper {
-      .add {
-        padding: 0 $spacing-medium 0 0;
-
-        img {
-          width: 24px;
-        }
-      }
-    }
+    text-align: center;
   }
 
   &__wrapper {
-    @include flex-column;
-    @include content;
-    align-items: center;
-
-    h3 {
-      margin-bottom: $spacing-small;
-    }
+    @include flex-column($row-gap: $spacing-min);
+    margin-top: $spacing-max;
 
     .poster {
-      width: 50%;
-      margin: $spacing-medium;
-      box-shadow: rgba(30, 31, 46, 0.4) 0px 30px 60px -12px,
-        rgba(0, 0, 0, 0.3) 0px 18px 36px -18px;
+      width: 100%;
     }
 
     .details {
-      @include flex-column;
+      @include grid-view($gap: $spacing-big);
+      grid-template-columns: 50% 50%;
+      column-gap: 0px;
 
-      &__wrapper {
-        @include flex-row;
-
-        & > * {
-          flex-basis: 50%;
-        }
+      &__language h2 {
+        text-transform: uppercase;
       }
     }
 
-    .production,
-    .cast {
+    .cast,
+    .production {
       &__wrapper {
         @include flex-row($col-gap: $spacing-small);
         flex-wrap: wrap;
+
         .country-name,
         .cast-member-name {
           @include flex-row($col-gap: $spacing-small);
@@ -407,15 +307,13 @@ onMounted(async () => {
       }
     }
 
-    .providers {
+    .providers,
+    .rating,
+    .add,
+    .remove {
       &__wrapper {
-        width: 100%;
         @include flex-row;
         justify-content: space-between;
-
-        .provider-img {
-          max-width: calc(100% / 3 - #{$spacing-big});
-        }
       }
     }
 
@@ -423,9 +321,11 @@ onMounted(async () => {
     .cast,
     .overview,
     .production,
-    .providers {
+    .providers,
+    .rating,
+    .add,
+    .remove {
       @include tile;
-      @include tile-bg;
     }
   }
 }
