@@ -7,7 +7,7 @@
           type="search"
           class="input-container__field"
           placeholder="Search films"
-          @input="(event) => debouncedSearch(event.target as HTMLInputElement)"
+          @input="(event: InputEvent) => debouncedSearch(event.target as HTMLInputElement)"
         />
         <router-link to="/search">
           <img
