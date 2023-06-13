@@ -56,18 +56,9 @@
     margin: 0px $spacing-max;
 
     .router-link {
+      @include button-round;
       @include object-shadow;
       @include flex-column;
-      justify-content: center;
-      width: $button-size;
-      height: $button-size;
-      background-color: $white;
-      border-radius: $border-radius;
-
-      .icon {
-        height: $icon-size-big;
-        color: $black;
-      }
     }
   }
 

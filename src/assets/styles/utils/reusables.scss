@@ -61,3 +61,18 @@
   width: calc(100% - (2 * $spacing-medium));
   color: $black;
 }
+
+@mixin button-round {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: $button-size;
+  height: $button-size;
+  background-color: $white;
+  border-radius: $border-radius;
+
+  .icon {
+    height: $icon-size-big;
+    color: $black;
+  }
+}

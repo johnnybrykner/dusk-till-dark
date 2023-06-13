@@ -3,8 +3,14 @@
     <img src="../assets/images/loading.svg" alt="Loading animation" />
   </div>
   <div class="film" v-else>
-    <header class="g-page-header">
-      <h1 class="g-page-header__title">{{ film.title }}</h1>
+    <header class="g-page-header header-animation">
+      <h1
+        class="g-page-header__title"
+        :class="{ 'header-animation__title': titleAnimationCondition }"
+        ref="refFilmTitle"
+      >
+        {{ film.title }}
+      </h1>
     </header>
     <div class="film__wrapper">
       <img
@@ -88,19 +94,28 @@
       <div class="rating">
         <div class="rating__wrapper">
           <h2>Give rating</h2>
-          <img src="../assets/images/arrow-forward_icon_black.svg" alt="" />
+          <img
+            src="../assets/images/arrow-forward_icon_black.svg"
+            alt="Arrow forward icon"
+          />
         </div>
       </div>
       <div class="add">
         <div class="add__wrapper">
-          <h2>Add to To Watch List</h2>
-          <img src="../assets/images/arrow-forward_icon_black.svg" alt="" />
+          <h2>Move to Watched</h2>
+          <img
+            src="../assets/images/arrow-forward_icon_black.svg"
+            alt="Arrow forward icon"
+          />
         </div>
       </div>
       <div class="remove">
         <div class="remove__wrapper">
           <h2>Remove film from library</h2>
-          <img src="../assets/images/arrow-forward_icon_black.svg" alt="" />
+          <img
+            src="../assets/images/arrow-forward_icon_black.svg"
+            alt="Arrow forward icon"
+          />
         </div>
       </div>
     </div>
@@ -129,10 +144,18 @@ const store = useStore();
 const account = useAccount();
 const route = useRoute();
 
+const refFilmTitle = ref<null | HTMLElement>(null);
 const watchProvidersElement = ref<null | HTMLElement>(null);
 const film = ref<null | FilmDetailsResponse>(null);
 const filmCredits = ref<null | FilmCreditsResponse>(null);
 const availableProviders = ref<null | WatchProvidersReponse>(null);
+
+const titleAnimationCondition = computed(() => {
+  if (!refFilmTitle.value) {
+    return false;
+  }
+  return refFilmTitle.value.scrollWidth > refFilmTitle.value.clientWidth;
+});
 
 const alreadyInToWatch = computed(() => {
   if (!account.userAccount?.to_watch) return null;
@@ -327,6 +350,34 @@ onMounted(async () => {
     .remove {
       @include tile;
     }
+  }
+
+  .header-animation {
+    width: $calc-page-width;
+    height: 28px;
+    display: block;
+    overflow: hidden;
+    position: relative;
+    white-space: nowrap;
+
+    &__title {
+      animation: leftright 10s infinite alternate linear;
+      display: inline-block;
+      position: relative;
+    }
+  }
+}
+
+@keyframes leftright {
+  0%,
+  30% {
+    transform: translateX(0%);
+    left: 0%;
+  }
+  70%,
+  100% {
+    transform: translateX(-100%);
+    left: 100%;
   }
 }
 </style>
