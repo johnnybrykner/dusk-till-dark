@@ -5,32 +5,17 @@
         <h1 v-if="listToggled" class="g-page-title">Watched list</h1>
         <h1 v-else class="g-page-title">To watch list</h1>
       </Transition>
-      <div
-        @click="toggleList"
-        class="swap"
-        :class="{ 'swap--flipped': listToggled }"
-      >
-        <img
-          src="../assets/images/swap_icon.svg"
-          class="swap__icon"
-          alt="Swap icon"
-        />
+      <div @click="toggleList" class="swap" :class="{ 'swap--flipped': listToggled }">
+        <img src="../assets/images/swap_icon.svg" class="swap__icon" alt="Swap icon" />
       </div>
     </header>
     <div class="transition__container">
       <div v-if="store.loading" class="g-loading">
         <img src="../assets/images/loading.svg" alt="Loading animation" />
       </div>
-      <WatchedList
-        v-else-if="listToggled"
-        :films="accountStore.userAccount.previously_watched"
-        :unmountTransitionRunning="listTransitInProgress"
-      />
-      <ToWatchList
-        v-else
-        :films="accountStore.userAccount.to_watch"
-        :unmountTransitionRunning="listTransitInProgress"
-      />
+      <WatchedList v-else-if="listToggled" :films="accountStore.userAccount.previously_watched"
+        :unmountTransitionRunning="listTransitInProgress" />
+      <ToWatchList v-else :films="accountStore.userAccount.to_watch" :unmountTransitionRunning="listTransitInProgress" />
     </div>
   </div>
 </template>
@@ -89,6 +74,7 @@ function toggleList() {
   opacity: 0;
   transform: rotateX(-90deg);
 }
+
 .transition__container {
   position: relative;
 
@@ -105,6 +91,7 @@ function toggleList() {
   .fade-enter-from {
     opacity: 0;
   }
+
   .fade-leave-to {
     opacity: 0;
   }

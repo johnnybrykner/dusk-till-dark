@@ -1,23 +1,12 @@
 <template>
   <transition name="notification">
-    <figure
-      :class="{
-        notification: true,
-        'notification--error': store.thrownError,
-        'notification--success': store.notificationText,
-      }"
-      v-if="store.thrownError || store.notificationText"
-    >
-      <img
-        v-if="store.thrownError"
-        src="../assets/images/error_icon.svg"
-        alt="Notification error icon"
-      />
-      <img
-        v-if="store.notificationText"
-        src="../assets/images/success_icon.svg"
-        alt="Notification success icon"
-      />
+    <figure :class="{
+      notification: true,
+      'notification--error': store.thrownError,
+      'notification--success': store.notificationText,
+    }" v-if="store.thrownError || store.notificationText">
+      <img v-if="store.thrownError" src="../assets/images/error_icon.svg" alt="Notification error icon" />
+      <img v-if="store.notificationText" src="../assets/images/success_icon.svg" alt="Notification success icon" />
       <figcaption>{{ store.thrownError ?? store.notificationText }}</figcaption>
     </figure>
   </transition>
@@ -42,6 +31,7 @@ const store = useStore();
   &--error {
     background-color: $error;
   }
+
   &--success {
     background-color: $success;
   }

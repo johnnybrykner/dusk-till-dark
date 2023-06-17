@@ -1,18 +1,13 @@
 <template>
   <ul class="list-wrapper">
-    <li
-      v-for="film in props.films"
-      :key="film.id"
-      class="list-item"
-      :class="{
-        'list-item--transit': unmountTransitionRunning,
-      }"
-    >
+    <li v-for="film in props.films" :key="film.id" class="list-item" :class="{
+      'list-item--transit': unmountTransitionRunning,
+    }">
       <router-link :to="'/film/' + film.id">
         <h2>{{ film.name }}</h2>
         <h4 class="details">
-          {{ formatLength(film.length) }} <span class="dot" />
-          {{ film.director }} <span class="dot" /> {{ film.year }}
+          {{ formatLength(film.length) }} <span class="dot" /> {{ film.director }}
+          <span class="dot" /> {{ film.year }}
         </h4>
       </router-link>
     </li>

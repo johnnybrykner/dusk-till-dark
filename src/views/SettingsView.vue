@@ -6,24 +6,15 @@
     <div class="settings__wrapper">
       <div class="option">
         <h2>Set streaming country</h2>
-        <img
-          src="../assets/images/arrow-forward_icon_black.svg"
-          alt="Arrow forward icon"
-        />
+        <img src="../assets/images/arrow-forward_icon_black.svg" alt="Arrow forward icon" />
       </div>
       <div class="option">
         <h2>Set providers</h2>
-        <img
-          src="../assets/images/arrow-forward_icon_black.svg"
-          alt="Arrow forward icon"
-        />
+        <img src="../assets/images/arrow-forward_icon_black.svg" alt="Arrow forward icon" />
       </div>
       <div class="option">
         <h2>Log out</h2>
-        <img
-          src="../assets/images/arrow-forward_icon_black.svg"
-          alt="Arrow forward icon"
-        />
+        <img src="../assets/images/arrow-forward_icon_black.svg" alt="Arrow forward icon" />
       </div>
     </div>
   </div>

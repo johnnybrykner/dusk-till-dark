@@ -22,7 +22,7 @@ export const useAccount = defineStore("account", {
       listAction: AWSEndpoints,
       filmDetails: FilmDetailsResponse,
       filmDirector: FilmCrew,
-      filmReleaseYear: number
+      filmReleaseYear: number,
     ) {
       const filmToAdd: AddToWatch = {
         director: filmDirector.original_name,
@@ -35,14 +35,14 @@ export const useAccount = defineStore("account", {
       this.userAccount = await baseAwsRequest(
         listAction,
         RequestMethods.PATCH,
-        filmToAdd
+        filmToAdd,
       );
     },
     async updatePreviouslyWatched(
       listAction: AWSEndpoints,
       filmDetails: FilmDetailsResponse,
       filmDirector: FilmCrew,
-      filmReleaseYear: number
+      filmReleaseYear: number,
     ) {
       const filmToAdd: AddToPreviouslyWatched = {
         director: filmDirector.original_name,
@@ -56,7 +56,7 @@ export const useAccount = defineStore("account", {
       this.userAccount = await baseAwsRequest(
         listAction,
         RequestMethods.PATCH,
-        filmToAdd
+        filmToAdd,
       );
     },
   },

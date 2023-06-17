@@ -34,11 +34,31 @@ const routes: Array<RouteRecordRaw> = [
     name: "settings",
     component: SettingsView,
   },
+  {
+    path: "/login",
+    name: "login",
+    component: () =>
+      import(/* webpackChunkName: "login" */ "../views/LoginView.vue"),
+  },
 ];
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes,
+});
+
+router.beforeEach((to) => {
+  if (
+    // make sure the user is authenticated
+    !document.cookie
+      .split(";")
+      .some((item) => item.trim().startsWith("account_token=")) &&
+    // avoid an infinite redirect
+    to.name !== "login"
+  ) {
+    // redirect the user to the login page
+    return { name: "login" };
+  }
 });
 
 export default router;

@@ -2,7 +2,7 @@
   <StatusNotification />
   <div class="wrapper">
     <router-view />
-    <MainNavigation />
+    <MainNavigation v-if="route.name !== 'login'" />
   </div>
 </template>
 
@@ -13,14 +13,13 @@ import { useAccount } from "@/store/account";
 import { onMounted } from "vue";
 import { baseAwsRequest } from "@/utils/baseRequest";
 import { AWSEndpoints, RequestMethods } from "@/types/apiTypes";
+import { useRoute } from "vue-router";
 
 const store = useAccount();
+const route = useRoute();
 
 onMounted(async () => {
-  store.userAccount = await baseAwsRequest(
-    AWSEndpoints.GET_ACCOUNT,
-    RequestMethods.GET
-  );
+  store.userAccount = await baseAwsRequest(AWSEndpoints.GET_ACCOUNT, RequestMethods.GET);
 });
 </script>
 

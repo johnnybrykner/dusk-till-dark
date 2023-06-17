@@ -3,27 +3,16 @@
     <div class="the-search__container">
       <div class="input-container">
         <img src="../assets/images/search_icon_white.svg" alt="Search icon" />
-        <input
-          type="search"
-          class="input-container__field"
-          placeholder="Search films"
-          @input="(event: InputEvent) => debouncedSearch(event.target as HTMLInputElement)"
-        />
+        <input type="search" class="input-container__field" placeholder="Search films"
+          @input="(event: Event) => debouncedSearch(event.target as HTMLInputElement)" />
         <router-link to="/search">
-          <img
-            src="../assets/images/arrow-forward_icon_white.svg"
-            alt="Arrow forward icon"
-          />
+          <img src="../assets/images/arrow-forward_icon_white.svg" alt="Arrow forward icon" />
         </router-link>
       </div>
       <span class="line"></span>
     </div>
     <ul class="the-search__results" v-if="search.tmdbResults.length">
-      <li
-        class="search-result"
-        v-for="result in search.tmdbResults"
-        :key="result.id"
-      >
+      <li class="search-result" v-for="result in search.tmdbResults" :key="result.id">
         <router-link :to="'/film/' + result.id">
           <h2>{{ result.original_title }}</h2>
           <h4 class="details">
@@ -63,6 +52,7 @@ function debouncedSearch(input: HTMLInputElement) {
 
     .input-container {
       @include flex-row($col-gap: $spacing-medium);
+
       &__field {
         width: $calc-page-width;
         border: none;

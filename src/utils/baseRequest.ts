@@ -8,7 +8,7 @@ import {
 export async function baseTmdbRequest(
   url: string,
   method: RequestMethods,
-  queryString?: string
+  queryString?: string,
 ) {
   const store = useStore();
   store.loading = true;
@@ -20,7 +20,7 @@ export async function baseTmdbRequest(
       url + "?api_key=" + process.env.VUE_APP_TMDB_KEY + query,
       {
         method,
-      }
+      },
     );
     return await rawResponse.json();
   } catch (error) {
@@ -33,7 +33,7 @@ export async function baseTmdbRequest(
 export async function baseAwsRequest(
   urlPrefix: AWSEndpoints,
   method: RequestMethods,
-  body?: OurFilmInterface
+  body?: OurFilmInterface,
 ) {
   const store = useStore();
   store.loading = true;
@@ -43,7 +43,7 @@ export async function baseAwsRequest(
       {
         method,
         body: JSON.stringify(body),
-      }
+      },
     );
     return await rawResponse.json();
   } catch (error) {
