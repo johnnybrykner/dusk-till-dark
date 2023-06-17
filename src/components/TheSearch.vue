@@ -55,12 +55,6 @@ function debouncedSearch(input: HTMLInputElement) {
 
       &__field {
         width: $calc-page-width;
-        border: none;
-        outline: none;
-        background-color: transparent;
-        color: $white;
-        font-family: "JostMedium";
-        font-size: 18px;
       }
     }
 

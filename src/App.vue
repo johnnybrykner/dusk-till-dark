@@ -64,6 +64,16 @@ p {
   font-weight: 400;
 }
 
+input {
+  border: none;
+  outline: none;
+  background-color: transparent;
+  color: $white;
+  font-family: "JostMedium";
+  font-size: 18px;
+  padding: 0;
+}
+
 .g-page-header {
   @include flex-column;
   align-items: center;
