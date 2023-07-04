@@ -1,13 +1,23 @@
 <template>
   <section class="login-field">
     <div class="g-loading" v-if="store.loading">
-      <img src="../assets/images/loading.svg" alt="Loading animation" />
+      <img src="../assets/images/loading.gif" alt="Loading animation" />
     </div>
-    <div class="field__container">
-      <img class="field__icon field__icon--left" src="../assets/images/account_icon_white.svg" alt="White account icon">
-      <input type="search" placeholder="Username">
-      <img class="field__icon field__icon--right" src="../assets/images/arrow-forward_icon_white.svg"
-        alt="White arrow forward">
+    <div v-else>
+      <div class="login-field__container">
+        <img
+          src="../assets/images/account_icon_white.png"
+          class="icon"
+          alt="White account icon"
+        />
+        <input type="search" placeholder="Username" />
+        <img
+          src="../assets/images/arrow-right_icon_white.png"
+          class="icon"
+          alt="Arrow forward icon"
+        />
+      </div>
+      <span class="line"></span>
     </div>
   </section>
 </template>
@@ -16,37 +26,30 @@
 import { useStore } from "@/store";
 import { ref } from "vue";
 const store = useStore();
-
 </script>
 
 <style scoped lang="scss">
 .login-field {
-  margin: 0 $spacing-max;
-  padding-bottom: $spacing-medium;
-  border-bottom: 1px solid $white;
+  margin: $spacing-max;
 
-  .field__container {
-    position: relative;
-    display: flex;
-    align-items: center;
+  &__container {
+    @include flex-row($col-gap: $spacing-medium);
+
+    .icon {
+      width: $icon-size-small;
+    }
 
     input {
-      margin-left: $spacing-max;
+      width: $calc-page-width;
     }
+  }
 
-    .field__icon {
-      position: absolute;
-      width: $icon-size-small;
-
-      &--left {
-        left: 0;
-      }
-
-      &--right {
-        right: 0;
-        margin-top: $spacing-small;
-      }
-    }
+  .line {
+    display: block;
+    width: $calc-page-width;
+    height: $spacing-min;
+    background-color: $white;
+    margin-top: $spacing-small;
   }
 }
 </style>

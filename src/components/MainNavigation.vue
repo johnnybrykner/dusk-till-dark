@@ -2,16 +2,28 @@
   <footer class="page-footer">
     <div class="page-footer__navbar">
       <router-link to="/" class="router-link">
-        <img src="../assets/images/home_icon_black.svg" class="icon" alt="Home icon" />
+        <img
+          src="../assets/images/main-page_icon_white.png"
+          class="icon"
+          alt="Home icon"
+        />
+        <h4>Home</h4>
       </router-link>
       <router-link to="/search" class="router-link">
-        <img src="../assets/images/search_icon_black.svg" class="icon" alt="Search icon" />
+        <img
+          src="../assets/images/search_icon_white.png"
+          class="icon"
+          alt="Search icon"
+        />
+        <h4>Search</h4>
       </router-link>
       <router-link to="/lists" class="router-link">
-        <img src="../assets/images/movie_icon_black.svg" class="icon" alt="List icon" />
-      </router-link>
-      <router-link to="/settings" class="router-link">
-        <img src="../assets/images/settings_icon_black.svg" class="icon" alt="Settings icon" />
+        <img
+          src="../assets/images/list_icon_white.png"
+          class="icon"
+          alt="List icon"
+        />
+        <h4>Your movies</h4>
       </router-link>
     </div>
     <div class="page-footer__references">
@@ -24,30 +36,37 @@
 <style scoped lang="scss">
 .page-footer {
   @include flex-column;
-  justify-content: flex-end;
-  height: calc($icon-size-small + 10px + $spacing-big + $button-size + $spacing-max);
+  justify-content: space-between;
+  height: $footer-height;
+  width: 100%;
+  position: fixed;
+  bottom: 0px;
   z-index: 1;
 
   &__navbar {
-    @include flex-row;
-    justify-content: space-between;
-    position: fixed;
-    bottom: calc($icon-size-small + 10px + $spacing-big);
-    z-index: 1;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
     width: $calc-page-width;
-    margin: 0px $spacing-max;
+    padding: 0px $spacing-max;
 
     .router-link {
-      @include button-round;
-      @include object-shadow;
       @include flex-column;
+      align-items: center;
+
+      img {
+        width: $icon-size-big;
+      }
+
+      h4 {
+        color: $white;
+      }
     }
   }
 
   &__references {
     @include flex-row($col-gap: $spacing-medium);
     justify-content: center;
-    margin-bottom: 10px;
+    padding: $spacing-medium $spacing-max;
 
     img {
       height: $icon-size-min;

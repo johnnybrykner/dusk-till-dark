@@ -1,5 +1,5 @@
 <template>
-  <div class="home">
+  <section class="home">
     <header class="g-page-header">
       <h1 class="g-page-header__title">Dusk Till Dark</h1>
       <h4 v-if="route.name === 'home'" class="g-page-header__subtitle">
@@ -11,7 +11,7 @@
         <TheSearch />
       </KeepAlive>
     </div>
-  </div>
+  </section>
 </template>
 
 <script setup lang="ts">
@@ -23,4 +23,8 @@ const store = useStore();
 const route = useRoute();
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.home {
+  @include body;
+}
+</style>

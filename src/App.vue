@@ -1,6 +1,6 @@
 <template>
   <StatusNotification />
-  <div class="wrapper">
+  <div class="body">
     <router-view />
     <MainNavigation v-if="route.name !== 'login'" />
   </div>
@@ -19,7 +19,10 @@ const store = useAccount();
 const route = useRoute();
 
 onMounted(async () => {
-  store.userAccount = await baseAwsRequest(AWSEndpoints.GET_ACCOUNT, RequestMethods.GET);
+  store.userAccount = await baseAwsRequest(
+    AWSEndpoints.GET_ACCOUNT,
+    RequestMethods.GET,
+  );
 });
 </script>
 
@@ -64,6 +67,10 @@ p {
   font-weight: 400;
 }
 
+a {
+  text-decoration: none;
+}
+
 input {
   border: none;
   outline: none;
@@ -79,7 +86,7 @@ input {
   align-items: center;
   padding: $spacing-big $spacing-max;
 
-  &__title {
+  .g-page-title {
     text-transform: capitalize;
   }
 
@@ -104,5 +111,10 @@ input {
 .g-loading {
   @include flex-row;
   justify-content: center;
+
+  img {
+    width: $button-size;
+    height: $button-size;
+  }
 }
 </style>

@@ -1,15 +1,24 @@
 <template>
   <div v-if="!film || !filmCredits" class="g-loading">
-    <img src="../assets/images/loading.svg" alt="Loading animation" />
+    <img src="../assets/images/loading.gif" alt="Loading animation" />
   </div>
-  <div class="film" v-else>
+  <section class="film" v-else>
     <header class="g-page-header header-animation">
-      <h1 class="g-page-header__title" :class="{ 'header-animation__title': titleAnimationCondition }" ref="refFilmTitle">
+      <h1
+        class="g-page-header__title"
+        :class="{ 'header-animation__title': titleAnimationCondition }"
+        ref="refFilmTitle"
+      >
         {{ film.title }}
       </h1>
     </header>
     <div class="film__wrapper">
-      <img class="poster" v-if="imageUrl" :src="imageUrl" :alt="film.title + ' image'" />
+      <img
+        class="poster"
+        v-if="imageUrl"
+        :src="imageUrl"
+        :alt="film.title + ' image'"
+      />
       <div class="details">
         <div v-if="filmDirector" class="details__director">
           <h4>Director</h4>
@@ -37,7 +46,11 @@
       <div class="cast">
         <h4>Cast</h4>
         <div class="cast__wrapper">
-          <h2 v-for="castMember in filmCast" :key="castMember.id" class="cast-member-name">
+          <h2
+            v-for="castMember in filmCast"
+            :key="castMember.id"
+            class="cast-member-name"
+          >
             {{ castMember.name }}
           </h2>
         </div>
@@ -49,7 +62,11 @@
       <div class="production">
         <h4>Production countries</h4>
         <div class="production__wrapper">
-          <h2 v-for="country in film.production_countries" :key="country.name" class="country-name">
+          <h2
+            v-for="country in film.production_countries"
+            :key="country.name"
+            class="country-name"
+          >
             {{ country.name }}
           </h2>
         </div>
@@ -77,23 +94,35 @@
       <div class="rating">
         <div class="rating__wrapper">
           <h2>Give rating</h2>
-          <img src="../assets/images/arrow-forward_icon_black.svg" alt="Arrow forward icon" />
+          <img
+            src="../assets/images/arrow-right_icon_black.png"
+            class="icon"
+            alt="Arrow forward icon"
+          />
         </div>
       </div>
       <div class="add">
         <div class="add__wrapper">
           <h2>Move to Watched</h2>
-          <img src="../assets/images/arrow-forward_icon_black.svg" alt="Arrow forward icon" />
+          <img
+            src="../assets/images/arrow-right_icon_black.png"
+            class="icon"
+            alt="Arrow forward icon"
+          />
         </div>
       </div>
       <div class="remove">
         <div class="remove__wrapper">
           <h2>Remove film from library</h2>
-          <img src="../assets/images/arrow-forward_icon_black.svg" alt="Arrow forward icon" />
+          <img
+            src="../assets/images/arrow-right_icon_black.png"
+            class="icon"
+            alt="Arrow forward icon"
+          />
         </div>
       </div>
     </div>
-  </div>
+  </section>
 </template>
 
 <script setup lang="ts">
@@ -133,7 +162,9 @@ const titleAnimationCondition = computed(() => {
 
 const alreadyInToWatch = computed(() => {
   if (!account.userAccount?.to_watch) return null;
-  return !!account.userAccount.to_watch.find((listItem) => listItem.id === film.value?.id);
+  return !!account.userAccount.to_watch.find(
+    (listItem) => listItem.id === film.value?.id,
+  );
 });
 
 // const alreadyInWatchedList = computed(() => {
@@ -146,14 +177,17 @@ const alreadyInToWatch = computed(() => {
 const imageUrl = computed(() => {
   if (film.value)
     return (
-      process.env.VUE_APP_TMDB_MEDIA_URL + (film.value.poster_path ?? film.value.backdrop_path)
+      process.env.VUE_APP_TMDB_MEDIA_URL +
+      (film.value.poster_path ?? film.value.backdrop_path)
     );
   return null;
 });
 
 const filmDirector = computed(() => {
   if (filmCredits.value)
-    return filmCredits.value.crew.find((crewMember) => crewMember.job === "Director");
+    return filmCredits.value.crew.find(
+      (crewMember) => crewMember.job === "Director",
+    );
   return null;
 });
 
@@ -207,9 +241,9 @@ async function checkProviderAvailability() {
   if (availableProviders.value) return;
   availableProviders.value = await baseTmdbRequest(
     process.env.VUE_APP_TMDB_BASE_URL +
-    TMDBEndpoints.FILM_DETAILS +
-    route.params.id +
-    TMDBEndpoints.WATCH_PROVIDERS,
+      TMDBEndpoints.FILM_DETAILS +
+      route.params.id +
+      TMDBEndpoints.WATCH_PROVIDERS,
     RequestMethods.GET,
   );
   await nextTick();
@@ -241,14 +275,16 @@ function removeFromWatchList() {
 
 onMounted(async () => {
   film.value = await baseTmdbRequest(
-    process.env.VUE_APP_TMDB_BASE_URL + TMDBEndpoints.FILM_DETAILS + route.params.id,
+    process.env.VUE_APP_TMDB_BASE_URL +
+      TMDBEndpoints.FILM_DETAILS +
+      route.params.id,
     RequestMethods.GET,
   );
   filmCredits.value = await baseTmdbRequest(
     process.env.VUE_APP_TMDB_BASE_URL +
-    TMDBEndpoints.FILM_DETAILS +
-    route.params.id +
-    TMDBEndpoints.FILM_CREDITS,
+      TMDBEndpoints.FILM_DETAILS +
+      route.params.id +
+      TMDBEndpoints.FILM_CREDITS,
     RequestMethods.GET,
   );
 });
@@ -256,13 +292,14 @@ onMounted(async () => {
 
 <style scoped lang="scss">
 .film {
+  @include body;
+
   .g-page-header {
     text-align: center;
   }
 
   &__wrapper {
     @include flex-column($row-gap: $spacing-min);
-    margin-top: $spacing-max;
 
     .poster {
       width: 100%;
@@ -304,6 +341,10 @@ onMounted(async () => {
       &__wrapper {
         @include flex-row;
         justify-content: space-between;
+
+        .icon {
+          width: $icon-size-small;
+        }
       }
     }
 
@@ -336,7 +377,6 @@ onMounted(async () => {
 }
 
 @keyframes leftright {
-
   0%,
   30% {
     transform: translateX(0%);

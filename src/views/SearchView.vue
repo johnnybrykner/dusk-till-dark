@@ -12,3 +12,9 @@
 <script setup lang="ts">
 import TheSearch from "@/components/TheSearch.vue";
 </script>
+
+<style scoped lang="scss">
+.search {
+  @include body;
+}
+</style>
