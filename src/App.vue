@@ -9,21 +9,13 @@
 <script setup lang="ts">
 import MainNavigation from "./components/MainNavigation.vue";
 import StatusNotification from "./components/StatusNotification.vue";
-import { useAccount } from "@/store/account";
-import { onMounted } from "vue";
-import { baseAwsRequest } from "@/utils/baseRequest";
-import { AWSEndpoints, RequestMethods } from "@/types/apiTypes";
 import { useRoute } from "vue-router";
 
-const store = useAccount();
 const route = useRoute();
 
-onMounted(async () => {
-  store.userAccount = await baseAwsRequest(
-    AWSEndpoints.GET_ACCOUNT,
-    RequestMethods.GET,
-  );
-});
+// onMounted(async () => {
+//   store.userAccount = await baseAwsRequest(AWSEndpoints.GET_ACCOUNT, RequestMethods.GET);
+// });
 </script>
 
 <style lang="scss">

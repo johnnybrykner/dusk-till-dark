@@ -1,34 +1,20 @@
 export enum RequestMethods {
   GET = "GET",
-  PATCH = "PATCH",
+  POST = "POST",
+  DELETE = "DELETE",
+  PUT = "PUT",
 }
 
 export interface OurFilmInterface {
-  director: string;
-  film_genres?: FilmGenre[];
-  id: number;
-  length: number;
-  name: string;
-  our_rating?: number;
-  year: number;
-}
-
-export interface AddToWatch {
   director: string;
   film_genres: FilmGenre[];
   id: number;
   length: number;
   name: string;
   year: number;
-}
-
-export interface AddToPreviouslyWatched {
-  director: string;
-  id: number;
-  length: number;
-  name: string;
-  our_rating: number;
-  year: number;
+  language: string;
+  our_rating?: number;
+  their_rating?: number;
 }
 
 export interface FilmSearch {
@@ -50,9 +36,9 @@ export interface FilmSearchResponse {
 }
 
 export interface UserAccount {
-  previously_watched: AddToPreviouslyWatched[];
+  previously_watched: OurFilmInterface[];
   recent_searches: FilmSearch[];
-  to_watch: AddToWatch[];
+  to_watch: OurFilmInterface[];
   username: string;
 }
 
@@ -143,14 +129,6 @@ export enum OurWatchProviders {
   NETFLIX = 8,
   DISNEY = 337,
   PRIME = 119,
-}
-
-export enum AWSEndpoints {
-  GET_ACCOUNT = "https://f45m7vc6ytsljdo7tkexl45opi0krdrt.",
-  ADD_TO_WATCH = "https://crhpfnm44rqsy457nesrawvcwi0pldit.",
-  ADD_PREVIOUSLY_WATCHED = "https://7tdqyc4cginsdkl7rsluiawhse0cpuxy.",
-  REMOVE_TO_WATCH = "https://sm27no2ghycyomfcloqvg2lgjy0qjckv.",
-  REMOVE_PREVIOUSLY_WATCHED = "https://k542njzonwvxbhfxmx6wjy4sgy0xoxat.",
 }
 
 export enum TMDBEndpoints {
