@@ -26,17 +26,21 @@ export async function baseTmdbRequest(
   }
 }
 
-export async function baseAwsRequest(
+export async function baseAccountRequest(
+  urlSuffix: string,
   method: RequestMethods,
   body?: OurFilmInterface,
 ) {
   const store = useStore();
   store.loading = true;
   try {
-    const rawResponse = await fetch(process.env.VUE_APP_DUSK_API_BASE_URL, {
-      method,
-      body: JSON.stringify(body),
-    });
+    const rawResponse = await fetch(
+      process.env.VUE_APP_DUSK_API_BASE_URL + urlSuffix,
+      {
+        method,
+        body: JSON.stringify(body),
+      },
+    );
     return await rawResponse.json();
   } catch (error) {
     store.handleError(error as string);

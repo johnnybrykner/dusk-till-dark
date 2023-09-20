@@ -4,21 +4,12 @@
   </div>
   <section class="film" v-else>
     <header class="g-page-header header-animation">
-      <h1
-        class="g-page-header__title"
-        :class="{ 'header-animation__title': titleAnimationCondition }"
-        ref="refFilmTitle"
-      >
+      <h1 class="g-page-header__title" :class="{ 'header-animation__title': titleAnimationCondition }" ref="refFilmTitle">
         {{ film.title }}
       </h1>
     </header>
     <div class="film__wrapper">
-      <img
-        class="poster"
-        v-if="imageUrl"
-        :src="imageUrl"
-        :alt="film.title + ' image'"
-      />
+      <img class="poster" v-if="imageUrl" :src="imageUrl" :alt="film.title + ' image'" />
       <div class="details">
         <div v-if="filmDirector" class="details__director">
           <h4>Director</h4>
@@ -46,11 +37,7 @@
       <div class="cast">
         <h4>Cast</h4>
         <div class="cast__wrapper">
-          <h2
-            v-for="castMember in filmCast"
-            :key="castMember.id"
-            class="cast-member-name"
-          >
+          <h2 v-for="castMember in filmCast" :key="castMember.id" class="cast-member-name">
             {{ castMember.name }}
           </h2>
         </div>
@@ -62,11 +49,7 @@
       <div class="production">
         <h4>Production countries</h4>
         <div class="production__wrapper">
-          <h2
-            v-for="country in film.production_countries"
-            :key="country.name"
-            class="country-name"
-          >
+          <h2 v-for="country in film.production_countries" :key="country.name" class="country-name">
             {{ country.name }}
           </h2>
         </div>
@@ -94,31 +77,19 @@
       <div class="rating">
         <div class="rating__wrapper">
           <h2>Give rating</h2>
-          <img
-            src="../assets/images/arrow-right_icon_black.png"
-            class="icon"
-            alt="Arrow forward icon"
-          />
+          <img src="../assets/images/arrow-right_icon_black.png" class="icon" alt="Arrow forward icon" />
         </div>
       </div>
       <div class="add">
         <div class="add__wrapper">
           <h2>Move to Watched</h2>
-          <img
-            src="../assets/images/arrow-right_icon_black.png"
-            class="icon"
-            alt="Arrow forward icon"
-          />
+          <img src="../assets/images/arrow-right_icon_black.png" class="icon" alt="Arrow forward icon" />
         </div>
       </div>
       <div class="remove">
         <div class="remove__wrapper">
           <h2>Remove film from library</h2>
-          <img
-            src="../assets/images/arrow-right_icon_black.png"
-            class="icon"
-            alt="Arrow forward icon"
-          />
+          <img src="../assets/images/arrow-right_icon_black.png" class="icon" alt="Arrow forward icon" />
         </div>
       </div>
     </div>
@@ -241,9 +212,9 @@ async function checkProviderAvailability() {
   if (availableProviders.value) return;
   availableProviders.value = await baseTmdbRequest(
     process.env.VUE_APP_TMDB_BASE_URL +
-      TMDBEndpoints.FILM_DETAILS +
-      route.params.id +
-      TMDBEndpoints.WATCH_PROVIDERS,
+    TMDBEndpoints.FILM_DETAILS +
+    route.params.id +
+    TMDBEndpoints.WATCH_PROVIDERS,
     RequestMethods.GET,
   );
   await nextTick();
@@ -256,7 +227,7 @@ async function checkProviderAvailability() {
 }
 
 function addToWatchList() {
-  account.updateToWatch(
+  account.addToWatch(
     AWSEndpoints.ADD_TO_WATCH,
     film.value as FilmDetailsResponse,
     filmDirector.value as FilmCrew,
@@ -265,7 +236,7 @@ function addToWatchList() {
 }
 
 function removeFromWatchList() {
-  account.updateToWatch(
+  account.addToWatch(
     AWSEndpoints.REMOVE_TO_WATCH,
     film.value as FilmDetailsResponse,
     filmDirector.value as FilmCrew,
@@ -276,15 +247,15 @@ function removeFromWatchList() {
 onMounted(async () => {
   film.value = await baseTmdbRequest(
     process.env.VUE_APP_TMDB_BASE_URL +
-      TMDBEndpoints.FILM_DETAILS +
-      route.params.id,
+    TMDBEndpoints.FILM_DETAILS +
+    route.params.id,
     RequestMethods.GET,
   );
   filmCredits.value = await baseTmdbRequest(
     process.env.VUE_APP_TMDB_BASE_URL +
-      TMDBEndpoints.FILM_DETAILS +
-      route.params.id +
-      TMDBEndpoints.FILM_CREDITS,
+    TMDBEndpoints.FILM_DETAILS +
+    route.params.id +
+    TMDBEndpoints.FILM_CREDITS,
     RequestMethods.GET,
   );
 });
@@ -377,6 +348,7 @@ onMounted(async () => {
 }
 
 @keyframes leftright {
+
   0%,
   30% {
     transform: translateX(0%);

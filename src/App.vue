@@ -14,7 +14,7 @@ import { useRoute } from "vue-router";
 const route = useRoute();
 
 // onMounted(async () => {
-//   store.userAccount = await baseAwsRequest(AWSEndpoints.GET_ACCOUNT, RequestMethods.GET);
+//   store.userAccount = await baseAccountRequest(AWSEndpoints.GET_ACCOUNT, RequestMethods.GET);
 // });
 </script>
 
