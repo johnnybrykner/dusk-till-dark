@@ -18,10 +18,10 @@ const routes: Array<RouteRecordRaw> = [
     path: "/lists",
     name: "lists",
     // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
+    // this generates a separate chunk (lists.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () =>
-      import(/* webpackChunkName: "about" */ "../views/ListsView.vue"),
+      import(/* webpackChunkName: "lists" */ "../views/ListsView.vue"),
   },
   {
     path: "/film/:id",
@@ -45,20 +45,6 @@ const routes: Array<RouteRecordRaw> = [
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes,
-});
-
-router.beforeEach((to) => {
-  if (
-    // make sure the user is authenticated
-    !document.cookie
-      .split(";")
-      .some((item) => item.trim().startsWith("account_token=")) &&
-    // avoid an infinite redirect
-    to.name !== "login"
-  ) {
-    // redirect the user to the login page
-    return { name: "login" };
-  }
 });
 
 export default router;

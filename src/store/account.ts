@@ -11,7 +11,7 @@ import { defineStore } from "pinia";
 export const useAccount = defineStore("account", {
   state: () => {
     return {
-      userAccount: {} as UserAccount,
+      userAccount: null as UserAccount | null,
     };
   },
   getters: {},
@@ -21,6 +21,7 @@ export const useAccount = defineStore("account", {
       filmDirector: FilmCrew,
       filmReleaseYear: number,
     ) {
+      if (!this.userAccount) return;
       const filmToAdd: OurFilmInterface = {
         director: filmDirector.original_name,
         film_genres: filmDetails.genres,
@@ -30,16 +31,19 @@ export const useAccount = defineStore("account", {
         year: filmReleaseYear,
         language: filmDetails.original_language,
       };
-      this.userAccount = await baseAccountRequest(
+      const accountRequestResult = await baseAccountRequest(
+        this.userAccount.username + "/add_to/to_watch",
         RequestMethods.POST,
         filmToAdd,
       );
+      if (accountRequestResult) this.userAccount = accountRequestResult;
     },
     async addToPreviouslyWatched(
       filmDetails: FilmDetailsResponse,
       filmDirector: FilmCrew,
       filmReleaseYear: number,
     ) {
+      if (!this.userAccount) return;
       const filmToAdd: OurFilmInterface = {
         director: filmDirector.original_name,
         id: filmDetails.id,
@@ -49,10 +53,12 @@ export const useAccount = defineStore("account", {
         film_genres: filmDetails.genres,
         language: filmDetails.original_language,
       };
-      this.userAccount = await baseAccountRequest(
+      const accountRequestResult = await baseAccountRequest(
+        this.userAccount.username + "/add_to/previously_watched",
         RequestMethods.POST,
         filmToAdd,
       );
+      if (accountRequestResult) this.userAccount = accountRequestResult;
     },
   },
 });

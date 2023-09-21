@@ -105,7 +105,6 @@ import { useAccount } from "@/store/account";
 import {
   RequestMethods,
   TMDBEndpoints,
-  AWSEndpoints,
   FilmDetailsResponse,
   FilmCreditsResponse,
   WatchProvidersReponse,
@@ -226,23 +225,23 @@ async function checkProviderAvailability() {
     });
 }
 
-function addToWatchList() {
-  account.addToWatch(
-    AWSEndpoints.ADD_TO_WATCH,
-    film.value as FilmDetailsResponse,
-    filmDirector.value as FilmCrew,
-    formattedReleaseDate.value ? formattedReleaseDate.value.year : 0,
-  );
-}
+// function addToWatchList() {
+//   account.addToWatch(
+//     AWSEndpoints.ADD_TO_WATCH,
+//     film.value as FilmDetailsResponse,
+//     filmDirector.value as FilmCrew,
+//     formattedReleaseDate.value ? formattedReleaseDate.value.year : 0,
+//   );
+// }
 
-function removeFromWatchList() {
-  account.addToWatch(
-    AWSEndpoints.REMOVE_TO_WATCH,
-    film.value as FilmDetailsResponse,
-    filmDirector.value as FilmCrew,
-    formattedReleaseDate.value ? formattedReleaseDate.value.year : 0,
-  );
-}
+// function removeFromWatchList() {
+//   account.addToWatch(
+//     AWSEndpoints.REMOVE_TO_WATCH,
+//     film.value as FilmDetailsResponse,
+//     filmDirector.value as FilmCrew,
+//     formattedReleaseDate.value ? formattedReleaseDate.value.year : 0,
+//   );
+// }
 
 onMounted(async () => {
   film.value = await baseTmdbRequest(

@@ -7,15 +7,32 @@
 </template>
 
 <script setup lang="ts">
+import { onMounted } from "vue";
 import MainNavigation from "./components/MainNavigation.vue";
 import StatusNotification from "./components/StatusNotification.vue";
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
+import { useAccount } from "@/store/account";
+import { baseAccountRequest } from "./utils/baseRequest";
+import { RequestMethods } from "./types/apiTypes";
 
 const route = useRoute();
+const router = useRouter();
+const account = useAccount();
 
-// onMounted(async () => {
-//   store.userAccount = await baseAccountRequest(AWSEndpoints.GET_ACCOUNT, RequestMethods.GET);
-// });
+onMounted(async () => {
+  console.log("App mounted");
+  if (account.userAccount) return;
+  const loginAttempt = await baseAccountRequest(
+    "users/account",
+    RequestMethods.GET,
+  );
+  console.log(loginAttempt);
+  if (loginAttempt) {
+    account.userAccount = loginAttempt;
+  } else {
+    router.replace({ name: "login" });
+  }
+});
 </script>
 
 <style lang="scss">

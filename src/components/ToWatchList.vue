@@ -1,13 +1,8 @@
 <template>
   <ul class="list-wrapper">
-    <li
-      v-for="film in props.films"
-      :key="film.id"
-      class="list-item"
-      :class="{
-        'list-item--transit': unmountTransitionRunning,
-      }"
-    >
+    <li v-for="film in props.films" :key="film.id" class="list-item" :class="{
+      'list-item--transit': unmountTransitionRunning,
+    }">
       <router-link :to="'/film/' + film.id">
         <h2>{{ film.name }}</h2>
         <h4 class="details">
@@ -21,7 +16,6 @@
 
 <script setup lang="ts">
 import { OurFilmInterface } from "@/types/apiTypes";
-import { defineProps } from "vue";
 import { formatLength } from "@/utils/dataFormatters";
 
 const props = defineProps<{

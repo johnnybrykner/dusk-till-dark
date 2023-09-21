@@ -5,32 +5,17 @@
         <h1 v-if="listToggled" class="g-page-title">Watched list</h1>
         <h1 v-else class="g-page-title">To watch list</h1>
       </Transition>
-      <div
-        @click="toggleList"
-        class="swap"
-        :class="{ 'swap--flipped': listToggled }"
-      >
-        <img
-          src="../assets/images/swap_icon.svg"
-          class="swap__icon"
-          alt="Swap icon"
-        />
+      <div @click="toggleList" class="swap" :class="{ 'swap--flipped': listToggled }">
+        <img src="../assets/images/swap_icon.svg" class="swap__icon" alt="Swap icon" />
       </div>
     </header>
     <div class="transition__container">
-      <div v-if="store.loading" class="g-loading">
+      <div v-if="store.loading || !accountStore.userAccount" class="g-loading">
         <img src="../assets/images/loading.gif" alt="Loading animation" />
       </div>
-      <WatchedList
-        v-else-if="listToggled"
-        :films="accountStore.userAccount.previously_watched"
-        :unmountTransitionRunning="listTransitInProgress"
-      />
-      <ToWatchList
-        v-else
-        :films="accountStore.userAccount.to_watch"
-        :unmountTransitionRunning="listTransitInProgress"
-      />
+      <WatchedList v-else-if="listToggled" :films="accountStore.userAccount.previously_watched"
+        :unmountTransitionRunning="listTransitInProgress" />
+      <ToWatchList v-else :films="accountStore.userAccount.to_watch" :unmountTransitionRunning="listTransitInProgress" />
     </div>
   </div>
 </template>
