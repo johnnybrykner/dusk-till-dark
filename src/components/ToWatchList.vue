@@ -20,7 +20,7 @@ import { formatLength } from "@/utils/dataFormatters";
 
 const props = defineProps<{
   films: OurFilmInterface[];
-  unmountTransitionRunning: boolean;
+  unmountTransitionRunning?: boolean;
 }>();
 </script>
 

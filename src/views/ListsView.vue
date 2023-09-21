@@ -47,12 +47,17 @@ function toggleList() {
   @include body;
 
   &__header {
-    @include flex-row;
+    @include flex-row($col-gap: 0px);
     justify-content: center;
   }
 }
 
 .g-page-header {
+  .g-page-title {
+    flex-grow: 1;
+    text-align: center;
+  }
+
   .swap {
     transition: transform 0.2s ease;
 

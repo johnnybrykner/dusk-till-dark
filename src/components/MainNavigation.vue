@@ -23,7 +23,7 @@
           class="icon"
           alt="List icon"
         />
-        <h4>Your movies</h4>
+        <h4>Your Movies</h4>
       </router-link>
     </div>
     <div class="page-footer__references">

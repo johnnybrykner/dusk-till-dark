@@ -11,30 +11,30 @@
       <router-link :to="'/film/' + film.id">
         <h2 class="title">{{ film.name }}</h2>
         <div class="details">
+          <div class="details__no-rating" v-if="!film.our_rating">
+            <img
+              src="../assets/images/star_icon_black.png"
+              class="rating-icon"
+              alt="Star icon"
+            />
+            <h3>Give rating</h3>
+          </div>
           <div class="details__our-rating" v-if="film.our_rating">
             <img
-              src="../assets/images/star_icon_black.svg"
+              src="../assets/images/star_icon_black.png"
               class="rating-icon"
               alt="Star icon"
             />
             <h3 class="rating">{{ film.our_rating }}</h3>
           </div>
-          <div class="details__tmdb-rating" v-if="film.our_rating">
+          <div class="details__tmdb-rating">
             <img
               src="../assets/images/tmdb_logo.svg"
               class="tmdb-logo"
               alt="TMDB logo"
             />
             <!-- change to tmdb rating when possible -->
-            <h3 class="rating tmdb-rating">{{ film.our_rating }}</h3>
-          </div>
-          <div class="details__no-rating" v-if="!film.our_rating">
-            <img
-              src="../assets/images/star_icon_black.svg"
-              class="rating-icon"
-              alt="Star icon"
-            />
-            <h3>Give rating</h3>
+            <h3 class="rating tmdb-rating">98</h3>
           </div>
         </div>
       </router-link>
@@ -76,7 +76,7 @@ const props = defineProps<{
           @include flex-row($col-gap: $spacing-small);
 
           .rating-icon {
-            height: $icon-size-small;
+            height: $icon-size-min;
           }
 
           .rating {

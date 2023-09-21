@@ -57,7 +57,7 @@
 
       <!-- Todo: come back to this, rework the functionality of immediately fetching streaming providers -->
       <!-- <div class="providers" ref="watchProvidersElement">
-        <h4>Streaming availability</h4>
+        <h4>Streaming</h4>
         <div class="providers__wrapper">
           <h2 v-if="isAvailableOnNetflix">Netflix</h2>
           <h2 v-if="isAvailableOnPrime">Primevideo</h2>
