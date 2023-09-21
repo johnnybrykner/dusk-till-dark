@@ -1,63 +1,64 @@
 import {
-  AddToPreviouslyWatched,
-  AddToWatch,
-  AWSEndpoints,
   FilmCrew,
   FilmDetailsResponse,
+  OurFilmInterface,
   RequestMethods,
   UserAccount,
 } from "@/types/apiTypes";
-import { baseAwsRequest } from "@/utils/baseRequest";
+import { baseAccountRequest } from "@/utils/baseRequest";
 import { defineStore } from "pinia";
 
 export const useAccount = defineStore("account", {
   state: () => {
     return {
-      userAccount: {} as UserAccount,
+      userAccount: null as UserAccount | null,
     };
   },
   getters: {},
   actions: {
-    async updateToWatch(
-      listAction: AWSEndpoints,
+    async addToWatch(
       filmDetails: FilmDetailsResponse,
       filmDirector: FilmCrew,
-      filmReleaseYear: number
+      filmReleaseYear: number,
     ) {
-      const filmToAdd: AddToWatch = {
+      if (!this.userAccount) return;
+      const filmToAdd: OurFilmInterface = {
         director: filmDirector.original_name,
         film_genres: filmDetails.genres,
         id: filmDetails.id,
         length: filmDetails.runtime,
         name: filmDetails.title,
         year: filmReleaseYear,
+        language: filmDetails.original_language,
       };
-      this.userAccount = await baseAwsRequest(
-        listAction,
-        RequestMethods.PATCH,
-        filmToAdd
+      const accountRequestResult = await baseAccountRequest(
+        this.userAccount.username + "/add_to/to_watch",
+        RequestMethods.POST,
+        filmToAdd,
       );
+      if (accountRequestResult) this.userAccount = accountRequestResult;
     },
-    async updatePreviouslyWatched(
-      listAction: AWSEndpoints,
+    async addToPreviouslyWatched(
       filmDetails: FilmDetailsResponse,
       filmDirector: FilmCrew,
-      filmReleaseYear: number
+      filmReleaseYear: number,
     ) {
-      const filmToAdd: AddToPreviouslyWatched = {
+      if (!this.userAccount) return;
+      const filmToAdd: OurFilmInterface = {
         director: filmDirector.original_name,
         id: filmDetails.id,
         length: filmDetails.runtime,
         name: filmDetails.title,
-        //TODO: change to our rating
-        our_rating: filmDetails.vote_average,
         year: filmReleaseYear,
+        film_genres: filmDetails.genres,
+        language: filmDetails.original_language,
       };
-      this.userAccount = await baseAwsRequest(
-        listAction,
-        RequestMethods.PATCH,
-        filmToAdd
+      const accountRequestResult = await baseAccountRequest(
+        this.userAccount.username + "/add_to/previously_watched",
+        RequestMethods.POST,
+        filmToAdd,
       );
+      if (accountRequestResult) this.userAccount = accountRequestResult;
     },
   },
 });

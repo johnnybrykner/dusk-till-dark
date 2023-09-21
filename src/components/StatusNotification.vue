@@ -8,16 +8,9 @@
       }"
       v-if="store.thrownError || store.notificationText"
     >
-      <img
-        v-if="store.thrownError"
-        src="../assets/images/error_icon.svg"
-        alt="Notification error icon"
-      />
-      <img
-        v-if="store.notificationText"
-        src="../assets/images/success_icon.svg"
-        alt="Notification success icon"
-      />
+      <!--change icons-->
+      <!-- <img v-if="store.thrownError" src="../assets/images/error_icon.svg" alt="Notification error icon" />
+      <img v-if="store.notificationText" src="../assets/images/success_icon.svg" alt="Notification success icon" /> -->
       <figcaption>{{ store.thrownError ?? store.notificationText }}</figcaption>
     </figure>
   </transition>
@@ -34,14 +27,15 @@ const store = useStore();
   @include flex-row;
   position: fixed;
   top: $spacing-big;
-  left: $spacing-med;
-  right: $spacing-med;
+  left: $spacing-medium;
+  right: $spacing-medium;
   z-index: 1;
-  padding: $spacing-med;
+  padding: $spacing-medium;
 
   &--error {
     background-color: $error;
   }
+
   &--success {
     background-color: $success;
   }

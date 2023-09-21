@@ -1,24 +1,26 @@
-@mixin top-gradient {
-  background-image: linear-gradient(to bottom, #8f94fb, #6d6eb7, #4c4b78, #2c2a3f, rgba(10, 10, 10, 0));
-  // background-image: linear-gradient(to right bottom, #4e54c8, #5b60d2, #676cdb, #7378e5, #7f84ee, #797ddb, #7375c9, #6d6eb7, #545387, #3c3a5b, #242332, rgba(10, 10, 10, 0));
+@mixin page-gradient {
+  background: linear-gradient(180deg, #1c274c 0%, #742f37 100%);
 }
 
-@mixin footer-gradient {
-  background: linear-gradient(360deg, rgba(10, 10, 10, 1) 20.1%, rgba(10, 10, 10, 0) 100%);
-}
-
-@mixin tile-bg {
-  background: rgba(30,31,46,0.30);
+@mixin body {
+  height: calc(
+    100vh - $footer-height - $spacing-big
+  ); //minus margin between body and footer
+  overflow-y: scroll;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
 }
 
 @mixin content {
   position: relative;
   z-index: 1;
-  background: rgba(30,31,46,0.30);
-  width: calc(100vw - (2 * $spacing-med));
-  min-height: calc(100vh - $body-padding-top - $page-title-height - $body-padding-bottom - (2 * $spacing-med));
-  margin-left: -$spacing-med;
-  padding: $spacing-med;
+  width: calc(100vw - (2 * $spacing-medium));
+  min-height: calc(
+    100vh - $body-padding-top - $page-title-height - $body-padding-bottom -
+      (2 * $spacing-medium)
+  );
+  margin-left: -$spacing-medium;
+  padding: $spacing-medium;
 }
 
 @mixin grid-view($gap: $spacing-big) {
@@ -33,30 +35,30 @@
   align-items: center;
 }
 
-@mixin flex-column($row-gap: $spacing-med) {
+@mixin flex-column($row-gap: $spacing-medium) {
   display: flex;
   flex-flow: column nowrap;
   row-gap: $row-gap;
 }
 
 @mixin tile {
-  width: calc(100% - (2 * $spacing-med));
-  padding: $spacing-big $spacing-med;
-  color: $white;
+  width: $calc-page-width;
+  padding: $spacing-big $spacing-max;
+  background-color: $white;
 }
 
 @mixin dot {
   display: block;
-  width: 2px;
-  height: 2px;
-  background-color: $white;
+  width: 3px;
+  height: 3px;
+  background-color: $black;
   border-radius: 100%;
 }
 
 @mixin tile-white {
   background: $white;
   border-radius: $border-radius;
-  padding: $spacing-big $spacing-med;
-  width: calc(100% - (2 * $spacing-med));
+  padding: $spacing-big $spacing-medium;
+  width: calc(100% - (2 * $spacing-medium));
   color: $black;
 }

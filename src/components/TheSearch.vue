@@ -1,11 +1,28 @@
 <template>
   <section class="the-search">
-    <input
-      type="search"
-      class="the-search__field"
-      placeholder="Quickly find films"
-      @input="(event) => debouncedSearch(event.target as HTMLInputElement)"
-    />
+    <div class="the-search__container">
+      <div class="input-container">
+        <img
+          src="../assets/images/search_icon_white.png"
+          class="input-container__icon"
+          alt="Search icon"
+        />
+        <input
+          type="search"
+          class="input-container__field"
+          placeholder="Search films"
+          @input="(event: Event) => debouncedSearch(event.target as HTMLInputElement)"
+        />
+        <router-link to="/search">
+          <img
+            src="../assets/images/arrow-right_icon_white.png"
+            class="input-container__icon"
+            alt="Arrow forward icon"
+          />
+        </router-link>
+      </div>
+      <span class="line"></span>
+    </div>
     <ul class="the-search__results" v-if="search.tmdbResults.length">
       <li
         class="search-result"
@@ -14,15 +31,15 @@
       >
         <router-link :to="'/film/' + result.id">
           <h2>{{ result.original_title }}</h2>
-          <h3 class="details">
+          <h4 class="details">
             {{ result.original_language }} <span class="dot" />
             {{ result.release_date }}
-          </h3>
+          </h4>
         </router-link>
       </li>
     </ul>
     <div class="g-loading" v-else-if="store.loading">
-      <img src="../assets/images/loading.svg" alt="Loading animation" />
+      <img src="../assets/images/loading.gif" alt="Loading animation" />
     </div>
   </section>
 </template>
@@ -46,36 +63,43 @@ function debouncedSearch(input: HTMLInputElement) {
 
 <style scoped lang="scss">
 .the-search {
-  &__field {
-    width: 100%;
-    height: $bar-height;
-    background-color: $purple-light;
-    border-radius: $border-radius;
-    border: none;
-    outline: none;
-    padding: $spacing-med;
-    margin: $spacing-med 0;
-    font-size: 16px;
-    font-weight: 500;
-    color: $purple-dark;
+  &__container {
+    margin: $spacing-max;
+
+    .input-container {
+      @include flex-row($col-gap: $spacing-medium);
+
+      &__icon {
+        width: $icon-size-small;
+      }
+
+      &__field {
+        width: $calc-page-width;
+      }
+    }
+
+    .line {
+      display: block;
+      width: $calc-page-width;
+      height: $spacing-min;
+      background-color: $white;
+      margin-top: $spacing-small;
+    }
   }
 
   &__results {
-    @include flex-column;
-    margin-top: $spacing-big;
+    @include flex-column($row-gap: $spacing-min);
+    margin-top: $spacing-max;
 
     .search-result {
-      @include tile;
-
       a {
-        @include flex-column($row-gap: $spacing-med);
+        @include tile;
+        @include flex-column($row-gap: $spacing-medium);
         text-decoration: none;
-        color: $white;
-        font-size: 16px;
-        font-weight: 400;
+        color: $black;
 
         .details {
-          @include flex-row($col-gap: $spacing-small);
+          @include flex-row($col-gap: $spacing-medium);
 
           .dot {
             @include dot;

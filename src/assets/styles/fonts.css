@@ -1,35 +1,22 @@
 @font-face {
-  font-family: "OpenSans";
-  src: url("../fonts/OpenSans-Light.ttf")
-    format("truetype");
-  font-display: swap;
-  font-style: normal;
-  font-weight: 300;
-}
-
-@font-face {
-  font-family: "OpenSans";
-  src: url("../fonts/OpenSans-Regular.ttf")
-    format("truetype");
+  font-family: "JostRegular";
+  src: url("../fonts/Jost-Regular.ttf") format("truetype");
   font-display: swap;
   font-style: normal;
   font-weight: 400;
 }
 
 @font-face {
-  font-family: "OpenSans";
-  src: url("../fonts/OpenSans-SemiBold.ttf")
-    format("truetype");
+  font-family: "JostMedium";
+  src: url("../fonts/Jost-Medium.ttf") format("truetype");
   font-display: swap;
   font-style: normal;
-  font-weight: 600;
+  font-weight: 500;
 }
 
 @font-face {
-  font-family: "OpenSans";
-  src: url("../fonts/OpenSans-ExtraBold.ttf")
-    format("truetype");
+  font-family: "JostSemiBold";
+  src: url("../fonts/Jost-SemiBold.ttf") format("truetype");
   font-display: swap;
   font-style: normal;
-  font-weight: 800;
 }

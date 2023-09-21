@@ -18,7 +18,7 @@ export const useSearch = defineStore("search", {
       const response = await baseTmdbRequest(
         process.env.VUE_APP_TMDB_BASE_URL + TMDBEndpoints.FILM_SEARCH,
         RequestMethods.GET,
-        searchString
+        searchString,
       );
       if (response) this.tmdbResults = response.results;
     },

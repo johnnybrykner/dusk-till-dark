@@ -3,11 +3,7 @@
     <div class="overlay" v-if="store.showOverlay">
       <header class="overlay__header">
         <h1>List management</h1>
-        <img
-          src="../assets/images/close_icon.svg"
-          alt="Close icon"
-          @click="store.showOverlay = false"
-        />
+        <img src="../assets/images/close_icon.svg" alt="Close icon" @click="store.showOverlay = false" />
       </header>
       <slot></slot>
     </div>
@@ -27,18 +23,14 @@ const store = useStore();
   bottom: 0;
   right: 0;
   left: 0;
-  background: linear-gradient(
-    180deg,
-    rgba(143, 148, 251, 0.9) 0%,
-    rgba(78, 84, 200, 0.9) 100%
-  );
+  background: linear-gradient(180deg, rgba(143, 148, 251, 0.9) 0%, rgba(78, 84, 200, 0.9) 100%);
   z-index: 4;
-  padding: $spacing-med * 2 $spacing-med;
+  padding: $spacing-medium * 2 $spacing-medium;
 
   &__header {
     @include flex-row;
     justify-content: space-between;
-    padding: 0 $spacing-med;
+    padding: 0 $spacing-medium;
   }
 }
 
@@ -46,6 +38,7 @@ const store = useStore();
 .fade-in-leave-active {
   transition: opacity 0.3s ease;
 }
+
 .fade-in-enter-from,
 .fade-in-leave-to {
   opacity: 0;

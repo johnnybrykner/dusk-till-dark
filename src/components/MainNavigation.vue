@@ -3,87 +3,73 @@
     <div class="page-footer__navbar">
       <router-link to="/" class="router-link">
         <img
-          src="../assets/images/home_icon.svg"
+          src="../assets/images/main-page_icon_white.png"
           class="icon"
           alt="Home icon"
         />
+        <h4>Home</h4>
       </router-link>
-      <router-link to="/" class="router-link">
+      <router-link to="/search" class="router-link">
         <img
-          src="../assets/images/search_icon.svg"
+          src="../assets/images/search_icon_white.png"
           class="icon"
           alt="Search icon"
         />
+        <h4>Search</h4>
       </router-link>
       <router-link to="/lists" class="router-link">
         <img
-          src="../assets/images/list_icon.svg"
+          src="../assets/images/list_icon_white.png"
           class="icon"
           alt="List icon"
         />
+        <h4>Your movies</h4>
       </router-link>
     </div>
     <div class="page-footer__references">
-      <p class="name">Dusk Till Dark</p>
-      <div class="sources">
-        <img src="../assets/images/tmdb_logo.svg" alt="TMDB logo" />
-        <img src="../assets/images/just_watch_logo.png" alt="JustWatch logo" />
-      </div>
+      <img src="../assets/images/tmdb_logo.svg" alt="TMDB logo" />
+      <img src="../assets/images/just_watch_logo.png" alt="JustWatch logo" />
     </div>
   </footer>
 </template>
 
 <style scoped lang="scss">
 .page-footer {
+  @include flex-column;
+  justify-content: space-between;
+  height: $footer-height;
+  width: 100%;
   position: fixed;
-  z-index: 2;
-  bottom: 0;
-  width: calc(100% - calc($spacing-med * 2));
-  max-height: $body-padding-bottom;
+  bottom: 0px;
+  z-index: 1;
 
   &__navbar {
-    @include flex-row;
-    align-items: center;
-    background-color: $white;
-    border-radius: $border-radius;
-    height: $bar-height;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    width: $calc-page-width;
+    padding: 0px $spacing-max;
 
     .router-link {
-      flex-basis: calc(100% / 3);
-      @include flex-row;
-      justify-content: center;
+      @include flex-column;
+      align-items: center;
 
-      .icon {
-        height: 24px;
-        color: $black;
+      img {
+        width: $icon-size-big;
+      }
+
+      h4 {
+        color: $white;
       }
     }
   }
 
   &__references {
-    @include footer-gradient;
-    @include grid-view;
-    grid-template-columns: 60px 1fr 60px;
-    padding: $spacing-med;
+    @include flex-row($col-gap: $spacing-medium);
+    justify-content: center;
+    padding: $spacing-medium $spacing-max;
 
-    .name {
-      grid-column-start: 2;
-      grid-column-end: 3;
-      color: $purple-light;
-      text-align: center;
-    }
-
-    .sources {
-      grid-column-start: 3;
-      grid-column-end: 4;
-      justify-self: end;
-      width: 100%;
-      display: flex;
-      gap: $spacing-small;
-
-      img {
-        height: 16px;
-      }
+    img {
+      height: $icon-size-min;
     }
   }
 }

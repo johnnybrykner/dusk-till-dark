@@ -1,26 +1,37 @@
 <template>
   <StatusNotification />
-  <div class="wrapper">
+  <div class="body">
     <router-view />
-    <MainNavigation />
+    <MainNavigation v-if="route.name !== 'login'" />
   </div>
 </template>
 
 <script setup lang="ts">
+import { onMounted } from "vue";
 import MainNavigation from "./components/MainNavigation.vue";
 import StatusNotification from "./components/StatusNotification.vue";
+import { useRoute, useRouter } from "vue-router";
 import { useAccount } from "@/store/account";
-import { onMounted } from "vue";
-import { baseAwsRequest } from "@/utils/baseRequest";
-import { AWSEndpoints, RequestMethods } from "@/types/apiTypes";
+import { baseAccountRequest } from "./utils/baseRequest";
+import { RequestMethods } from "./types/apiTypes";
 
-const store = useAccount();
+const route = useRoute();
+const router = useRouter();
+const account = useAccount();
 
 onMounted(async () => {
-  store.userAccount = await baseAwsRequest(
-    AWSEndpoints.GET_ACCOUNT,
-    RequestMethods.GET
+  console.log("App mounted");
+  if (account.userAccount) return;
+  const loginAttempt = await baseAccountRequest(
+    "users/account",
+    RequestMethods.GET,
   );
+  console.log(loginAttempt);
+  if (loginAttempt) {
+    account.userAccount = loginAttempt;
+  } else {
+    router.replace({ name: "login" });
+  }
 });
 </script>
 
@@ -30,76 +41,89 @@ onMounted(async () => {
 @import "./assets/styles/fonts.css";
 
 #app {
+  @include page-gradient;
+  background-attachment: fixed;
   min-height: 100vh;
-  background-color: $black;
-  color: $white;
-  font-family: "OpenSans";
-  font-weight: 400;
-
-  .wrapper {
-    padding: $body-padding-top $spacing-med $body-padding-bottom $spacing-med;
-    min-height: calc(100vh - $body-padding-top - $body-padding-bottom);
-  }
 }
 
 h1 {
-  font-size: 24px;
-  font-weight: 300;
+  font-family: "JostMedium";
+  font-size: 28px;
+  color: $white;
 }
 
 h2 {
+  font-family: "JostMedium";
   font-size: 16px;
-  font-weight: 600;
-  line-height: 24px;
+  line-height: 30px;
 }
 
 h3 {
-  font-size: 11px;
+  font-family: "JostSemiBold";
+  font-size: 14px;
+}
+
+h4 {
+  font-family: "JostRegular";
+  font-size: 12px;
+  line-height: 18px;
+}
+
+a,
+p {
+  font-family: "JostRegular";
+  font-size: 16px;
   font-weight: 400;
 }
 
-p {
-  font-size: 16px;
-  font-weight: 400;
+a {
+  text-decoration: none;
+}
+
+input {
+  border: none;
+  outline: none;
+  background-color: transparent;
+  color: $white;
+  font-family: "JostMedium";
+  font-size: 18px;
+  padding: 0;
 }
 
 .g-page-header {
   @include flex-column;
-  justify-content: flex-start;
-  position: fixed;
-  z-index: 0;
-  top: 0;
-  left: 0;
-  height: $header-height;
-  width: 100%;
-  mask-image: linear-gradient(rgba(0, 0, 0, 1), transparent);
+  align-items: center;
+  padding: $spacing-big $spacing-max;
 
-  &__gradient {
-    @include top-gradient;
-    height: 80%;
+  .g-page-title {
+    text-transform: capitalize;
   }
 
-  &__wrapper {
-    @include flex-row;
-    justify-content: space-between;
-    align-items: flex-start;
-    position: sticky;
-    z-index: 3;
-    top: $spacing-med;
-    min-height: 24.5px;
-    max-height: $page-title-height;
-    overflow: hidden;
+  &__subtitle {
+    color: $white;
+    text-transform: capitalize;
   }
-}
-.g-page-title {
-  position: sticky;
-  top: $spacing-med;
-  margin-bottom: $spacing-small * 5;
-  padding: 0 $spacing-med;
+
+  // &__wrapper {
+  //   @include flex-row;
+  //   justify-content: space-between;
+  //   align-items: flex-start;
+  //   position: sticky;
+  //   z-index: 3;
+  //   top: $spacing-medium;
+  //   min-height: 24.5px;
+  //   max-height: $page-title-height;
+  //   overflow: hidden;
+  // }
 }
 
 .g-loading {
   @include flex-row;
   justify-content: center;
+
+  img {
+    width: $button-size;
+    height: $button-size;
+  }
 }
 </style>

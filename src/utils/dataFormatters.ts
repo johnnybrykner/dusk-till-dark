@@ -7,7 +7,7 @@ export function formatDate(dateString: string): FormattedDate {
     (accumulator, datePiece, index) => {
       return { ...accumulator, [datePiece]: Number(dateFragment[index]) };
     },
-    { year: 0, month: 0, day: 0 }
+    { year: 0, month: 0, day: 0 },
   );
 }
 
