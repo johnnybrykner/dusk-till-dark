@@ -56,23 +56,14 @@
       </div>
 
       <!-- Todo: come back to this, rework the functionality of immediately fetching streaming providers -->
-      <!-- <div class="providers" ref="watchProvidersElement">
+      <div class="providers" ref="watchProvidersElement">
         <h4>Streaming availability</h4>
         <div class="providers__wrapper">
-          <h2 v-if="isAvailableOnNetflix">Netflix</h2>
-          <h2 v-if="isAvailableOnPrime">Primevideo</h2>
-          <h2 v-if="isAvailableOnDisney">Disney+</h2>
-          <h2
-            v-if="
-              !isAvailableOnNetflix &&
-              !isAvailableOnDisney &&
-              !isAvailableOnPrime
-            "
-          >
+          <h2>
             No streaming availability
           </h2>
         </div>
-      </div> -->
+      </div>
 
       <div class="rating">
         <div class="rating__wrapper">
@@ -98,7 +89,7 @@
 
 <script setup lang="ts">
 import { baseTmdbRequest } from "@/utils/baseRequest";
-import { computed, onMounted, ref, nextTick } from "vue";
+import { computed, onMounted, ref } from "vue";
 import { useRoute } from "vue-router";
 import { useStore } from "@/store";
 import { useAccount } from "@/store/account";
@@ -216,13 +207,6 @@ async function checkProviderAvailability() {
     TMDBEndpoints.WATCH_PROVIDERS,
     RequestMethods.GET,
   );
-  await nextTick();
-  await nextTick();
-  if (watchProvidersElement.value)
-    watchProvidersElement.value.scrollIntoView({
-      behavior: "smooth",
-      block: "start",
-    });
 }
 
 // function addToWatchList() {

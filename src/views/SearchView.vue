@@ -4,7 +4,7 @@
       <h1 class="g-page-header__title">Search</h1>
     </header>
     <div class="search__wrapper">
-      <TheSearch />
+      <TheSearch autofocus />
     </div>
   </div>
 </template>

@@ -2,27 +2,15 @@
   <footer class="page-footer">
     <div class="page-footer__navbar">
       <router-link to="/" class="router-link">
-        <img
-          src="../assets/images/main-page_icon_white.png"
-          class="icon"
-          alt="Home icon"
-        />
+        <img src="../assets/images/main-page_icon_white.png" class="icon" alt="Home icon" />
         <h4>Home</h4>
       </router-link>
       <router-link to="/search" class="router-link">
-        <img
-          src="../assets/images/search_icon_white.png"
-          class="icon"
-          alt="Search icon"
-        />
+        <img src="../assets/images/search_icon_white.png" class="icon" alt="Search icon" />
         <h4>Search</h4>
       </router-link>
       <router-link to="/lists" class="router-link">
-        <img
-          src="../assets/images/list_icon_white.png"
-          class="icon"
-          alt="List icon"
-        />
+        <img src="../assets/images/list_icon_white.png" class="icon" alt="List icon" />
         <h4>Your movies</h4>
       </router-link>
     </div>

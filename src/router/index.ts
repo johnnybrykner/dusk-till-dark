@@ -1,6 +1,5 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
 import HomeView from "../views/HomeView.vue";
-import SettingsView from "../views/SettingsView.vue";
 import SearchView from "../views/SearchView.vue";
 
 const routes: Array<RouteRecordRaw> = [
@@ -32,7 +31,8 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: "/settings",
     name: "settings",
-    component: SettingsView,
+    component: () =>
+      import(/* webpackChunkName: "settings" */ "../views/SettingsView.vue"),
   },
   {
     path: "/login",

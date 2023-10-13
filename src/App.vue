@@ -70,7 +70,8 @@ h4 {
 }
 
 a,
-p {
+p,
+label {
   font-family: "JostRegular";
   font-size: 16px;
   font-weight: 400;
@@ -78,6 +79,7 @@ p {
 
 a {
   text-decoration: none;
+  color: $white;
 }
 
 input {

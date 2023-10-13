@@ -39,7 +39,24 @@ export interface UserAccount {
   previously_watched: OurFilmInterface[];
   recent_searches: FilmSearch[];
   to_watch: OurFilmInterface[];
+  account_settings: AccountSettings;
   username: string;
+}
+
+export interface AccountSettings {
+  streaming_countries: StreamingCountry[];
+  streaming_providers: StreamingProvider[];
+}
+
+export interface StreamingCountry {
+  country_code: string;
+  country_name: string;
+}
+
+export interface StreamingProvider {
+  provider_id: number;
+  provider_name: string;
+  logo_path?: string;
 }
 
 export interface FilmDetailsResponse {

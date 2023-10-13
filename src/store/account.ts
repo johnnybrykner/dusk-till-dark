@@ -14,7 +14,16 @@ export const useAccount = defineStore("account", {
       userAccount: null as UserAccount | null,
     };
   },
-  getters: {},
+  getters: {
+    selectedCountries(state) {
+      if (!state.userAccount) return [];
+      return state.userAccount.account_settings.streaming_countries;
+    },
+    selectedProviders(state) {
+      if (!state.userAccount) return [];
+      return state.userAccount.account_settings.streaming_providers;
+    }
+  },
   actions: {
     async addToWatch(
       filmDetails: FilmDetailsResponse,
