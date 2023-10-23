@@ -1,17 +1,14 @@
 <template>
   <transition name="notification">
-    <figure
-      :class="{
-        notification: true,
-        'notification--error': store.thrownError,
-        'notification--success': store.notificationText,
-      }"
-      v-if="store.thrownError || store.notificationText"
-    >
+    <figure :class="{
+      notification: true,
+      'notification--error': store.thrownError,
+      'notification--success': store.notificationText,
+    }" v-if="store.thrownError || store.notificationText">
       <!--change icons-->
       <!-- <img v-if="store.thrownError" src="../assets/images/error_icon.svg" alt="Notification error icon" />
       <img v-if="store.notificationText" src="../assets/images/success_icon.svg" alt="Notification success icon" /> -->
-      <figcaption>{{ store.thrownError ?? store.notificationText }}</figcaption>
+      <figcaption>{{ store.thrownError || store.notificationText }}</figcaption>
     </figure>
   </transition>
 </template>

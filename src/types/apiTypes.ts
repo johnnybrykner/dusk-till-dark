@@ -13,8 +13,8 @@ export interface OurFilmInterface {
   name: string;
   year: number;
   language: string;
-  our_rating?: number;
-  their_rating?: number;
+  our_rating?: number | null;
+  their_rating?: number | null;
 }
 
 export interface FilmSearch {
@@ -153,4 +153,9 @@ export enum TMDBEndpoints {
   FILM_DETAILS = "movie/",
   FILM_CREDITS = "/credits",
   WATCH_PROVIDERS = "/watch/providers",
+}
+
+export enum ListNames {
+  TO_WATCH = "to_watch",
+  PREVIOUSLY_WATCHED = "previously_watched",
 }

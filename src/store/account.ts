@@ -1,6 +1,8 @@
 import {
+  AccountSettings,
   FilmCrew,
   FilmDetailsResponse,
+  ListNames,
   OurFilmInterface,
   RequestMethods,
   UserAccount,
@@ -41,7 +43,7 @@ export const useAccount = defineStore("account", {
         language: filmDetails.original_language,
       };
       const accountRequestResult = await baseAccountRequest(
-        this.userAccount.username + "/add_to/to_watch",
+        "users/add_to/to_watch",
         RequestMethods.POST,
         filmToAdd,
       );
@@ -63,11 +65,43 @@ export const useAccount = defineStore("account", {
         language: filmDetails.original_language,
       };
       const accountRequestResult = await baseAccountRequest(
-        this.userAccount.username + "/add_to/previously_watched",
+        "users/add_to/previously_watched",
         RequestMethods.POST,
         filmToAdd,
       );
       if (accountRequestResult) this.userAccount = accountRequestResult;
     },
+    async moveToPreviouslyWatched(filmId: number) {
+      if (!this.userAccount) return;
+      const accountRequestResult = await baseAccountRequest(
+        `users/move_to_watched/${filmId}`,
+        RequestMethods.PUT,
+      );
+      if (accountRequestResult) this.userAccount = accountRequestResult;
+    },
+    async removeFilm(listName: ListNames, filmId: number) {
+      if (!this.userAccount) return;
+      const accountRequestResult = await baseAccountRequest(
+        `users/remove_from/${listName}/${filmId}`,
+        RequestMethods.DELETE,
+      );
+      if (accountRequestResult) this.userAccount = accountRequestResult;
+    },
+    async updateSettings(user_settings: AccountSettings) {
+      if (!this.userAccount) return;
+      const accountRequestResult = await baseAccountRequest(
+        "users/settings",
+        RequestMethods.PUT,
+        user_settings,
+      );
+      if (accountRequestResult) this.userAccount = accountRequestResult;
+    },
+    async userLogout() {
+      if (!this.userAccount) return;
+      await baseAccountRequest(
+        "users/logout",
+        RequestMethods.GET,
+      );
+    }
   },
 });

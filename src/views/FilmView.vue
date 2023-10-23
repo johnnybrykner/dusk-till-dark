@@ -56,28 +56,40 @@
       </div>
 
       <!-- Todo: come back to this, rework the functionality of immediately fetching streaming providers -->
-      <div class="providers" ref="watchProvidersElement">
+      <!-- <div class="providers" ref="watchProvidersElement">
         <h4>Streaming availability</h4>
         <div class="providers__wrapper">
           <h2>
             No streaming availability
           </h2>
         </div>
-      </div>
+      </div> -->
 
-      <div class="rating">
+      <div class="rating" v-if="alreadyInWatchedList">
         <div class="rating__wrapper">
           <h2>Give rating</h2>
           <img src="../assets/images/arrow-right_icon_black.png" class="icon" alt="Arrow forward icon" />
         </div>
       </div>
-      <div class="add">
+      <div class="add" v-if="!alreadyInToWatch && !alreadyInWatchedList" @click="addToWatchList">
+        <div class="add__wrapper">
+          <h2>Add to Watch</h2>
+          <img src="../assets/images/arrow-right_icon_black.png" class="icon" alt="Arrow forward icon" />
+        </div>
+      </div>
+      <div class="add" v-if="!alreadyInWatchedList && alreadyInToWatch" @click="moveToPreviouslyWatched">
         <div class="add__wrapper">
           <h2>Move to Watched</h2>
           <img src="../assets/images/arrow-right_icon_black.png" class="icon" alt="Arrow forward icon" />
         </div>
       </div>
-      <div class="remove">
+      <div class="watched" v-if="!alreadyInToWatch && !alreadyInWatchedList" @click="addToPreviouslyWatched">
+        <div class="watched__wrapper">
+          <h2>I have seen this</h2>
+          <img src="../assets/images/arrow-right_icon_black.png" class="icon" alt="Arrow forward icon" />
+        </div>
+      </div>
+      <div class="remove" v-if="alreadyInToWatch || alreadyInWatchedList" @click="removeFromLibrary">
         <div class="remove__wrapper">
           <h2>Remove film from library</h2>
           <img src="../assets/images/arrow-right_icon_black.png" class="icon" alt="Arrow forward icon" />
@@ -91,7 +103,6 @@
 import { baseTmdbRequest } from "@/utils/baseRequest";
 import { computed, onMounted, ref } from "vue";
 import { useRoute } from "vue-router";
-import { useStore } from "@/store";
 import { useAccount } from "@/store/account";
 import {
   RequestMethods,
@@ -99,12 +110,10 @@ import {
   FilmDetailsResponse,
   FilmCreditsResponse,
   WatchProvidersReponse,
-  OurWatchProviders,
-  FilmCrew,
+  ListNames,
 } from "../types/apiTypes";
 import { formatDate, formatLength } from "@/utils/dataFormatters";
 
-const store = useStore();
 const account = useAccount();
 const route = useRoute();
 
@@ -128,12 +137,12 @@ const alreadyInToWatch = computed(() => {
   );
 });
 
-// const alreadyInWatchedList = computed(() => {
-//   if (!account.userAccount?.previously_watched) return null;
-//   return !!account.userAccount.previously_watched.find(
-//     (listItem) => listItem.id === film.value?.id
-//   );
-// });
+const alreadyInWatchedList = computed(() => {
+  if (!account.userAccount?.previously_watched) return null;
+  return !!account.userAccount.previously_watched.find(
+    (listItem) => listItem.id === film.value?.id
+  );
+});
 
 const imageUrl = computed(() => {
   if (film.value)
@@ -160,72 +169,51 @@ const filmCast = computed(() => {
   return null;
 });
 
-const isAvailableOnNetflix = computed(() => {
-  return (
-    availableProviders.value &&
-    availableProviders.value.results.NL &&
-    availableProviders.value.results.NL.flatrate &&
-    availableProviders.value.results.NL.flatrate.find(
-      (provider) => provider.provider_id === OurWatchProviders.NETFLIX,
-    )
-  );
-});
-
-const isAvailableOnDisney = computed(() => {
-  return (
-    availableProviders.value &&
-    availableProviders.value.results.NL &&
-    availableProviders.value.results.NL.flatrate &&
-    availableProviders.value.results.NL.flatrate.find(
-      (provider) => provider.provider_id === OurWatchProviders.DISNEY,
-    )
-  );
-});
-
-const isAvailableOnPrime = computed(() => {
-  return (
-    availableProviders.value &&
-    availableProviders.value.results.NL &&
-    availableProviders.value.results.NL.flatrate &&
-    availableProviders.value.results.NL.flatrate.find(
-      (provider) => provider.provider_id === OurWatchProviders.PRIME,
-    )
-  );
-});
-
 const formattedReleaseDate = computed(() => {
   if (film.value) return formatDate(film.value.release_date);
   return null;
 });
 
-async function checkProviderAvailability() {
-  if (availableProviders.value) return;
-  availableProviders.value = await baseTmdbRequest(
-    process.env.VUE_APP_TMDB_BASE_URL +
-    TMDBEndpoints.FILM_DETAILS +
-    route.params.id +
-    TMDBEndpoints.WATCH_PROVIDERS,
-    RequestMethods.GET,
+// async function checkProviderAvailability() {
+//   if (availableProviders.value) return;
+//   availableProviders.value = await baseTmdbRequest(
+//     process.env.VUE_APP_TMDB_BASE_URL +
+//     TMDBEndpoints.FILM_DETAILS +
+//     route.params.id +
+//     TMDBEndpoints.WATCH_PROVIDERS,
+//     RequestMethods.GET,
+//   );
+// }
+
+function addToWatchList() {
+  if (!film.value || !filmDirector.value) return;
+  account.addToWatch(
+    film.value,
+    filmDirector.value,
+    formattedReleaseDate.value!.year,
   );
 }
 
-// function addToWatchList() {
-//   account.addToWatch(
-//     AWSEndpoints.ADD_TO_WATCH,
-//     film.value as FilmDetailsResponse,
-//     filmDirector.value as FilmCrew,
-//     formattedReleaseDate.value ? formattedReleaseDate.value.year : 0,
-//   );
-// }
+function moveToPreviouslyWatched() {
+  if (!film.value) return;
+  account.moveToPreviouslyWatched(
+    film.value.id,
+  );
+}
 
-// function removeFromWatchList() {
-//   account.addToWatch(
-//     AWSEndpoints.REMOVE_TO_WATCH,
-//     film.value as FilmDetailsResponse,
-//     filmDirector.value as FilmCrew,
-//     formattedReleaseDate.value ? formattedReleaseDate.value.year : 0,
-//   );
-// }
+function addToPreviouslyWatched() {
+  if (!film.value || !filmDirector.value) return;
+  account.addToPreviouslyWatched(
+    film.value,
+    filmDirector.value,
+    formattedReleaseDate.value!.year,
+  );
+}
+
+function removeFromLibrary() {
+  if (!film.value) return;
+  account.removeFilm(alreadyInToWatch.value && !alreadyInWatchedList.value ? ListNames.TO_WATCH : ListNames.PREVIOUSLY_WATCHED, film.value.id);
+}
 
 onMounted(async () => {
   film.value = await baseTmdbRequest(
@@ -291,7 +279,8 @@ onMounted(async () => {
     .providers,
     .rating,
     .add,
-    .remove {
+    .remove,
+    .watched {
       &__wrapper {
         @include flex-row;
         justify-content: space-between;
@@ -309,7 +298,8 @@ onMounted(async () => {
     .providers,
     .rating,
     .add,
-    .remove {
+    .remove,
+    .watched {
       @include tile;
     }
   }

@@ -1,5 +1,5 @@
 import { useStore } from "@/store";
-import { OurFilmInterface, RequestMethods, UserAccount } from "@/types/apiTypes";
+import { AccountSettings, OurFilmInterface, RequestMethods, UserAccount } from "@/types/apiTypes";
 
 export async function baseTmdbRequest(
   url: string,
@@ -29,7 +29,7 @@ export async function baseTmdbRequest(
 export async function baseAccountRequest(
   urlSuffix: string,
   method: RequestMethods,
-  body?: OurFilmInterface,
+  body?: OurFilmInterface | AccountSettings,
 ): Promise<UserAccount | void> {
   const store = useStore();
   store.loading = true;
@@ -39,6 +39,7 @@ export async function baseAccountRequest(
       {
         credentials: "include",
         method,
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
       },
     );
@@ -46,7 +47,13 @@ export async function baseAccountRequest(
       const errorObject = await rawResponse.json();
       throw errorObject.error;
     }
-    return await rawResponse.json();
+    const response = await rawResponse.json();
+    if (response.message) {
+      store.showNotification(response.message);
+      return;
+    } else {
+      return response;
+    }
   } catch (error) {
     store.handleError(error as string);
   } finally {
