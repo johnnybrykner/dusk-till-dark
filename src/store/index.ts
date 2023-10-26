@@ -11,6 +11,7 @@ export const useStore = defineStore("miscellaneous", {
       notificationText: "",
       currentHour: new Date().getHours(),
       showOverlay: false,
+      listToggled: false,
     };
   },
   getters: {

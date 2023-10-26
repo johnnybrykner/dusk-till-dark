@@ -66,33 +66,48 @@
       </div> -->
 
       <div class="rating" v-if="alreadyInWatchedList">
-        <div class="rating__wrapper">
+        <div class="rating__wrapper" v-if="!store.loading">
           <h2>Give rating</h2>
           <img src="../assets/images/arrow-right_icon_black.png" class="icon" alt="Arrow forward icon" />
         </div>
+        <div v-else class="g-loading">
+          <img src="../assets/images/loading.gif" alt="Loading animation" />
+        </div>
       </div>
       <div class="add" v-if="!alreadyInToWatch && !alreadyInWatchedList" @click="addToWatchList">
-        <div class="add__wrapper">
+        <div class="add__wrapper" v-if="!store.loading">
           <h2>Add to Watch</h2>
           <img src="../assets/images/arrow-right_icon_black.png" class="icon" alt="Arrow forward icon" />
         </div>
+        <div v-else class="g-loading">
+          <img src="../assets/images/loading.gif" alt="Loading animation" />
+        </div>
       </div>
       <div class="add" v-if="!alreadyInWatchedList && alreadyInToWatch" @click="moveToPreviouslyWatched">
-        <div class="add__wrapper">
+        <div class="add__wrapper" v-if="!store.loading">
           <h2>Move to Watched</h2>
           <img src="../assets/images/arrow-right_icon_black.png" class="icon" alt="Arrow forward icon" />
         </div>
+        <div v-else class="g-loading">
+          <img src="../assets/images/loading.gif" alt="Loading animation" />
+        </div>
       </div>
       <div class="watched" v-if="!alreadyInToWatch && !alreadyInWatchedList" @click="addToPreviouslyWatched">
-        <div class="watched__wrapper">
+        <div class="watched__wrapper" v-if="!store.loading">
           <h2>I have seen this</h2>
           <img src="../assets/images/arrow-right_icon_black.png" class="icon" alt="Arrow forward icon" />
         </div>
+        <div v-else class="g-loading">
+          <img src="../assets/images/loading.gif" alt="Loading animation" />
+        </div>
       </div>
       <div class="remove" v-if="alreadyInToWatch || alreadyInWatchedList" @click="removeFromLibrary">
-        <div class="remove__wrapper">
+        <div class="remove__wrapper" v-if="!store.loading">
           <h2>Remove film from library</h2>
           <img src="../assets/images/arrow-right_icon_black.png" class="icon" alt="Arrow forward icon" />
+        </div>
+        <div v-else class="g-loading">
+          <img src="../assets/images/loading.gif" alt="Loading animation" />
         </div>
       </div>
     </div>
@@ -113,8 +128,10 @@ import {
   ListNames,
 } from "../types/apiTypes";
 import { formatDate, formatLength } from "@/utils/dataFormatters";
+import { useStore } from "@/store";
 
 const account = useAccount();
+const store = useStore();
 const route = useRoute();
 
 const refFilmTitle = ref<null | HTMLElement>(null);
@@ -154,7 +171,7 @@ const imageUrl = computed(() => {
 });
 
 const filmDirector = computed(() => {
-  if (filmCredits.value)
+  if (filmCredits.value && filmCredits.value.crew)
     return filmCredits.value.crew.find(
       (crewMember) => crewMember.job === "Director",
     );
@@ -162,7 +179,7 @@ const filmDirector = computed(() => {
 });
 
 const filmCast = computed(() => {
-  if (filmCredits.value)
+  if (filmCredits.value && filmCredits.value.cast)
     return filmCredits.value.cast
       .filter((castMember) => castMember.known_for_department === "Acting")
       .slice(0, 7);
@@ -170,7 +187,7 @@ const filmCast = computed(() => {
 });
 
 const formattedReleaseDate = computed(() => {
-  if (film.value) return formatDate(film.value.release_date);
+  if (film.value && film.value.release_date) return formatDate(film.value.release_date);
   return null;
 });
 
@@ -242,6 +259,8 @@ onMounted(async () => {
 
   &__wrapper {
     @include flex-column($row-gap: $spacing-min);
+    max-width: 600px;
+    margin: 0 auto;
 
     .poster {
       width: 100%;
@@ -305,7 +324,6 @@ onMounted(async () => {
   }
 
   .header-animation {
-    width: $calc-page-width;
     height: 28px;
     display: block;
     overflow: hidden;

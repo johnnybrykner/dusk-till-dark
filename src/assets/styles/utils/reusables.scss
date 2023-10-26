@@ -3,9 +3,6 @@
 }
 
 @mixin body {
-  height: calc(
-    100vh - $footer-height - $spacing-big
-  ); //minus margin between body and footer
   overflow-y: scroll;
   overflow-x: hidden;
   scroll-behavior: smooth;
@@ -14,11 +11,6 @@
 @mixin content {
   position: relative;
   z-index: 1;
-  width: calc(100vw - (2 * $spacing-medium));
-  min-height: calc(
-    100vh - $body-padding-top - $page-title-height - $body-padding-bottom -
-      (2 * $spacing-medium)
-  );
   margin-left: -$spacing-medium;
   padding: $spacing-medium;
 }
@@ -42,7 +34,6 @@
 }
 
 @mixin tile {
-  width: $calc-page-width;
   padding: $spacing-big $spacing-max;
   background-color: $white;
 }

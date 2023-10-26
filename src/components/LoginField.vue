@@ -6,7 +6,7 @@
     <div v-else>
       <div class="login-field__container">
         <img src="../assets/images/account_icon_white.png" class="icon" alt="White account icon" />
-        <input type="search" placeholder="Username" v-model="username"
+        <input type="search" placeholder="Username" v-model="username" class="field"
           @keyup="(keyEvent) => { if (keyEvent.code === 'Enter') userLogin() }" />
         <img src="../assets/images/arrow-right_icon_white.png" class="icon" alt="Arrow forward icon" @click="userLogin" />
       </div>
@@ -54,14 +54,13 @@ async function userLogin() {
       width: $icon-size-small;
     }
 
-    input {
-      width: $calc-page-width;
+    .field {
+      width: 100%;
     }
   }
 
   .line {
     display: block;
-    width: $calc-page-width;
     height: $spacing-min;
     background-color: $white;
     margin-top: $spacing-small;

@@ -21,12 +21,9 @@ $body-padding-bottom: 104px;
 $page-title-height: 49px;
 
 $header-height: 90px;
-$footer-height: 90px;
+$footer-height: 116px;
 $bar-height: 50px;
-$screen-height: 100vh;
 
-$calc-page-width: calc(100vw - (2 * $spacing-max));
-$calc-body-height: calc(100vh - $header-height - $footer-height);
 $button-size: 32px;
 $icon-size-big: 24px;
 $icon-size-medium: 20px;

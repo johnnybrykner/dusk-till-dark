@@ -43,7 +43,8 @@ onMounted(async () => {
 #app {
   @include page-gradient;
   background-attachment: fixed;
-  min-height: 100vh;
+  min-height: calc(100vh - $footer-height);
+  margin-bottom: $footer-height;
 }
 
 h1 {

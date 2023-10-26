@@ -17,7 +17,6 @@ import LoginField from "@/components/LoginField.vue";
 .login {
   display: flex;
   flex-flow: column nowrap;
-  height: 100vh;
 
   &__wrapper {
     position: relative;

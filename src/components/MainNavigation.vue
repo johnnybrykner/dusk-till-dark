@@ -25,17 +25,16 @@
 .page-footer {
   @include flex-column;
   justify-content: space-between;
-  height: $footer-height;
   width: 100%;
   position: fixed;
   bottom: 0px;
   z-index: 1;
+  background-color: $wine;
 
   &__navbar {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    width: $calc-page-width;
-    padding: 0px $spacing-max;
+    padding: $spacing-big;
 
     .router-link {
       @include flex-column;

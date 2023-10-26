@@ -71,13 +71,12 @@ onMounted(() => {
       }
 
       &__field {
-        width: $calc-page-width;
+        width: 100%;
       }
     }
 
     .line {
       display: block;
-      width: $calc-page-width;
       height: $spacing-min;
       background-color: $white;
       margin-top: $spacing-small;

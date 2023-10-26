@@ -2,10 +2,10 @@
   <div class="lists">
     <header class="g-page-header lists__header">
       <Transition name="slide-up" mode="out-in">
-        <h1 v-if="listToggled" class="g-page-title">Watched list</h1>
+        <h1 v-if="store.listToggled" class="g-page-title">Watched list</h1>
         <h1 v-else class="g-page-title">To watch list</h1>
       </Transition>
-      <div @click="toggleList" class="swap" :class="{ 'swap--flipped': listToggled }">
+      <div @click="toggleList" class="swap" :class="{ 'swap--flipped': store.listToggled }">
         <img src="../assets/images/swap_icon.svg" class="swap__icon" alt="Swap icon" />
       </div>
     </header>
@@ -13,7 +13,7 @@
       <div v-if="store.loading || !accountStore.userAccount" class="g-loading">
         <img src="../assets/images/loading.gif" alt="Loading animation" />
       </div>
-      <WatchedList v-else-if="listToggled" :films="accountStore.userAccount.previously_watched"
+      <WatchedList v-else-if="store.listToggled" :films="accountStore.userAccount.previously_watched"
         :unmountTransitionRunning="listTransitInProgress" />
       <ToWatchList v-else :films="accountStore.userAccount.to_watch" :unmountTransitionRunning="listTransitInProgress" />
     </div>
@@ -29,13 +29,12 @@ import { nextTick, ref } from "vue";
 const accountStore = useAccount();
 const store = useStore();
 
-const listToggled = ref(false);
 const listTransitInProgress = ref(false);
 
 function toggleList() {
   listTransitInProgress.value = true;
   setTimeout(async () => {
-    listToggled.value = !listToggled.value;
+    store.listToggled = !store.listToggled;
     await nextTick();
     listTransitInProgress.value = false;
   }, 200);
