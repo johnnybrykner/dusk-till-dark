@@ -26,7 +26,6 @@ onMounted(async () => {
     "users/account",
     RequestMethods.GET,
   );
-  console.log(loginAttempt);
   if (loginAttempt) {
     account.userAccount = loginAttempt;
   } else {

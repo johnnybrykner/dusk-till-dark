@@ -54,17 +54,14 @@
           </h2>
         </div>
       </div>
-
-      <!-- Todo: come back to this, rework the functionality of immediately fetching streaming providers -->
-      <!-- <div class="providers" ref="watchProvidersElement">
+      <div class="providers">
         <h4>Streaming availability</h4>
         <div class="providers__wrapper">
           <h2>
             No streaming availability
           </h2>
         </div>
-      </div> -->
-
+      </div>
       <div class="rating" v-if="alreadyInWatchedList">
         <div class="rating__wrapper" v-if="!store.loading">
           <h2>Give rating</h2>
@@ -124,8 +121,9 @@ import {
   TMDBEndpoints,
   FilmDetailsResponse,
   FilmCreditsResponse,
-  WatchProvidersReponse,
   ListNames,
+  CountryWatchProviders,
+  WatchProvider,
 } from "../types/apiTypes";
 import { formatDate, formatLength } from "@/utils/dataFormatters";
 import { useStore } from "@/store";
@@ -135,10 +133,9 @@ const store = useStore();
 const route = useRoute();
 
 const refFilmTitle = ref<null | HTMLElement>(null);
-const watchProvidersElement = ref<null | HTMLElement>(null);
 const film = ref<null | FilmDetailsResponse>(null);
 const filmCredits = ref<null | FilmCreditsResponse>(null);
-const availableProviders = ref<null | WatchProvidersReponse>(null);
+const availableProviders = ref<null | WatchProvider[]>(null);
 
 const titleAnimationCondition = computed(() => {
   if (!refFilmTitle.value) {
@@ -191,17 +188,6 @@ const formattedReleaseDate = computed(() => {
   return null;
 });
 
-// async function checkProviderAvailability() {
-//   if (availableProviders.value) return;
-//   availableProviders.value = await baseTmdbRequest(
-//     process.env.VUE_APP_TMDB_BASE_URL +
-//     TMDBEndpoints.FILM_DETAILS +
-//     route.params.id +
-//     TMDBEndpoints.WATCH_PROVIDERS,
-//     RequestMethods.GET,
-//   );
-// }
-
 function addToWatchList() {
   if (!film.value || !filmDirector.value) return;
   account.addToWatch(
@@ -246,6 +232,34 @@ onMounted(async () => {
     TMDBEndpoints.FILM_CREDITS,
     RequestMethods.GET,
   );
+  const watchProviders = await baseTmdbRequest(
+    process.env.VUE_APP_TMDB_BASE_URL +
+    TMDBEndpoints.FILM_DETAILS +
+    route.params.id +
+    TMDBEndpoints.WATCH_PROVIDERS,
+    RequestMethods.GET,
+  );
+  if (watchProviders.results) {
+    const selectedCountries = account.selectedCountries;
+    const selectedProviders = account.selectedProviders;
+
+    availableProviders.value = selectedCountries.reduce((result: WatchProvider[], country) => {
+      const countryResult: CountryWatchProviders | undefined = watchProviders.results[country.country_code];
+
+      if (countryResult?.flatrate?.length) {
+        const matchingProvider = countryResult.flatrate.find(flatrateProvider =>
+          selectedProviders.some(
+            selectedProvider => selectedProvider.provider_id === flatrateProvider.provider_id
+          )
+        );
+
+        if (matchingProvider) {
+          result.push({ ...matchingProvider, provider_country: country.country_code });
+        }
+      }
+      return result;
+    }, []);
+  }
 });
 </script>
 

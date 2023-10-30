@@ -34,7 +34,6 @@ async function userLogin() {
       "authenticate/" + username.value,
       RequestMethods.GET,
     );
-    console.log(loginResult);
     if (loginResult) {
       account.userAccount = loginResult;
       router.replace({ name: "home" });

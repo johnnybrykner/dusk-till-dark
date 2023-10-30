@@ -124,6 +124,7 @@ export interface WatchProvider {
   logo_path: string;
   provider_id: number;
   provider_name: string;
+  provider_country?: string;
 }
 
 export interface FilmGenre {
